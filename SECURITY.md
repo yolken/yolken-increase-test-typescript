@@ -20,7 +20,7 @@ or products provided by Yolken Increase Test, please follow the respective compa
 
 ### Yolken Increase Test Terms and Policies
 
-Please contact yolken@stainless.com for any questions or concerns regarding the security of our services.
+Please contact benjamin@stainless.com for any questions or concerns regarding the security of our services.
 
 ---
 
