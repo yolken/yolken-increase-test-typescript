@@ -1,0 +1,4775 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import { APIResource } from '../core/resource';
+import * as PendingTransactionsAPI from './pending-transactions';
+import * as SimulationsAPI from './simulations/simulations';
+import { APIPromise } from '../core/api-promise';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
+
+export class CardPayments extends APIResource {
+  /**
+   * Retrieve a Card Payment
+   *
+   * @example
+   * ```ts
+   * const cardPayment = await client.cardPayments.retrieve(
+   *   'card_payment_nd3k2kacrqjli8482ave',
+   * );
+   * ```
+   */
+  retrieve(cardPaymentID: string, options?: RequestOptions): APIPromise<CardPayment> {
+    return this._client.get(path`/card_payments/${cardPaymentID}`, options);
+  }
+
+  /**
+   * List Card Payments
+   *
+   * @example
+   * ```ts
+   * const cardPayments = await client.cardPayments.list();
+   * ```
+   */
+  list(
+    query: CardPaymentListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CardPaymentListResponse> {
+    return this._client.get('/card_payments', { query, ...options });
+  }
+}
+
+/**
+ * Card Payments group together interactions related to a single card payment, such
+ * as an authorization and its corresponding settlement.
+ */
+export interface CardPayment {
+  /**
+   * The Card Payment identifier.
+   */
+  id: string;
+
+  /**
+   * The identifier for the Account the Transaction belongs to.
+   */
+  account_id: string;
+
+  /**
+   * The Card identifier for this payment.
+   */
+  card_id: string;
+
+  /**
+   * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Card
+   * Payment was created.
+   */
+  created_at: string;
+
+  /**
+   * The Digital Wallet Token identifier for this payment.
+   */
+  digital_wallet_token_id: string | null;
+
+  /**
+   * The interactions related to this card payment.
+   */
+  elements: Array<CardPayment.Element>;
+
+  /**
+   * The Physical Card identifier for this payment.
+   */
+  physical_card_id: string | null;
+
+  /**
+   * The summarized state of this card payment.
+   */
+  state: CardPayment.State;
+
+  /**
+   * A constant representing the object's type. For this resource it will always be
+   * `card_payment`.
+   */
+  type: 'card_payment';
+
+  [k: string]: unknown;
+}
+
+export namespace CardPayment {
+  export interface Element {
+    /**
+     * The type of the resource. We may add additional possible values for this enum
+     * over time; your application should be able to handle such additions gracefully.
+     *
+     * - `card_authorization` - Card Authorization: details will be under the
+     *   `card_authorization` object.
+     * - `card_authentication` - Card Authentication: details will be under the
+     *   `card_authentication` object.
+     * - `card_balance_inquiry` - Card Balance Inquiry: details will be under the
+     *   `card_balance_inquiry` object.
+     * - `card_validation` - Inbound Card Validation: details will be under the
+     *   `card_validation` object.
+     * - `card_decline` - Card Decline: details will be under the `card_decline`
+     *   object.
+     * - `card_reversal` - Card Reversal: details will be under the `card_reversal`
+     *   object.
+     * - `card_authorization_expiration` - Card Authorization Expiration: details will
+     *   be under the `card_authorization_expiration` object.
+     * - `card_increment` - Card Increment: details will be under the `card_increment`
+     *   object.
+     * - `card_settlement` - Card Settlement: details will be under the
+     *   `card_settlement` object.
+     * - `card_refund` - Card Refund: details will be under the `card_refund` object.
+     * - `card_fuel_confirmation` - Card Fuel Confirmation: details will be under the
+     *   `card_fuel_confirmation` object.
+     * - `card_financial` - Card Financial: details will be under the `card_financial`
+     *   object.
+     * - `other` - Unknown card payment element.
+     */
+    category:
+      | 'card_authorization'
+      | 'card_authentication'
+      | 'card_balance_inquiry'
+      | 'card_validation'
+      | 'card_decline'
+      | 'card_reversal'
+      | 'card_authorization_expiration'
+      | 'card_increment'
+      | 'card_settlement'
+      | 'card_refund'
+      | 'card_fuel_confirmation'
+      | 'card_financial'
+      | 'other';
+
+    /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+     * the card payment element was created.
+     */
+    created_at: string;
+
+    /**
+     * A Card Authentication object. This field will be present in the JSON response if
+     * and only if `category` is equal to `card_authentication`. Card Authentications
+     * are attempts to authenticate a transaction or a card with 3DS.
+     */
+    card_authentication?: Element.CardAuthentication | null;
+
+    /**
+     * A Card Authorization object. This field will be present in the JSON response if
+     * and only if `category` is equal to `card_authorization`. Card Authorizations are
+     * temporary holds placed on a customer's funds with the intent to later clear a
+     * transaction.
+     */
+    card_authorization?: PendingTransactionsAPI.CardAuthorization | null;
+
+    /**
+     * A Card Authorization Expiration object. This field will be present in the JSON
+     * response if and only if `category` is equal to `card_authorization_expiration`.
+     * Card Authorization Expirations are cancellations of authorizations that were
+     * never settled by the acquirer.
+     */
+    card_authorization_expiration?: Element.CardAuthorizationExpiration | null;
+
+    /**
+     * A Card Balance Inquiry object. This field will be present in the JSON response
+     * if and only if `category` is equal to `card_balance_inquiry`. Card Balance
+     * Inquiries are transactions that allow merchants to check the available balance
+     * on a card without placing a hold on funds, commonly used when a customer
+     * requests their balance at an ATM.
+     */
+    card_balance_inquiry?: Element.CardBalanceInquiry | null;
+
+    /**
+     * A Card Decline object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_decline`.
+     */
+    card_decline?: Element.CardDecline | null;
+
+    /**
+     * A Card Financial object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_financial`. Card Financials are temporary
+     * holds placed on a customer's funds with the intent to later clear a transaction.
+     */
+    card_financial?: SimulationsAPI.CardFinancial | null;
+
+    /**
+     * A Card Fuel Confirmation object. This field will be present in the JSON response
+     * if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel
+     * Confirmations update the amount of a Card Authorization after a fuel pump
+     * transaction is completed.
+     */
+    card_fuel_confirmation?: Element.CardFuelConfirmation | null;
+
+    /**
+     * A Card Increment object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_increment`. Card Increments increase the
+     * pending amount of an authorized transaction.
+     */
+    card_increment?: Element.CardIncrement | null;
+
+    /**
+     * A Card Refund object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_refund`. Card Refunds move money back to
+     * the cardholder. While they are usually connected to a Card Settlement, an
+     * acquirer can also refund money directly to a card without relation to a
+     * transaction.
+     */
+    card_refund?: SimulationsAPI.CardRefund | null;
+
+    /**
+     * A Card Reversal object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_reversal`. Card Reversals cancel parts of
+     * or the entirety of an existing Card Authorization.
+     */
+    card_reversal?: Element.CardReversal | null;
+
+    /**
+     * A Card Settlement object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_settlement`. Card Settlements are card
+     * transactions that have cleared and settled. While a settlement is usually
+     * preceded by an authorization, an acquirer can also directly clear a transaction
+     * without first authorizing it.
+     */
+    card_settlement?: SimulationsAPI.CardSettlement | null;
+
+    /**
+     * An Inbound Card Validation object. This field will be present in the JSON
+     * response if and only if `category` is equal to `card_validation`. Inbound Card
+     * Validations are requests from a merchant to verify that a card number and
+     * optionally its address and/or Card Verification Value are valid.
+     */
+    card_validation?: Element.CardValidation | null;
+
+    /**
+     * If the category of this Transaction source is equal to `other`, this field will
+     * contain an empty object, otherwise it will contain null.
+     */
+    other?: unknown | null;
+  }
+
+  export namespace Element {
+    /**
+     * A Card Authentication object. This field will be present in the JSON response if
+     * and only if `category` is equal to `card_authentication`. Card Authentications
+     * are attempts to authenticate a transaction or a card with 3DS.
+     */
+    export interface CardAuthentication {
+      /**
+       * The Card Authentication identifier.
+       */
+      id: string;
+
+      /**
+       * A unique identifier assigned by the Access Control Server (us) for this
+       * transaction.
+       */
+      access_control_server_transaction_identifier: string;
+
+      /**
+       * The city of the cardholder billing address associated with the card used for
+       * this purchase.
+       */
+      billing_address_city: string | null;
+
+      /**
+       * The country of the cardholder billing address associated with the card used for
+       * this purchase.
+       */
+      billing_address_country: string | null;
+
+      /**
+       * The first line of the cardholder billing address associated with the card used
+       * for this purchase.
+       */
+      billing_address_line1: string | null;
+
+      /**
+       * The second line of the cardholder billing address associated with the card used
+       * for this purchase.
+       */
+      billing_address_line2: string | null;
+
+      /**
+       * The third line of the cardholder billing address associated with the card used
+       * for this purchase.
+       */
+      billing_address_line3: string | null;
+
+      /**
+       * The postal code of the cardholder billing address associated with the card used
+       * for this purchase.
+       */
+      billing_address_postal_code: string | null;
+
+      /**
+       * The US state of the cardholder billing address associated with the card used for
+       * this purchase.
+       */
+      billing_address_state: string | null;
+
+      /**
+       * The identifier of the Card.
+       */
+      card_id: string;
+
+      /**
+       * The ID of the Card Payment this transaction belongs to.
+       */
+      card_payment_id: string;
+
+      /**
+       * The email address of the cardholder.
+       */
+      cardholder_email: string | null;
+
+      /**
+       * The name of the cardholder.
+       */
+      cardholder_name: string | null;
+
+      /**
+       * Details about the challenge, if one was requested.
+       */
+      challenge: CardAuthentication.Challenge | null;
+
+      /**
+       * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Card
+       * Authentication was attempted.
+       */
+      created_at: string;
+
+      /**
+       * The reason why this authentication attempt was denied, if it was.
+       *
+       * - `group_locked` - The group was locked.
+       * - `card_not_active` - The card was not active.
+       * - `entity_not_active` - The entity was not active.
+       * - `transaction_not_allowed` - The transaction was not allowed.
+       * - `webhook_denied` - The webhook was denied.
+       * - `webhook_timed_out` - The webhook timed out.
+       */
+      deny_reason:
+        | 'group_locked'
+        | 'card_not_active'
+        | 'entity_not_active'
+        | 'transaction_not_allowed'
+        | 'webhook_denied'
+        | 'webhook_timed_out'
+        | null;
+
+      /**
+       * The device channel of the card authentication attempt.
+       */
+      device_channel: CardAuthentication.DeviceChannel;
+
+      /**
+       * A unique identifier assigned by the Directory Server (the card network) for this
+       * transaction.
+       */
+      directory_server_transaction_identifier: string;
+
+      /**
+       * The merchant identifier (commonly abbreviated as MID) of the merchant the card
+       * is transacting with.
+       */
+      merchant_acceptor_id: string | null;
+
+      /**
+       * The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+       * card is transacting with.
+       */
+      merchant_category_code: string | null;
+
+      /**
+       * The country the merchant resides in.
+       */
+      merchant_country: string | null;
+
+      /**
+       * The name of the merchant.
+       */
+      merchant_name: string | null;
+
+      /**
+       * The message category of the card authentication attempt.
+       */
+      message_category: CardAuthentication.MessageCategory;
+
+      /**
+       * The ID of a prior Card Authentication that the requestor used to authenticate
+       * this cardholder for a previous transaction.
+       */
+      prior_authenticated_card_payment_id: string | null;
+
+      /**
+       * The identifier of the Real-Time Decision sent to approve or decline this
+       * authentication attempt.
+       */
+      real_time_decision_id: string | null;
+
+      /**
+       * The 3DS requestor authentication indicator describes why the authentication
+       * attempt is performed, such as for a recurring transaction.
+       *
+       * - `payment_transaction` - The authentication is for a payment transaction.
+       * - `recurring_transaction` - The authentication is for a recurring transaction.
+       * - `installment_transaction` - The authentication is for an installment
+       *   transaction.
+       * - `add_card` - The authentication is for adding a card.
+       * - `maintain_card` - The authentication is for maintaining a card.
+       * - `emv_token_cardholder_verification` - The authentication is for EMV token
+       *   cardholder verification.
+       * - `billing_agreement` - The authentication is for a billing agreement.
+       */
+      requestor_authentication_indicator:
+        | 'payment_transaction'
+        | 'recurring_transaction'
+        | 'installment_transaction'
+        | 'add_card'
+        | 'maintain_card'
+        | 'emv_token_cardholder_verification'
+        | 'billing_agreement'
+        | null;
+
+      /**
+       * Indicates whether a challenge is requested for this transaction.
+       *
+       * - `no_preference` - No preference.
+       * - `no_challenge_requested` - No challenge requested.
+       * - `challenge_requested_3ds_requestor_preference` - Challenge requested, 3DS
+       *   Requestor preference.
+       * - `challenge_requested_mandate` - Challenge requested, mandate.
+       * - `no_challenge_requested_transactional_risk_analysis_already_performed` - No
+       *   challenge requested, transactional risk analysis already performed.
+       * - `no_challenge_requested_data_share_only` - No challenge requested, data share
+       *   only.
+       * - `no_challenge_requested_strong_consumer_authentication_already_performed` - No
+       *   challenge requested, strong consumer authentication already performed.
+       * - `no_challenge_requested_utilize_whitelist_exemption_if_no_challenge_required` -
+       *   No challenge requested, utilize whitelist exemption if no challenge required.
+       * - `challenge_requested_whitelist_prompt_requested_if_challenge_required` -
+       *   Challenge requested, whitelist prompt requested if challenge required.
+       */
+      requestor_challenge_indicator:
+        | 'no_preference'
+        | 'no_challenge_requested'
+        | 'challenge_requested_3ds_requestor_preference'
+        | 'challenge_requested_mandate'
+        | 'no_challenge_requested_transactional_risk_analysis_already_performed'
+        | 'no_challenge_requested_data_share_only'
+        | 'no_challenge_requested_strong_consumer_authentication_already_performed'
+        | 'no_challenge_requested_utilize_whitelist_exemption_if_no_challenge_required'
+        | 'challenge_requested_whitelist_prompt_requested_if_challenge_required'
+        | null;
+
+      /**
+       * The name of the 3DS requestor.
+       */
+      requestor_name: string;
+
+      /**
+       * The URL of the 3DS requestor.
+       */
+      requestor_url: string;
+
+      /**
+       * The city of the shipping address associated with this purchase.
+       */
+      shipping_address_city: string | null;
+
+      /**
+       * The country of the shipping address associated with this purchase.
+       */
+      shipping_address_country: string | null;
+
+      /**
+       * The first line of the shipping address associated with this purchase.
+       */
+      shipping_address_line1: string | null;
+
+      /**
+       * The second line of the shipping address associated with this purchase.
+       */
+      shipping_address_line2: string | null;
+
+      /**
+       * The third line of the shipping address associated with this purchase.
+       */
+      shipping_address_line3: string | null;
+
+      /**
+       * The postal code of the shipping address associated with this purchase.
+       */
+      shipping_address_postal_code: string | null;
+
+      /**
+       * The US state of the shipping address associated with this purchase.
+       */
+      shipping_address_state: string | null;
+
+      /**
+       * The status of the card authentication.
+       *
+       * - `denied` - The authentication attempt was denied.
+       * - `authenticated_with_challenge` - The authentication attempt was authenticated
+       *   with a challenge.
+       * - `authenticated_without_challenge` - The authentication attempt was
+       *   authenticated without a challenge.
+       * - `awaiting_challenge` - The authentication attempt is awaiting a challenge.
+       * - `validating_challenge` - The authentication attempt is validating a challenge.
+       * - `canceled` - The authentication attempt was canceled.
+       * - `timed_out_awaiting_challenge` - The authentication attempt timed out while
+       *   awaiting a challenge.
+       * - `errored` - The authentication attempt errored.
+       * - `exceeded_attempt_threshold` - The authentication attempt exceeded the attempt
+       *   threshold.
+       */
+      status:
+        | 'denied'
+        | 'authenticated_with_challenge'
+        | 'authenticated_without_challenge'
+        | 'awaiting_challenge'
+        | 'validating_challenge'
+        | 'canceled'
+        | 'timed_out_awaiting_challenge'
+        | 'errored'
+        | 'exceeded_attempt_threshold';
+
+      /**
+       * A unique identifier assigned by the 3DS Server initiating the authentication
+       * attempt for this transaction.
+       */
+      three_d_secure_server_transaction_identifier: string;
+
+      /**
+       * A constant representing the object's type. For this resource it will always be
+       * `card_authentication`.
+       */
+      type: 'card_authentication';
+
+      [k: string]: unknown;
+    }
+
+    export namespace CardAuthentication {
+      /**
+       * Details about the challenge, if one was requested.
+       */
+      export interface Challenge {
+        /**
+         * Details about the challenge verification attempts, if any happened.
+         */
+        attempts: Array<Challenge.Attempt>;
+
+        /**
+         * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the Card
+         * Authentication Challenge was started.
+         */
+        created_at: string;
+
+        /**
+         * The one-time code used for the Card Authentication Challenge.
+         */
+        one_time_code: string;
+
+        /**
+         * The identifier of the Real-Time Decision used to deliver this challenge.
+         */
+        real_time_decision_id: string | null;
+
+        /**
+         * The method used to verify the Card Authentication Challenge.
+         *
+         * - `text_message` - The one-time code was sent via text message.
+         * - `email` - The one-time code was sent via email.
+         * - `none_available` - The one-time code was not successfully delivered.
+         */
+        verification_method: 'text_message' | 'email' | 'none_available';
+
+        /**
+         * E.g., the email address or phone number used for the Card Authentication
+         * Challenge.
+         */
+        verification_value: string | null;
+      }
+
+      export namespace Challenge {
+        export interface Attempt {
+          /**
+           * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time of the Card
+           * Authentication Challenge Attempt.
+           */
+          created_at: string;
+
+          /**
+           * The outcome of the Card Authentication Challenge Attempt.
+           *
+           * - `successful` - The attempt was successful.
+           * - `failed` - The attempt was unsuccessful.
+           */
+          outcome: 'successful' | 'failed';
+        }
+      }
+
+      /**
+       * The device channel of the card authentication attempt.
+       */
+      export interface DeviceChannel {
+        /**
+         * Fields specific to the browser device channel.
+         */
+        browser: DeviceChannel.Browser | null;
+
+        /**
+         * The category of the device channel.
+         *
+         * - `app` - The authentication attempt was made from an app.
+         * - `browser` - The authentication attempt was made from a browser.
+         * - `three_ds_requestor_initiated` - The authentication attempt was initiated by
+         *   the 3DS Requestor.
+         */
+        category: 'app' | 'browser' | 'three_ds_requestor_initiated';
+
+        /**
+         * Fields specific to merchant initiated transactions.
+         */
+        merchant_initiated: DeviceChannel.MerchantInitiated | null;
+      }
+
+      export namespace DeviceChannel {
+        /**
+         * Fields specific to the browser device channel.
+         */
+        export interface Browser {
+          /**
+           * The accept header from the cardholder's browser.
+           */
+          accept_header: string | null;
+
+          /**
+           * The IP address of the cardholder's browser.
+           */
+          ip_address: string | null;
+
+          /**
+           * Whether JavaScript is enabled in the cardholder's browser.
+           *
+           * - `enabled` - JavaScript is enabled in the cardholder's browser.
+           * - `disabled` - JavaScript is not enabled in the cardholder's browser.
+           */
+          javascript_enabled: 'enabled' | 'disabled' | null;
+
+          /**
+           * The language of the cardholder's browser.
+           */
+          language: string | null;
+
+          /**
+           * The user agent of the cardholder's browser.
+           */
+          user_agent: string | null;
+        }
+
+        /**
+         * Fields specific to merchant initiated transactions.
+         */
+        export interface MerchantInitiated {
+          /**
+           * The merchant initiated indicator for the transaction.
+           *
+           * - `recurring_transaction` - Recurring transaction.
+           * - `installment_transaction` - Installment transaction.
+           * - `add_card` - Add card.
+           * - `maintain_card_information` - Maintain card information.
+           * - `account_verification` - Account verification.
+           * - `split_delayed_shipment` - Split or delayed shipment.
+           * - `top_up` - Top up.
+           * - `mail_order` - Mail order.
+           * - `telephone_order` - Telephone order.
+           * - `whitelist_status_check` - Whitelist status check.
+           * - `other_payment` - Other payment.
+           * - `billing_agreement` - Billing agreement.
+           * - `device_binding_status_check` - Device binding status check.
+           * - `card_security_code_status_check` - Card security code status check.
+           * - `delayed_shipment` - Delayed shipment.
+           * - `split_payment` - Split payment.
+           * - `fido_credential_deletion` - FIDO credential deletion.
+           * - `fido_credential_registration` - FIDO credential registration.
+           * - `decoupled_authentication_fallback` - Decoupled authentication fallback.
+           */
+          indicator:
+            | 'recurring_transaction'
+            | 'installment_transaction'
+            | 'add_card'
+            | 'maintain_card_information'
+            | 'account_verification'
+            | 'split_delayed_shipment'
+            | 'top_up'
+            | 'mail_order'
+            | 'telephone_order'
+            | 'whitelist_status_check'
+            | 'other_payment'
+            | 'billing_agreement'
+            | 'device_binding_status_check'
+            | 'card_security_code_status_check'
+            | 'delayed_shipment'
+            | 'split_payment'
+            | 'fido_credential_deletion'
+            | 'fido_credential_registration'
+            | 'decoupled_authentication_fallback';
+        }
+      }
+
+      /**
+       * The message category of the card authentication attempt.
+       */
+      export interface MessageCategory {
+        /**
+         * The category of the card authentication attempt.
+         *
+         * - `payment_authentication` - The authentication attempt is for a payment.
+         * - `non_payment_authentication` - The authentication attempt is not for a
+         *   payment.
+         */
+        category: 'payment_authentication' | 'non_payment_authentication';
+
+        /**
+         * Fields specific to non-payment authentication attempts.
+         */
+        non_payment: unknown | null;
+
+        /**
+         * Fields specific to payment authentication attempts.
+         */
+        payment: MessageCategory.Payment | null;
+      }
+
+      export namespace MessageCategory {
+        /**
+         * Fields specific to payment authentication attempts.
+         */
+        export interface Payment {
+          /**
+           * The purchase amount in minor units.
+           */
+          purchase_amount: number;
+
+          /**
+           * The purchase amount in the cardholder's currency (i.e., USD) estimated using
+           * daily conversion rates from the card network.
+           */
+          purchase_amount_cardholder_estimated: number | null;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+           * authentication attempt's purchase currency.
+           */
+          purchase_currency: string;
+
+          /**
+           * The type of transaction being authenticated.
+           *
+           * - `goods_service_purchase` - Purchase of goods or services.
+           * - `check_acceptance` - Check acceptance.
+           * - `account_funding` - Account funding.
+           * - `quasi_cash_transaction` - Quasi-cash transaction.
+           * - `prepaid_activation_and_load` - Prepaid activation and load.
+           */
+          transaction_type:
+            | 'goods_service_purchase'
+            | 'check_acceptance'
+            | 'account_funding'
+            | 'quasi_cash_transaction'
+            | 'prepaid_activation_and_load'
+            | null;
+        }
+      }
+    }
+
+    /**
+     * A Card Authorization Expiration object. This field will be present in the JSON
+     * response if and only if `category` is equal to `card_authorization_expiration`.
+     * Card Authorization Expirations are cancellations of authorizations that were
+     * never settled by the acquirer.
+     */
+    export interface CardAuthorizationExpiration {
+      /**
+       * The Card Authorization Expiration identifier.
+       */
+      id: string;
+
+      /**
+       * The identifier for the Card Authorization this reverses.
+       */
+      card_authorization_id: string;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the reversal's
+       * currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The amount of this authorization expiration in the minor unit of the
+       * transaction's currency. For dollars, for example, this is cents.
+       */
+      expired_amount: number;
+
+      /**
+       * The card network used to process this card authorization.
+       *
+       * - `visa` - Visa
+       * - `pulse` - Pulse
+       */
+      network: 'visa' | 'pulse';
+
+      /**
+       * A constant representing the object's type. For this resource it will always be
+       * `card_authorization_expiration`.
+       */
+      type: 'card_authorization_expiration';
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Card Balance Inquiry object. This field will be present in the JSON response
+     * if and only if `category` is equal to `card_balance_inquiry`. Card Balance
+     * Inquiries are transactions that allow merchants to check the available balance
+     * on a card without placing a hold on funds, commonly used when a customer
+     * requests their balance at an ATM.
+     */
+    export interface CardBalanceInquiry {
+      /**
+       * The Card Balance Inquiry identifier.
+       */
+      id: string;
+
+      /**
+       * Additional amounts associated with the card authorization, such as ATM
+       * surcharges fees. These are usually a subset of the `amount` field and are used
+       * to provide more detailed information about the transaction.
+       */
+      additional_amounts: CardBalanceInquiry.AdditionalAmounts;
+
+      /**
+       * The balance amount in the minor unit of the account's currency. For dollars, for
+       * example, this is cents.
+       */
+      balance: number;
+
+      /**
+       * The ID of the Card Payment this transaction belongs to.
+       */
+      card_payment_id: string;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the account's
+       * currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * If the authorization was made via a Digital Wallet Token (such as an Apple Pay
+       * purchase), the identifier of the token that was used.
+       */
+      digital_wallet_token_id: string | null;
+
+      /**
+       * The merchant identifier (commonly abbreviated as MID) of the merchant the card
+       * is transacting with.
+       */
+      merchant_acceptor_id: string;
+
+      /**
+       * The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+       * card is transacting with.
+       */
+      merchant_category_code: string;
+
+      /**
+       * The city the merchant resides in.
+       */
+      merchant_city: string | null;
+
+      /**
+       * The country the merchant resides in.
+       */
+      merchant_country: string;
+
+      /**
+       * The merchant descriptor of the merchant the card is transacting with.
+       */
+      merchant_descriptor: string;
+
+      /**
+       * The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
+       * ZIP code, where the first 5 and last 4 are separated by a dash.
+       */
+      merchant_postal_code: string | null;
+
+      /**
+       * The state the merchant resides in.
+       */
+      merchant_state: string | null;
+
+      /**
+       * Fields specific to the `network`.
+       */
+      network_details: CardBalanceInquiry.NetworkDetails;
+
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      network_identifiers: CardBalanceInquiry.NetworkIdentifiers;
+
+      /**
+       * The risk score generated by the card network. For Visa this is the Visa Advanced
+       * Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
+       * score is from 0 to 999, where 999 is the riskiest.
+       */
+      network_risk_score: number | null;
+
+      /**
+       * If the authorization was made in-person with a physical card, the Physical Card
+       * that was used.
+       */
+      physical_card_id: string | null;
+
+      /**
+       * The identifier of the Real-Time Decision sent to approve or decline this
+       * transaction.
+       */
+      real_time_decision_id: string | null;
+
+      /**
+       * The scheme fees associated with this card balance inquiry.
+       */
+      scheme_fees: Array<CardBalanceInquiry.SchemeFee>;
+
+      /**
+       * The terminal identifier (commonly abbreviated as TID) of the terminal the card
+       * is transacting with.
+       */
+      terminal_id: string | null;
+
+      /**
+       * A constant representing the object's type. For this resource it will always be
+       * `card_balance_inquiry`.
+       */
+      type: 'card_balance_inquiry';
+
+      /**
+       * Fields related to verification of cardholder-provided values.
+       */
+      verification: CardBalanceInquiry.Verification;
+
+      [k: string]: unknown;
+    }
+
+    export namespace CardBalanceInquiry {
+      /**
+       * Additional amounts associated with the card authorization, such as ATM
+       * surcharges fees. These are usually a subset of the `amount` field and are used
+       * to provide more detailed information about the transaction.
+       */
+      export interface AdditionalAmounts {
+        /**
+         * The part of this transaction amount that was for clinic-related services.
+         */
+        clinic: AdditionalAmounts.Clinic | null;
+
+        /**
+         * The part of this transaction amount that was for dental-related services.
+         */
+        dental: AdditionalAmounts.Dental | null;
+
+        /**
+         * The original pre-authorized amount.
+         */
+        original: AdditionalAmounts.Original | null;
+
+        /**
+         * The part of this transaction amount that was for healthcare prescriptions.
+         */
+        prescription: AdditionalAmounts.Prescription | null;
+
+        /**
+         * The surcharge amount charged for this transaction by the merchant.
+         */
+        surcharge: AdditionalAmounts.Surcharge | null;
+
+        /**
+         * The total amount of a series of incremental authorizations, optionally provided.
+         */
+        total_cumulative: AdditionalAmounts.TotalCumulative | null;
+
+        /**
+         * The total amount of healthcare-related additional amounts.
+         */
+        total_healthcare: AdditionalAmounts.TotalHealthcare | null;
+
+        /**
+         * The part of this transaction amount that was for transit-related services.
+         */
+        transit: AdditionalAmounts.Transit | null;
+
+        /**
+         * An unknown additional amount.
+         */
+        unknown: AdditionalAmounts.Unknown | null;
+
+        /**
+         * The part of this transaction amount that was for vision-related services.
+         */
+        vision: AdditionalAmounts.Vision | null;
+      }
+
+      export namespace AdditionalAmounts {
+        /**
+         * The part of this transaction amount that was for clinic-related services.
+         */
+        export interface Clinic {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for dental-related services.
+         */
+        export interface Dental {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The original pre-authorized amount.
+         */
+        export interface Original {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for healthcare prescriptions.
+         */
+        export interface Prescription {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The surcharge amount charged for this transaction by the merchant.
+         */
+        export interface Surcharge {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The total amount of a series of incremental authorizations, optionally provided.
+         */
+        export interface TotalCumulative {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The total amount of healthcare-related additional amounts.
+         */
+        export interface TotalHealthcare {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for transit-related services.
+         */
+        export interface Transit {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * An unknown additional amount.
+         */
+        export interface Unknown {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for vision-related services.
+         */
+        export interface Vision {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+      }
+
+      /**
+       * Fields specific to the `network`.
+       */
+      export interface NetworkDetails {
+        /**
+         * The payment network used to process this card authorization.
+         *
+         * - `visa` - Visa
+         * - `pulse` - Pulse
+         */
+        category: 'visa' | 'pulse';
+
+        /**
+         * Fields specific to the `pulse` network.
+         */
+        pulse: unknown | null;
+
+        /**
+         * Fields specific to the `visa` network.
+         */
+        visa: NetworkDetails.Visa | null;
+      }
+
+      export namespace NetworkDetails {
+        /**
+         * Fields specific to the `visa` network.
+         */
+        export interface Visa {
+          /**
+           * For electronic commerce transactions, this identifies the level of security used
+           * in obtaining the customer's payment credential. For mail or telephone order
+           * transactions, identifies the type of mail or telephone order.
+           *
+           * - `mail_phone_order` - Single transaction of a mail/phone order: Use to indicate
+           *   that the transaction is a mail/phone order purchase, not a recurring
+           *   transaction or installment payment. For domestic transactions in the US
+           *   region, this value may also indicate one bill payment transaction in the
+           *   card-present or card-absent environments.
+           * - `recurring` - Recurring transaction: Payment indicator used to indicate a
+           *   recurring transaction that originates from an acquirer in the US region.
+           * - `installment` - Installment payment: Payment indicator used to indicate one
+           *   purchase of goods or services that is billed to the account in multiple
+           *   charges over a period of time agreed upon by the cardholder and merchant from
+           *   transactions that originate from an acquirer in the US region.
+           * - `unknown_mail_phone_order` - Unknown classification: other mail order: Use to
+           *   indicate that the type of mail/telephone order is unknown.
+           * - `secure_electronic_commerce` - Secure electronic commerce transaction: Use to
+           *   indicate that the electronic commerce transaction has been authenticated using
+           *   e.g., 3-D Secure
+           * - `non_authenticated_security_transaction_at_3ds_capable_merchant` -
+           *   Non-authenticated security transaction at a 3-D Secure-capable merchant, and
+           *   merchant attempted to authenticate the cardholder using 3-D Secure: Use to
+           *   identify an electronic commerce transaction where the merchant attempted to
+           *   authenticate the cardholder using 3-D Secure, but was unable to complete the
+           *   authentication because the issuer or cardholder does not participate in the
+           *   3-D Secure program.
+           * - `non_authenticated_security_transaction` - Non-authenticated security
+           *   transaction: Use to identify an electronic commerce transaction that uses data
+           *   encryption for security however, cardholder authentication is not performed
+           *   using 3-D Secure.
+           * - `non_secure_transaction` - Non-secure transaction: Use to identify an
+           *   electronic commerce transaction that has no data protection.
+           */
+          electronic_commerce_indicator:
+            | 'mail_phone_order'
+            | 'recurring'
+            | 'installment'
+            | 'unknown_mail_phone_order'
+            | 'secure_electronic_commerce'
+            | 'non_authenticated_security_transaction_at_3ds_capable_merchant'
+            | 'non_authenticated_security_transaction'
+            | 'non_secure_transaction'
+            | null;
+
+          /**
+           * The method used to enter the cardholder's primary account number and card
+           * expiration date.
+           *
+           * - `unknown` - Unknown
+           * - `manual` - Manual key entry
+           * - `magnetic_stripe_no_cvv` - Magnetic stripe read, without card verification
+           *   value
+           * - `optical_code` - Optical code
+           * - `integrated_circuit_card` - Contact chip card
+           * - `contactless` - Contactless read of chip card
+           * - `credential_on_file` - Transaction initiated using a credential that has
+           *   previously been stored on file
+           * - `magnetic_stripe` - Magnetic stripe read
+           * - `contactless_magnetic_stripe` - Contactless read of magnetic stripe data
+           * - `integrated_circuit_card_no_cvv` - Contact chip card, without card
+           *   verification value
+           */
+          point_of_service_entry_mode:
+            | 'unknown'
+            | 'manual'
+            | 'magnetic_stripe_no_cvv'
+            | 'optical_code'
+            | 'integrated_circuit_card'
+            | 'contactless'
+            | 'credential_on_file'
+            | 'magnetic_stripe'
+            | 'contactless_magnetic_stripe'
+            | 'integrated_circuit_card_no_cvv'
+            | null;
+
+          /**
+           * Only present when `actioner: network`. Describes why a card authorization was
+           * approved or declined by Visa through stand-in processing.
+           *
+           * - `issuer_error` - Increase failed to process the authorization in a timely
+           *   manner.
+           * - `invalid_physical_card` - The physical card read had an invalid CVV or dCVV.
+           * - `invalid_cryptogram` - The card's authorization request cryptogram was
+           *   invalid. The cryptogram can be from a physical card or a Digital Wallet Token
+           *   purchase.
+           * - `invalid_cardholder_authentication_verification_value` - The 3DS cardholder
+           *   authentication verification value was invalid.
+           * - `internal_visa_error` - An internal Visa error occurred. Visa uses this reason
+           *   code for certain expected occurrences as well, such as Application Transaction
+           *   Counter (ATC) replays.
+           * - `merchant_transaction_advisory_service_authentication_required` - The merchant
+           *   has enabled Visa's Transaction Advisory Service and requires further
+           *   authentication to perform the transaction. In practice this is often utilized
+           *   at fuel pumps to tell the cardholder to see the cashier.
+           * - `payment_fraud_disruption_acquirer_block` - The transaction was blocked by
+           *   Visa's Payment Fraud Disruption service due to fraudulent Acquirer behavior,
+           *   such as card testing.
+           * - `other` - An unspecific reason for stand-in processing.
+           */
+          stand_in_processing_reason:
+            | 'issuer_error'
+            | 'invalid_physical_card'
+            | 'invalid_cryptogram'
+            | 'invalid_cardholder_authentication_verification_value'
+            | 'internal_visa_error'
+            | 'merchant_transaction_advisory_service_authentication_required'
+            | 'payment_fraud_disruption_acquirer_block'
+            | 'other'
+            | null;
+
+          /**
+           * The capability of the terminal being used to read the card. Shows whether a
+           * terminal can e.g., accept chip cards or if it only supports magnetic stripe
+           * reads. This reflects the highest capability of the terminal — for example, a
+           * terminal that supports both chip and magnetic stripe will be identified as
+           * chip-capable.
+           *
+           * - `unknown` - Unknown
+           * - `terminal_not_used` - No terminal was used for this transaction.
+           * - `magnetic_stripe` - The terminal can only read magnetic stripes and does not
+           *   have chip or contactless reading capability.
+           * - `barcode` - The terminal can only read barcodes.
+           * - `optical_character_recognition` - The terminal can only read cards via Optical
+           *   Character Recognition.
+           * - `chip_or_contactless` - The terminal supports contact chip cards and can also
+           *   read the magnetic stripe. If contact chip is supported, this value is used
+           *   regardless of whether contactless is also supported.
+           * - `contactless_only` - The terminal supports contactless reads but does not
+           *   support contact chip. Only used when the terminal lacks contact chip
+           *   capability.
+           * - `no_capability` - The terminal has no card reading capability.
+           */
+          terminal_entry_capability:
+            | 'unknown'
+            | 'terminal_not_used'
+            | 'magnetic_stripe'
+            | 'barcode'
+            | 'optical_character_recognition'
+            | 'chip_or_contactless'
+            | 'contactless_only'
+            | 'no_capability'
+            | null;
+        }
+      }
+
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      export interface NetworkIdentifiers {
+        /**
+         * The randomly generated 6-character Authorization Identification Response code
+         * sent back to the acquirer in an approved response.
+         */
+        authorization_identification_response: string | null;
+
+        /**
+         * A life-cycle identifier used across e.g., an authorization and a reversal.
+         * Expected to be unique per acquirer within a window of time. For some card
+         * networks the retrieval reference number includes the trace counter.
+         */
+        retrieval_reference_number: string | null;
+
+        /**
+         * A counter used to verify an individual authorization. Expected to be unique per
+         * acquirer within a window of time.
+         */
+        trace_number: string | null;
+
+        /**
+         * A globally unique transaction identifier provided by the card network, used
+         * across multiple life-cycle requests.
+         */
+        transaction_id: string | null;
+      }
+
+      export interface SchemeFee {
+        /**
+         * The fee amount given as a string containing a decimal number.
+         */
+        amount: string;
+
+        /**
+         * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
+         * created.
+         */
+        created_at: string;
+
+        /**
+         * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+         * reimbursement.
+         *
+         * - `USD` - US Dollar (USD)
+         */
+        currency: 'USD';
+
+        /**
+         * The type of fee being assessed.
+         *
+         * - `visa_international_service_assessment_single_currency` - International
+         *   Service Assessment (ISA) single-currency is a fee assessed by the card network
+         *   for cross-border transactions presented and settled in the same currency.
+         * - `visa_international_service_assessment_cross_currency` - International Service
+         *   Assessment (ISA) cross-currency is a fee assessed by the card network for
+         *   cross-border transactions presented and settled in different currencies.
+         * - `visa_authorization_domestic_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for POS (Point-Of-Sale) authorization
+         *   transactions. Authorization is the process of approving or declining the
+         *   transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_international_point_of_sale` - Activity and charges for
+         *   Visa Settlement System processing for POS (Point-Of-Sale) International
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_canada_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for Canada Region POS (Point-of-Sale)
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified.
+         * - `visa_authorization_reversal_point_of_sale` - Activity only for Visa
+         *   Settlement System authorization processing of POS (Point-Of-Sale) reversal
+         *   transactions. Authorization reversal represents a VSS message that undoes the
+         *   complete or partial actions of a previous authorization request.
+         * - `visa_authorization_reversal_international_point_of_sale` - Activity only for
+         *   Visa Settlement System authorization processing of POS (Point-Of-Sale)
+         *   International reversal transactions. Authorization reversal represents a VSS
+         *   message that undoes the complete or partial actions of a previous
+         *   authorization request.
+         * - `visa_authorization_address_verification_service` - A per Address Verification
+         *   Service (AVS) result fee. Applies to all usable AVS result codes.
+         * - `visa_advanced_authorization` - Advanced Authorization is a fraud detection
+         *   tool that monitors and risk evaluates 100 percent of US VisaNet authorizations
+         *   in real-time. Activity related to Purchase (includes Signature Authenticated
+         *   Visa and PIN Authenticated Visa Debit (PAVD) transactions).
+         * - `visa_message_transmission` - Issuer Transactions Visa represents a charge
+         *   based on total actual monthly processing (Visa transactions only) through a
+         *   VisaNet Access Point (VAP). Charges are assessed to the processor for each
+         *   VisaNet Access Point.
+         * - `visa_account_verification_domestic` - Activity, per inquiry, related to the
+         *   domestic Issuer for Account Number Verification.
+         * - `visa_account_verification_international` - Activity, per inquiry, related to
+         *   the international Issuer for Account Number Verification.
+         * - `visa_account_verification_canada` - Activity, per inquiry, related to the
+         *   US-Canada Issuer for Account Number Verification.
+         * - `visa_corporate_acceptance_fee` - The Corporate Acceptance Fee is charged to
+         *   issuers and is based on the monthly sales volume on Commercial and Government
+         *   Debit, Prepaid, Credit, Charge, or Deferred Debit card transactions.
+         * - `visa_consumer_debit_acceptance_fee` - The Consumer Debit Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume of Consumer Debit
+         *   or Prepaid card transactions. The cashback portion of a Debit and Prepaid card
+         *   transaction is excluded from the sales volume calculation.
+         * - `visa_business_debit_acceptance_fee` - The Business Acceptance Fee is charged
+         *   to issuers and is based on the monthly sales volume on Business Debit,
+         *   Prepaid, Credit, Charge, or Deferred Debit card transactions. The cashback
+         *   portion is included in the sales volume calculation with the exception of a
+         *   Debit and Prepaid card transactions.
+         * - `visa_purchasing_acceptance_fee` - The Purchasing Card Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume on Commercial and
+         *   Government Debit, Prepaid, Credit, Charge, or Deferred Debit card
+         *   transactions.
+         * - `visa_purchase_domestic` - Activity and fees for the processing of a sales
+         *   draft original for a purchase transaction.
+         * - `visa_purchase_international` - Activity and fees for the processing of an
+         *   international sales draft original for a purchase transaction.
+         * - `visa_credit_purchase_token` - Apple Pay Credit Product Token Purchase
+         *   Original Transactions. This fee is billed by Visa on behalf of Apple Inc. for
+         *   Apple Pay transactions.
+         * - `visa_debit_purchase_token` - Apple Pay Debit Product Token Purchase Original
+         *   Transactions. This fee is billed by Visa on behalf of Apple Inc. for Apple Pay
+         *   transactions.
+         * - `visa_clearing_transmission` - A per transaction fee assessed for Base II
+         *   financial draft - Issuer.
+         * - `visa_direct_authorization` - Issuer charge for Non-Financial OCT/AFT
+         *   Authorization 0100 and Declined Financial OCT/AFT 0200 transactions.
+         * - `visa_direct_transaction_domestic` - Data processing charge for Visa Direct
+         *   OCTs for all business application identifiers (BAIs) other than money
+         *   transfer-bank initiated (BI). BASE II transactions.
+         * - `visa_service_commercial_credit` - Issuer card service fee for Commercial
+         *   Credit cards.
+         * - `visa_advertising_service_commercial_credit` - Issuer Advertising Service Fee
+         *   for Commercial Credit cards.
+         * - `visa_community_growth_acceleration_program` - Issuer Community Growth
+         *   Acceleration Program Fee.
+         * - `visa_processing_guarantee_commercial_credit` - Issuer Processing Guarantee
+         *   for Commercial Credit cards.
+         * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
+         *   for processing transactions on its network.
+         */
+        fee_type:
+          | 'visa_international_service_assessment_single_currency'
+          | 'visa_international_service_assessment_cross_currency'
+          | 'visa_authorization_domestic_point_of_sale'
+          | 'visa_authorization_international_point_of_sale'
+          | 'visa_authorization_canada_point_of_sale'
+          | 'visa_authorization_reversal_point_of_sale'
+          | 'visa_authorization_reversal_international_point_of_sale'
+          | 'visa_authorization_address_verification_service'
+          | 'visa_advanced_authorization'
+          | 'visa_message_transmission'
+          | 'visa_account_verification_domestic'
+          | 'visa_account_verification_international'
+          | 'visa_account_verification_canada'
+          | 'visa_corporate_acceptance_fee'
+          | 'visa_consumer_debit_acceptance_fee'
+          | 'visa_business_debit_acceptance_fee'
+          | 'visa_purchasing_acceptance_fee'
+          | 'visa_purchase_domestic'
+          | 'visa_purchase_international'
+          | 'visa_credit_purchase_token'
+          | 'visa_debit_purchase_token'
+          | 'visa_clearing_transmission'
+          | 'visa_direct_authorization'
+          | 'visa_direct_transaction_domestic'
+          | 'visa_service_commercial_credit'
+          | 'visa_advertising_service_commercial_credit'
+          | 'visa_community_growth_acceleration_program'
+          | 'visa_processing_guarantee_commercial_credit'
+          | 'pulse_switch_fee';
+
+        /**
+         * The fixed component of the fee, if applicable, given in major units of the fee
+         * amount.
+         */
+        fixed_component: string | null;
+
+        /**
+         * The variable rate component of the fee, if applicable, given as a decimal (e.g.,
+         * 0.015 for 1.5%).
+         */
+        variable_rate: string | null;
+      }
+
+      /**
+       * Fields related to verification of cardholder-provided values.
+       */
+      export interface Verification {
+        /**
+         * Fields related to verification of the Card Verification Code, a 3-digit code on
+         * the back of the card.
+         */
+        card_verification_code: Verification.CardVerificationCode;
+
+        /**
+         * Cardholder address provided in the authorization request and the address on file
+         * we verified it against.
+         */
+        cardholder_address: Verification.CardholderAddress;
+
+        /**
+         * Cardholder name provided in the authorization request.
+         */
+        cardholder_name: Verification.CardholderName | null;
+      }
+
+      export namespace Verification {
+        /**
+         * Fields related to verification of the Card Verification Code, a 3-digit code on
+         * the back of the card.
+         */
+        export interface CardVerificationCode {
+          /**
+           * The result of verifying the Card Verification Code.
+           *
+           * - `not_checked` - No card verification code was provided in the authorization
+           *   request.
+           * - `match` - The card verification code matched the one on file.
+           * - `no_match` - The card verification code did not match the one on file.
+           */
+          result: 'not_checked' | 'match' | 'no_match';
+        }
+
+        /**
+         * Cardholder address provided in the authorization request and the address on file
+         * we verified it against.
+         */
+        export interface CardholderAddress {
+          /**
+           * Line 1 of the address on file for the cardholder.
+           */
+          actual_line1: string | null;
+
+          /**
+           * The postal code of the address on file for the cardholder.
+           */
+          actual_postal_code: string | null;
+
+          /**
+           * The cardholder address line 1 provided for verification in the authorization
+           * request.
+           */
+          provided_line1: string | null;
+
+          /**
+           * The postal code provided for verification in the authorization request.
+           */
+          provided_postal_code: string | null;
+
+          /**
+           * The address verification result returned to the card network.
+           *
+           * - `not_checked` - No address information was provided in the authorization
+           *   request.
+           * - `postal_code_match_address_no_match` - Postal code matches, but the street
+           *   address does not match or was not provided.
+           * - `postal_code_no_match_address_match` - Postal code does not match, but the
+           *   street address matches or was not provided.
+           * - `match` - Postal code and street address match.
+           * - `no_match` - Postal code and street address do not match.
+           * - `postal_code_match_address_not_checked` - Postal code matches, but the street
+           *   address was not verified. (deprecated)
+           */
+          result:
+            | 'not_checked'
+            | 'postal_code_match_address_no_match'
+            | 'postal_code_no_match_address_match'
+            | 'match'
+            | 'no_match'
+            | 'postal_code_match_address_not_checked';
+        }
+
+        /**
+         * Cardholder name provided in the authorization request.
+         */
+        export interface CardholderName {
+          /**
+           * The first name provided for verification in the authorization request.
+           */
+          provided_first_name: string | null;
+
+          /**
+           * The last name provided for verification in the authorization request.
+           */
+          provided_last_name: string | null;
+
+          /**
+           * The middle name provided for verification in the authorization request.
+           */
+          provided_middle_name: string | null;
+        }
+      }
+    }
+
+    /**
+     * A Card Decline object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_decline`.
+     */
+    export interface CardDecline {
+      /**
+       * The Card Decline identifier.
+       */
+      id: string;
+
+      /**
+       * Whether this authorization was approved by Increase, the card network through
+       * stand-in processing, or the user through a real-time decision.
+       *
+       * - `user` - This object was actioned by the user through a real-time decision.
+       * - `increase` - This object was actioned by Increase without user intervention.
+       * - `network` - This object was actioned by the network, through stand-in
+       *   processing.
+       */
+      actioner: 'user' | 'increase' | 'network';
+
+      /**
+       * Additional amounts associated with the card authorization, such as ATM
+       * surcharges fees. These are usually a subset of the `amount` field and are used
+       * to provide more detailed information about the transaction.
+       */
+      additional_amounts: CardDecline.AdditionalAmounts;
+
+      /**
+       * The declined amount in the minor unit of the destination account currency. For
+       * dollars, for example, this is cents.
+       */
+      amount: number;
+
+      /**
+       * The ID of the Card Payment this transaction belongs to.
+       */
+      card_payment_id: string;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+       * account currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The identifier of the declined transaction created for this Card Decline.
+       */
+      declined_transaction_id: string;
+
+      /**
+       * If the authorization was made via a Digital Wallet Token (such as an Apple Pay
+       * purchase), the identifier of the token that was used.
+       */
+      digital_wallet_token_id: string | null;
+
+      /**
+       * The direction describes the direction the funds will move, either from the
+       * cardholder to the merchant or from the merchant to the cardholder.
+       *
+       * - `settlement` - A regular card authorization where funds are debited from the
+       *   cardholder.
+       * - `refund` - A refund card authorization, sometimes referred to as a credit
+       *   voucher authorization, where funds are credited to the cardholder.
+       */
+      direction: 'settlement' | 'refund';
+
+      /**
+       * The identifier of the card authorization this request attempted to incrementally
+       * authorize.
+       */
+      incremented_card_authorization_id: string | null;
+
+      /**
+       * The merchant identifier (commonly abbreviated as MID) of the merchant the card
+       * is transacting with.
+       */
+      merchant_acceptor_id: string;
+
+      /**
+       * The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+       * card is transacting with.
+       */
+      merchant_category_code: string;
+
+      /**
+       * The city the merchant resides in.
+       */
+      merchant_city: string | null;
+
+      /**
+       * The country the merchant resides in.
+       */
+      merchant_country: string;
+
+      /**
+       * The merchant descriptor of the merchant the card is transacting with.
+       */
+      merchant_descriptor: string;
+
+      /**
+       * The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
+       * ZIP code, where the first 5 and last 4 are separated by a dash.
+       */
+      merchant_postal_code: string | null;
+
+      /**
+       * The state the merchant resides in.
+       */
+      merchant_state: string | null;
+
+      /**
+       * Fields specific to the `network`.
+       */
+      network_details: CardDecline.NetworkDetails;
+
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      network_identifiers: CardDecline.NetworkIdentifiers;
+
+      /**
+       * The risk score generated by the card network. For Visa this is the Visa Advanced
+       * Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
+       * score is from 0 to 999, where 999 is the riskiest.
+       */
+      network_risk_score: number | null;
+
+      /**
+       * If the authorization was made in-person with a physical card, the Physical Card
+       * that was used.
+       */
+      physical_card_id: string | null;
+
+      /**
+       * The declined amount in the minor unit of the transaction's presentment currency.
+       */
+      presentment_amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+       * transaction's presentment currency.
+       */
+      presentment_currency: string;
+
+      /**
+       * The processing category describes the intent behind the authorization, such as
+       * whether it was used for bill payments or an automatic fuel dispenser.
+       *
+       * - `account_funding` - Account funding transactions are transactions used to
+       *   e.g., fund an account or transfer funds between accounts.
+       * - `automatic_fuel_dispenser` - Automatic fuel dispenser authorizations occur
+       *   when a card is used at a gas pump, prior to the actual transaction amount
+       *   being known. They are followed by an advice message that updates the amount of
+       *   the pending transaction.
+       * - `bill_payment` - A transaction used to pay a bill.
+       * - `original_credit` - Original credit transactions are used to send money to a
+       *   cardholder.
+       * - `purchase` - A regular purchase.
+       * - `quasi_cash` - Quasi-cash transactions represent purchases of items which may
+       *   be convertible to cash.
+       * - `refund` - A refund card authorization, sometimes referred to as a credit
+       *   voucher authorization, where funds are credited to the cardholder.
+       * - `cash_disbursement` - Cash disbursement transactions are used to withdraw cash
+       *   from an ATM or a point of sale.
+       * - `balance_inquiry` - A balance inquiry transaction is used to check the balance
+       *   of an account associated with a card.
+       * - `unknown` - The processing category is unknown.
+       */
+      processing_category:
+        | 'account_funding'
+        | 'automatic_fuel_dispenser'
+        | 'bill_payment'
+        | 'original_credit'
+        | 'purchase'
+        | 'quasi_cash'
+        | 'refund'
+        | 'cash_disbursement'
+        | 'balance_inquiry'
+        | 'unknown';
+
+      /**
+       * The identifier of the Real-Time Decision sent to approve or decline this
+       * transaction.
+       */
+      real_time_decision_id: string | null;
+
+      /**
+       * This is present if a specific decline reason was given in the real-time
+       * decision.
+       *
+       * - `insufficient_funds` - The cardholder does not have sufficient funds to cover
+       *   the transaction. The merchant may attempt to process the transaction again.
+       * - `transaction_never_allowed` - This type of transaction is not allowed for this
+       *   card. This transaction should not be retried.
+       * - `exceeds_approval_limit` - The transaction amount exceeds the cardholder's
+       *   approval limit. The merchant may attempt to process the transaction again.
+       * - `card_temporarily_disabled` - The card has been temporarily disabled or not
+       *   yet activated. The merchant may attempt to process the transaction again.
+       * - `suspected_fraud` - The transaction is suspected to be fraudulent. The
+       *   merchant may attempt to process the transaction again.
+       * - `other` - The transaction was declined for another reason. The merchant may
+       *   attempt to process the transaction again. This should be used sparingly.
+       */
+      real_time_decision_reason:
+        | 'insufficient_funds'
+        | 'transaction_never_allowed'
+        | 'exceeds_approval_limit'
+        | 'card_temporarily_disabled'
+        | 'suspected_fraud'
+        | 'other'
+        | null;
+
+      /**
+       * Why the transaction was declined.
+       *
+       * - `account_closed` - The account has been closed.
+       * - `card_not_active` - The Card was not active.
+       * - `card_canceled` - The Card has been canceled.
+       * - `physical_card_not_active` - The Physical Card was not active.
+       * - `entity_not_active` - The account's entity was not active.
+       * - `group_locked` - The account was inactive.
+       * - `insufficient_funds` - The Card's Account did not have a sufficient available
+       *   balance.
+       * - `cvv2_mismatch` - The given CVV2 did not match the card's value.
+       * - `pin_mismatch` - The given PIN did not match the card's value.
+       * - `card_expiration_mismatch` - The given expiration date did not match the
+       *   card's value. Only applies when a CVV2 is present.
+       * - `transaction_not_allowed` - The attempted card transaction is not allowed per
+       *   Increase's terms.
+       * - `breaches_limit` - The transaction was blocked by a Limit.
+       * - `webhook_declined` - Your application declined the transaction via webhook.
+       * - `webhook_timed_out` - Your application webhook did not respond without the
+       *   required timeout.
+       * - `declined_by_stand_in_processing` - Declined by stand-in processing.
+       * - `invalid_physical_card` - The card read had an invalid CVV or dCVV.
+       * - `missing_original_authorization` - The original card authorization for this
+       *   incremental authorization does not exist.
+       * - `invalid_cryptogram` - The card's authorization request cryptogram was
+       *   invalid. The cryptogram can be from a physical card or a Digital Wallet Token
+       *   purchase.
+       * - `failed_3ds_authentication` - The transaction was declined because the 3DS
+       *   authentication failed.
+       * - `suspected_card_testing` - The transaction was suspected to be used by a card
+       *   tester to test for valid card numbers.
+       * - `suspected_fraud` - The transaction was suspected to be fraudulent. Please
+       *   reach out to support@increase.com for more information.
+       */
+      reason:
+        | 'account_closed'
+        | 'card_not_active'
+        | 'card_canceled'
+        | 'physical_card_not_active'
+        | 'entity_not_active'
+        | 'group_locked'
+        | 'insufficient_funds'
+        | 'cvv2_mismatch'
+        | 'pin_mismatch'
+        | 'card_expiration_mismatch'
+        | 'transaction_not_allowed'
+        | 'breaches_limit'
+        | 'webhook_declined'
+        | 'webhook_timed_out'
+        | 'declined_by_stand_in_processing'
+        | 'invalid_physical_card'
+        | 'missing_original_authorization'
+        | 'invalid_cryptogram'
+        | 'failed_3ds_authentication'
+        | 'suspected_card_testing'
+        | 'suspected_fraud';
+
+      /**
+       * The scheme fees associated with this card decline.
+       */
+      scheme_fees: Array<CardDecline.SchemeFee>;
+
+      /**
+       * The terminal identifier (commonly abbreviated as TID) of the terminal the card
+       * is transacting with.
+       */
+      terminal_id: string | null;
+
+      /**
+       * Fields related to verification of cardholder-provided values.
+       */
+      verification: CardDecline.Verification;
+
+      [k: string]: unknown;
+    }
+
+    export namespace CardDecline {
+      /**
+       * Additional amounts associated with the card authorization, such as ATM
+       * surcharges fees. These are usually a subset of the `amount` field and are used
+       * to provide more detailed information about the transaction.
+       */
+      export interface AdditionalAmounts {
+        /**
+         * The part of this transaction amount that was for clinic-related services.
+         */
+        clinic: AdditionalAmounts.Clinic | null;
+
+        /**
+         * The part of this transaction amount that was for dental-related services.
+         */
+        dental: AdditionalAmounts.Dental | null;
+
+        /**
+         * The original pre-authorized amount.
+         */
+        original: AdditionalAmounts.Original | null;
+
+        /**
+         * The part of this transaction amount that was for healthcare prescriptions.
+         */
+        prescription: AdditionalAmounts.Prescription | null;
+
+        /**
+         * The surcharge amount charged for this transaction by the merchant.
+         */
+        surcharge: AdditionalAmounts.Surcharge | null;
+
+        /**
+         * The total amount of a series of incremental authorizations, optionally provided.
+         */
+        total_cumulative: AdditionalAmounts.TotalCumulative | null;
+
+        /**
+         * The total amount of healthcare-related additional amounts.
+         */
+        total_healthcare: AdditionalAmounts.TotalHealthcare | null;
+
+        /**
+         * The part of this transaction amount that was for transit-related services.
+         */
+        transit: AdditionalAmounts.Transit | null;
+
+        /**
+         * An unknown additional amount.
+         */
+        unknown: AdditionalAmounts.Unknown | null;
+
+        /**
+         * The part of this transaction amount that was for vision-related services.
+         */
+        vision: AdditionalAmounts.Vision | null;
+      }
+
+      export namespace AdditionalAmounts {
+        /**
+         * The part of this transaction amount that was for clinic-related services.
+         */
+        export interface Clinic {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for dental-related services.
+         */
+        export interface Dental {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The original pre-authorized amount.
+         */
+        export interface Original {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for healthcare prescriptions.
+         */
+        export interface Prescription {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The surcharge amount charged for this transaction by the merchant.
+         */
+        export interface Surcharge {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The total amount of a series of incremental authorizations, optionally provided.
+         */
+        export interface TotalCumulative {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The total amount of healthcare-related additional amounts.
+         */
+        export interface TotalHealthcare {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for transit-related services.
+         */
+        export interface Transit {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * An unknown additional amount.
+         */
+        export interface Unknown {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for vision-related services.
+         */
+        export interface Vision {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+      }
+
+      /**
+       * Fields specific to the `network`.
+       */
+      export interface NetworkDetails {
+        /**
+         * The payment network used to process this card authorization.
+         *
+         * - `visa` - Visa
+         * - `pulse` - Pulse
+         */
+        category: 'visa' | 'pulse';
+
+        /**
+         * Fields specific to the `pulse` network.
+         */
+        pulse: unknown | null;
+
+        /**
+         * Fields specific to the `visa` network.
+         */
+        visa: NetworkDetails.Visa | null;
+      }
+
+      export namespace NetworkDetails {
+        /**
+         * Fields specific to the `visa` network.
+         */
+        export interface Visa {
+          /**
+           * For electronic commerce transactions, this identifies the level of security used
+           * in obtaining the customer's payment credential. For mail or telephone order
+           * transactions, identifies the type of mail or telephone order.
+           *
+           * - `mail_phone_order` - Single transaction of a mail/phone order: Use to indicate
+           *   that the transaction is a mail/phone order purchase, not a recurring
+           *   transaction or installment payment. For domestic transactions in the US
+           *   region, this value may also indicate one bill payment transaction in the
+           *   card-present or card-absent environments.
+           * - `recurring` - Recurring transaction: Payment indicator used to indicate a
+           *   recurring transaction that originates from an acquirer in the US region.
+           * - `installment` - Installment payment: Payment indicator used to indicate one
+           *   purchase of goods or services that is billed to the account in multiple
+           *   charges over a period of time agreed upon by the cardholder and merchant from
+           *   transactions that originate from an acquirer in the US region.
+           * - `unknown_mail_phone_order` - Unknown classification: other mail order: Use to
+           *   indicate that the type of mail/telephone order is unknown.
+           * - `secure_electronic_commerce` - Secure electronic commerce transaction: Use to
+           *   indicate that the electronic commerce transaction has been authenticated using
+           *   e.g., 3-D Secure
+           * - `non_authenticated_security_transaction_at_3ds_capable_merchant` -
+           *   Non-authenticated security transaction at a 3-D Secure-capable merchant, and
+           *   merchant attempted to authenticate the cardholder using 3-D Secure: Use to
+           *   identify an electronic commerce transaction where the merchant attempted to
+           *   authenticate the cardholder using 3-D Secure, but was unable to complete the
+           *   authentication because the issuer or cardholder does not participate in the
+           *   3-D Secure program.
+           * - `non_authenticated_security_transaction` - Non-authenticated security
+           *   transaction: Use to identify an electronic commerce transaction that uses data
+           *   encryption for security however, cardholder authentication is not performed
+           *   using 3-D Secure.
+           * - `non_secure_transaction` - Non-secure transaction: Use to identify an
+           *   electronic commerce transaction that has no data protection.
+           */
+          electronic_commerce_indicator:
+            | 'mail_phone_order'
+            | 'recurring'
+            | 'installment'
+            | 'unknown_mail_phone_order'
+            | 'secure_electronic_commerce'
+            | 'non_authenticated_security_transaction_at_3ds_capable_merchant'
+            | 'non_authenticated_security_transaction'
+            | 'non_secure_transaction'
+            | null;
+
+          /**
+           * The method used to enter the cardholder's primary account number and card
+           * expiration date.
+           *
+           * - `unknown` - Unknown
+           * - `manual` - Manual key entry
+           * - `magnetic_stripe_no_cvv` - Magnetic stripe read, without card verification
+           *   value
+           * - `optical_code` - Optical code
+           * - `integrated_circuit_card` - Contact chip card
+           * - `contactless` - Contactless read of chip card
+           * - `credential_on_file` - Transaction initiated using a credential that has
+           *   previously been stored on file
+           * - `magnetic_stripe` - Magnetic stripe read
+           * - `contactless_magnetic_stripe` - Contactless read of magnetic stripe data
+           * - `integrated_circuit_card_no_cvv` - Contact chip card, without card
+           *   verification value
+           */
+          point_of_service_entry_mode:
+            | 'unknown'
+            | 'manual'
+            | 'magnetic_stripe_no_cvv'
+            | 'optical_code'
+            | 'integrated_circuit_card'
+            | 'contactless'
+            | 'credential_on_file'
+            | 'magnetic_stripe'
+            | 'contactless_magnetic_stripe'
+            | 'integrated_circuit_card_no_cvv'
+            | null;
+
+          /**
+           * Only present when `actioner: network`. Describes why a card authorization was
+           * approved or declined by Visa through stand-in processing.
+           *
+           * - `issuer_error` - Increase failed to process the authorization in a timely
+           *   manner.
+           * - `invalid_physical_card` - The physical card read had an invalid CVV or dCVV.
+           * - `invalid_cryptogram` - The card's authorization request cryptogram was
+           *   invalid. The cryptogram can be from a physical card or a Digital Wallet Token
+           *   purchase.
+           * - `invalid_cardholder_authentication_verification_value` - The 3DS cardholder
+           *   authentication verification value was invalid.
+           * - `internal_visa_error` - An internal Visa error occurred. Visa uses this reason
+           *   code for certain expected occurrences as well, such as Application Transaction
+           *   Counter (ATC) replays.
+           * - `merchant_transaction_advisory_service_authentication_required` - The merchant
+           *   has enabled Visa's Transaction Advisory Service and requires further
+           *   authentication to perform the transaction. In practice this is often utilized
+           *   at fuel pumps to tell the cardholder to see the cashier.
+           * - `payment_fraud_disruption_acquirer_block` - The transaction was blocked by
+           *   Visa's Payment Fraud Disruption service due to fraudulent Acquirer behavior,
+           *   such as card testing.
+           * - `other` - An unspecific reason for stand-in processing.
+           */
+          stand_in_processing_reason:
+            | 'issuer_error'
+            | 'invalid_physical_card'
+            | 'invalid_cryptogram'
+            | 'invalid_cardholder_authentication_verification_value'
+            | 'internal_visa_error'
+            | 'merchant_transaction_advisory_service_authentication_required'
+            | 'payment_fraud_disruption_acquirer_block'
+            | 'other'
+            | null;
+
+          /**
+           * The capability of the terminal being used to read the card. Shows whether a
+           * terminal can e.g., accept chip cards or if it only supports magnetic stripe
+           * reads. This reflects the highest capability of the terminal — for example, a
+           * terminal that supports both chip and magnetic stripe will be identified as
+           * chip-capable.
+           *
+           * - `unknown` - Unknown
+           * - `terminal_not_used` - No terminal was used for this transaction.
+           * - `magnetic_stripe` - The terminal can only read magnetic stripes and does not
+           *   have chip or contactless reading capability.
+           * - `barcode` - The terminal can only read barcodes.
+           * - `optical_character_recognition` - The terminal can only read cards via Optical
+           *   Character Recognition.
+           * - `chip_or_contactless` - The terminal supports contact chip cards and can also
+           *   read the magnetic stripe. If contact chip is supported, this value is used
+           *   regardless of whether contactless is also supported.
+           * - `contactless_only` - The terminal supports contactless reads but does not
+           *   support contact chip. Only used when the terminal lacks contact chip
+           *   capability.
+           * - `no_capability` - The terminal has no card reading capability.
+           */
+          terminal_entry_capability:
+            | 'unknown'
+            | 'terminal_not_used'
+            | 'magnetic_stripe'
+            | 'barcode'
+            | 'optical_character_recognition'
+            | 'chip_or_contactless'
+            | 'contactless_only'
+            | 'no_capability'
+            | null;
+        }
+      }
+
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      export interface NetworkIdentifiers {
+        /**
+         * The randomly generated 6-character Authorization Identification Response code
+         * sent back to the acquirer in an approved response.
+         */
+        authorization_identification_response: string | null;
+
+        /**
+         * A life-cycle identifier used across e.g., an authorization and a reversal.
+         * Expected to be unique per acquirer within a window of time. For some card
+         * networks the retrieval reference number includes the trace counter.
+         */
+        retrieval_reference_number: string | null;
+
+        /**
+         * A counter used to verify an individual authorization. Expected to be unique per
+         * acquirer within a window of time.
+         */
+        trace_number: string | null;
+
+        /**
+         * A globally unique transaction identifier provided by the card network, used
+         * across multiple life-cycle requests.
+         */
+        transaction_id: string | null;
+      }
+
+      export interface SchemeFee {
+        /**
+         * The fee amount given as a string containing a decimal number.
+         */
+        amount: string;
+
+        /**
+         * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
+         * created.
+         */
+        created_at: string;
+
+        /**
+         * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+         * reimbursement.
+         *
+         * - `USD` - US Dollar (USD)
+         */
+        currency: 'USD';
+
+        /**
+         * The type of fee being assessed.
+         *
+         * - `visa_international_service_assessment_single_currency` - International
+         *   Service Assessment (ISA) single-currency is a fee assessed by the card network
+         *   for cross-border transactions presented and settled in the same currency.
+         * - `visa_international_service_assessment_cross_currency` - International Service
+         *   Assessment (ISA) cross-currency is a fee assessed by the card network for
+         *   cross-border transactions presented and settled in different currencies.
+         * - `visa_authorization_domestic_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for POS (Point-Of-Sale) authorization
+         *   transactions. Authorization is the process of approving or declining the
+         *   transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_international_point_of_sale` - Activity and charges for
+         *   Visa Settlement System processing for POS (Point-Of-Sale) International
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_canada_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for Canada Region POS (Point-of-Sale)
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified.
+         * - `visa_authorization_reversal_point_of_sale` - Activity only for Visa
+         *   Settlement System authorization processing of POS (Point-Of-Sale) reversal
+         *   transactions. Authorization reversal represents a VSS message that undoes the
+         *   complete or partial actions of a previous authorization request.
+         * - `visa_authorization_reversal_international_point_of_sale` - Activity only for
+         *   Visa Settlement System authorization processing of POS (Point-Of-Sale)
+         *   International reversal transactions. Authorization reversal represents a VSS
+         *   message that undoes the complete or partial actions of a previous
+         *   authorization request.
+         * - `visa_authorization_address_verification_service` - A per Address Verification
+         *   Service (AVS) result fee. Applies to all usable AVS result codes.
+         * - `visa_advanced_authorization` - Advanced Authorization is a fraud detection
+         *   tool that monitors and risk evaluates 100 percent of US VisaNet authorizations
+         *   in real-time. Activity related to Purchase (includes Signature Authenticated
+         *   Visa and PIN Authenticated Visa Debit (PAVD) transactions).
+         * - `visa_message_transmission` - Issuer Transactions Visa represents a charge
+         *   based on total actual monthly processing (Visa transactions only) through a
+         *   VisaNet Access Point (VAP). Charges are assessed to the processor for each
+         *   VisaNet Access Point.
+         * - `visa_account_verification_domestic` - Activity, per inquiry, related to the
+         *   domestic Issuer for Account Number Verification.
+         * - `visa_account_verification_international` - Activity, per inquiry, related to
+         *   the international Issuer for Account Number Verification.
+         * - `visa_account_verification_canada` - Activity, per inquiry, related to the
+         *   US-Canada Issuer for Account Number Verification.
+         * - `visa_corporate_acceptance_fee` - The Corporate Acceptance Fee is charged to
+         *   issuers and is based on the monthly sales volume on Commercial and Government
+         *   Debit, Prepaid, Credit, Charge, or Deferred Debit card transactions.
+         * - `visa_consumer_debit_acceptance_fee` - The Consumer Debit Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume of Consumer Debit
+         *   or Prepaid card transactions. The cashback portion of a Debit and Prepaid card
+         *   transaction is excluded from the sales volume calculation.
+         * - `visa_business_debit_acceptance_fee` - The Business Acceptance Fee is charged
+         *   to issuers and is based on the monthly sales volume on Business Debit,
+         *   Prepaid, Credit, Charge, or Deferred Debit card transactions. The cashback
+         *   portion is included in the sales volume calculation with the exception of a
+         *   Debit and Prepaid card transactions.
+         * - `visa_purchasing_acceptance_fee` - The Purchasing Card Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume on Commercial and
+         *   Government Debit, Prepaid, Credit, Charge, or Deferred Debit card
+         *   transactions.
+         * - `visa_purchase_domestic` - Activity and fees for the processing of a sales
+         *   draft original for a purchase transaction.
+         * - `visa_purchase_international` - Activity and fees for the processing of an
+         *   international sales draft original for a purchase transaction.
+         * - `visa_credit_purchase_token` - Apple Pay Credit Product Token Purchase
+         *   Original Transactions. This fee is billed by Visa on behalf of Apple Inc. for
+         *   Apple Pay transactions.
+         * - `visa_debit_purchase_token` - Apple Pay Debit Product Token Purchase Original
+         *   Transactions. This fee is billed by Visa on behalf of Apple Inc. for Apple Pay
+         *   transactions.
+         * - `visa_clearing_transmission` - A per transaction fee assessed for Base II
+         *   financial draft - Issuer.
+         * - `visa_direct_authorization` - Issuer charge for Non-Financial OCT/AFT
+         *   Authorization 0100 and Declined Financial OCT/AFT 0200 transactions.
+         * - `visa_direct_transaction_domestic` - Data processing charge for Visa Direct
+         *   OCTs for all business application identifiers (BAIs) other than money
+         *   transfer-bank initiated (BI). BASE II transactions.
+         * - `visa_service_commercial_credit` - Issuer card service fee for Commercial
+         *   Credit cards.
+         * - `visa_advertising_service_commercial_credit` - Issuer Advertising Service Fee
+         *   for Commercial Credit cards.
+         * - `visa_community_growth_acceleration_program` - Issuer Community Growth
+         *   Acceleration Program Fee.
+         * - `visa_processing_guarantee_commercial_credit` - Issuer Processing Guarantee
+         *   for Commercial Credit cards.
+         * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
+         *   for processing transactions on its network.
+         */
+        fee_type:
+          | 'visa_international_service_assessment_single_currency'
+          | 'visa_international_service_assessment_cross_currency'
+          | 'visa_authorization_domestic_point_of_sale'
+          | 'visa_authorization_international_point_of_sale'
+          | 'visa_authorization_canada_point_of_sale'
+          | 'visa_authorization_reversal_point_of_sale'
+          | 'visa_authorization_reversal_international_point_of_sale'
+          | 'visa_authorization_address_verification_service'
+          | 'visa_advanced_authorization'
+          | 'visa_message_transmission'
+          | 'visa_account_verification_domestic'
+          | 'visa_account_verification_international'
+          | 'visa_account_verification_canada'
+          | 'visa_corporate_acceptance_fee'
+          | 'visa_consumer_debit_acceptance_fee'
+          | 'visa_business_debit_acceptance_fee'
+          | 'visa_purchasing_acceptance_fee'
+          | 'visa_purchase_domestic'
+          | 'visa_purchase_international'
+          | 'visa_credit_purchase_token'
+          | 'visa_debit_purchase_token'
+          | 'visa_clearing_transmission'
+          | 'visa_direct_authorization'
+          | 'visa_direct_transaction_domestic'
+          | 'visa_service_commercial_credit'
+          | 'visa_advertising_service_commercial_credit'
+          | 'visa_community_growth_acceleration_program'
+          | 'visa_processing_guarantee_commercial_credit'
+          | 'pulse_switch_fee';
+
+        /**
+         * The fixed component of the fee, if applicable, given in major units of the fee
+         * amount.
+         */
+        fixed_component: string | null;
+
+        /**
+         * The variable rate component of the fee, if applicable, given as a decimal (e.g.,
+         * 0.015 for 1.5%).
+         */
+        variable_rate: string | null;
+      }
+
+      /**
+       * Fields related to verification of cardholder-provided values.
+       */
+      export interface Verification {
+        /**
+         * Fields related to verification of the Card Verification Code, a 3-digit code on
+         * the back of the card.
+         */
+        card_verification_code: Verification.CardVerificationCode;
+
+        /**
+         * Cardholder address provided in the authorization request and the address on file
+         * we verified it against.
+         */
+        cardholder_address: Verification.CardholderAddress;
+
+        /**
+         * Cardholder name provided in the authorization request.
+         */
+        cardholder_name: Verification.CardholderName | null;
+      }
+
+      export namespace Verification {
+        /**
+         * Fields related to verification of the Card Verification Code, a 3-digit code on
+         * the back of the card.
+         */
+        export interface CardVerificationCode {
+          /**
+           * The result of verifying the Card Verification Code.
+           *
+           * - `not_checked` - No card verification code was provided in the authorization
+           *   request.
+           * - `match` - The card verification code matched the one on file.
+           * - `no_match` - The card verification code did not match the one on file.
+           */
+          result: 'not_checked' | 'match' | 'no_match';
+        }
+
+        /**
+         * Cardholder address provided in the authorization request and the address on file
+         * we verified it against.
+         */
+        export interface CardholderAddress {
+          /**
+           * Line 1 of the address on file for the cardholder.
+           */
+          actual_line1: string | null;
+
+          /**
+           * The postal code of the address on file for the cardholder.
+           */
+          actual_postal_code: string | null;
+
+          /**
+           * The cardholder address line 1 provided for verification in the authorization
+           * request.
+           */
+          provided_line1: string | null;
+
+          /**
+           * The postal code provided for verification in the authorization request.
+           */
+          provided_postal_code: string | null;
+
+          /**
+           * The address verification result returned to the card network.
+           *
+           * - `not_checked` - No address information was provided in the authorization
+           *   request.
+           * - `postal_code_match_address_no_match` - Postal code matches, but the street
+           *   address does not match or was not provided.
+           * - `postal_code_no_match_address_match` - Postal code does not match, but the
+           *   street address matches or was not provided.
+           * - `match` - Postal code and street address match.
+           * - `no_match` - Postal code and street address do not match.
+           * - `postal_code_match_address_not_checked` - Postal code matches, but the street
+           *   address was not verified. (deprecated)
+           */
+          result:
+            | 'not_checked'
+            | 'postal_code_match_address_no_match'
+            | 'postal_code_no_match_address_match'
+            | 'match'
+            | 'no_match'
+            | 'postal_code_match_address_not_checked';
+        }
+
+        /**
+         * Cardholder name provided in the authorization request.
+         */
+        export interface CardholderName {
+          /**
+           * The first name provided for verification in the authorization request.
+           */
+          provided_first_name: string | null;
+
+          /**
+           * The last name provided for verification in the authorization request.
+           */
+          provided_last_name: string | null;
+
+          /**
+           * The middle name provided for verification in the authorization request.
+           */
+          provided_middle_name: string | null;
+        }
+      }
+    }
+
+    /**
+     * A Card Fuel Confirmation object. This field will be present in the JSON response
+     * if and only if `category` is equal to `card_fuel_confirmation`. Card Fuel
+     * Confirmations update the amount of a Card Authorization after a fuel pump
+     * transaction is completed.
+     */
+    export interface CardFuelConfirmation {
+      /**
+       * The Card Fuel Confirmation identifier.
+       */
+      id: string;
+
+      /**
+       * The identifier for the Card Authorization this updates.
+       */
+      card_authorization_id: string;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the increment's
+       * currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The card network used to process this card authorization.
+       *
+       * - `visa` - Visa
+       * - `pulse` - Pulse
+       */
+      network: 'visa' | 'pulse';
+
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      network_identifiers: CardFuelConfirmation.NetworkIdentifiers;
+
+      /**
+       * The identifier of the Pending Transaction associated with this Card Fuel
+       * Confirmation.
+       */
+      pending_transaction_id: string | null;
+
+      /**
+       * The scheme fees associated with this card fuel confirmation.
+       */
+      scheme_fees: Array<CardFuelConfirmation.SchemeFee>;
+
+      /**
+       * A constant representing the object's type. For this resource it will always be
+       * `card_fuel_confirmation`.
+       */
+      type: 'card_fuel_confirmation';
+
+      /**
+       * The updated authorization amount after this fuel confirmation, in the minor unit
+       * of the transaction's currency. For dollars, for example, this is cents.
+       */
+      updated_authorization_amount: number;
+
+      [k: string]: unknown;
+    }
+
+    export namespace CardFuelConfirmation {
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      export interface NetworkIdentifiers {
+        /**
+         * The randomly generated 6-character Authorization Identification Response code
+         * sent back to the acquirer in an approved response.
+         */
+        authorization_identification_response: string | null;
+
+        /**
+         * A life-cycle identifier used across e.g., an authorization and a reversal.
+         * Expected to be unique per acquirer within a window of time. For some card
+         * networks the retrieval reference number includes the trace counter.
+         */
+        retrieval_reference_number: string | null;
+
+        /**
+         * A counter used to verify an individual authorization. Expected to be unique per
+         * acquirer within a window of time.
+         */
+        trace_number: string | null;
+
+        /**
+         * A globally unique transaction identifier provided by the card network, used
+         * across multiple life-cycle requests.
+         */
+        transaction_id: string | null;
+      }
+
+      export interface SchemeFee {
+        /**
+         * The fee amount given as a string containing a decimal number.
+         */
+        amount: string;
+
+        /**
+         * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
+         * created.
+         */
+        created_at: string;
+
+        /**
+         * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+         * reimbursement.
+         *
+         * - `USD` - US Dollar (USD)
+         */
+        currency: 'USD';
+
+        /**
+         * The type of fee being assessed.
+         *
+         * - `visa_international_service_assessment_single_currency` - International
+         *   Service Assessment (ISA) single-currency is a fee assessed by the card network
+         *   for cross-border transactions presented and settled in the same currency.
+         * - `visa_international_service_assessment_cross_currency` - International Service
+         *   Assessment (ISA) cross-currency is a fee assessed by the card network for
+         *   cross-border transactions presented and settled in different currencies.
+         * - `visa_authorization_domestic_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for POS (Point-Of-Sale) authorization
+         *   transactions. Authorization is the process of approving or declining the
+         *   transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_international_point_of_sale` - Activity and charges for
+         *   Visa Settlement System processing for POS (Point-Of-Sale) International
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_canada_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for Canada Region POS (Point-of-Sale)
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified.
+         * - `visa_authorization_reversal_point_of_sale` - Activity only for Visa
+         *   Settlement System authorization processing of POS (Point-Of-Sale) reversal
+         *   transactions. Authorization reversal represents a VSS message that undoes the
+         *   complete or partial actions of a previous authorization request.
+         * - `visa_authorization_reversal_international_point_of_sale` - Activity only for
+         *   Visa Settlement System authorization processing of POS (Point-Of-Sale)
+         *   International reversal transactions. Authorization reversal represents a VSS
+         *   message that undoes the complete or partial actions of a previous
+         *   authorization request.
+         * - `visa_authorization_address_verification_service` - A per Address Verification
+         *   Service (AVS) result fee. Applies to all usable AVS result codes.
+         * - `visa_advanced_authorization` - Advanced Authorization is a fraud detection
+         *   tool that monitors and risk evaluates 100 percent of US VisaNet authorizations
+         *   in real-time. Activity related to Purchase (includes Signature Authenticated
+         *   Visa and PIN Authenticated Visa Debit (PAVD) transactions).
+         * - `visa_message_transmission` - Issuer Transactions Visa represents a charge
+         *   based on total actual monthly processing (Visa transactions only) through a
+         *   VisaNet Access Point (VAP). Charges are assessed to the processor for each
+         *   VisaNet Access Point.
+         * - `visa_account_verification_domestic` - Activity, per inquiry, related to the
+         *   domestic Issuer for Account Number Verification.
+         * - `visa_account_verification_international` - Activity, per inquiry, related to
+         *   the international Issuer for Account Number Verification.
+         * - `visa_account_verification_canada` - Activity, per inquiry, related to the
+         *   US-Canada Issuer for Account Number Verification.
+         * - `visa_corporate_acceptance_fee` - The Corporate Acceptance Fee is charged to
+         *   issuers and is based on the monthly sales volume on Commercial and Government
+         *   Debit, Prepaid, Credit, Charge, or Deferred Debit card transactions.
+         * - `visa_consumer_debit_acceptance_fee` - The Consumer Debit Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume of Consumer Debit
+         *   or Prepaid card transactions. The cashback portion of a Debit and Prepaid card
+         *   transaction is excluded from the sales volume calculation.
+         * - `visa_business_debit_acceptance_fee` - The Business Acceptance Fee is charged
+         *   to issuers and is based on the monthly sales volume on Business Debit,
+         *   Prepaid, Credit, Charge, or Deferred Debit card transactions. The cashback
+         *   portion is included in the sales volume calculation with the exception of a
+         *   Debit and Prepaid card transactions.
+         * - `visa_purchasing_acceptance_fee` - The Purchasing Card Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume on Commercial and
+         *   Government Debit, Prepaid, Credit, Charge, or Deferred Debit card
+         *   transactions.
+         * - `visa_purchase_domestic` - Activity and fees for the processing of a sales
+         *   draft original for a purchase transaction.
+         * - `visa_purchase_international` - Activity and fees for the processing of an
+         *   international sales draft original for a purchase transaction.
+         * - `visa_credit_purchase_token` - Apple Pay Credit Product Token Purchase
+         *   Original Transactions. This fee is billed by Visa on behalf of Apple Inc. for
+         *   Apple Pay transactions.
+         * - `visa_debit_purchase_token` - Apple Pay Debit Product Token Purchase Original
+         *   Transactions. This fee is billed by Visa on behalf of Apple Inc. for Apple Pay
+         *   transactions.
+         * - `visa_clearing_transmission` - A per transaction fee assessed for Base II
+         *   financial draft - Issuer.
+         * - `visa_direct_authorization` - Issuer charge for Non-Financial OCT/AFT
+         *   Authorization 0100 and Declined Financial OCT/AFT 0200 transactions.
+         * - `visa_direct_transaction_domestic` - Data processing charge for Visa Direct
+         *   OCTs for all business application identifiers (BAIs) other than money
+         *   transfer-bank initiated (BI). BASE II transactions.
+         * - `visa_service_commercial_credit` - Issuer card service fee for Commercial
+         *   Credit cards.
+         * - `visa_advertising_service_commercial_credit` - Issuer Advertising Service Fee
+         *   for Commercial Credit cards.
+         * - `visa_community_growth_acceleration_program` - Issuer Community Growth
+         *   Acceleration Program Fee.
+         * - `visa_processing_guarantee_commercial_credit` - Issuer Processing Guarantee
+         *   for Commercial Credit cards.
+         * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
+         *   for processing transactions on its network.
+         */
+        fee_type:
+          | 'visa_international_service_assessment_single_currency'
+          | 'visa_international_service_assessment_cross_currency'
+          | 'visa_authorization_domestic_point_of_sale'
+          | 'visa_authorization_international_point_of_sale'
+          | 'visa_authorization_canada_point_of_sale'
+          | 'visa_authorization_reversal_point_of_sale'
+          | 'visa_authorization_reversal_international_point_of_sale'
+          | 'visa_authorization_address_verification_service'
+          | 'visa_advanced_authorization'
+          | 'visa_message_transmission'
+          | 'visa_account_verification_domestic'
+          | 'visa_account_verification_international'
+          | 'visa_account_verification_canada'
+          | 'visa_corporate_acceptance_fee'
+          | 'visa_consumer_debit_acceptance_fee'
+          | 'visa_business_debit_acceptance_fee'
+          | 'visa_purchasing_acceptance_fee'
+          | 'visa_purchase_domestic'
+          | 'visa_purchase_international'
+          | 'visa_credit_purchase_token'
+          | 'visa_debit_purchase_token'
+          | 'visa_clearing_transmission'
+          | 'visa_direct_authorization'
+          | 'visa_direct_transaction_domestic'
+          | 'visa_service_commercial_credit'
+          | 'visa_advertising_service_commercial_credit'
+          | 'visa_community_growth_acceleration_program'
+          | 'visa_processing_guarantee_commercial_credit'
+          | 'pulse_switch_fee';
+
+        /**
+         * The fixed component of the fee, if applicable, given in major units of the fee
+         * amount.
+         */
+        fixed_component: string | null;
+
+        /**
+         * The variable rate component of the fee, if applicable, given as a decimal (e.g.,
+         * 0.015 for 1.5%).
+         */
+        variable_rate: string | null;
+      }
+    }
+
+    /**
+     * A Card Increment object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_increment`. Card Increments increase the
+     * pending amount of an authorized transaction.
+     */
+    export interface CardIncrement {
+      /**
+       * The Card Increment identifier.
+       */
+      id: string;
+
+      /**
+       * Whether this authorization was approved by Increase, the card network through
+       * stand-in processing, or the user through a real-time decision.
+       *
+       * - `user` - This object was actioned by the user through a real-time decision.
+       * - `increase` - This object was actioned by Increase without user intervention.
+       * - `network` - This object was actioned by the network, through stand-in
+       *   processing.
+       */
+      actioner: 'user' | 'increase' | 'network';
+
+      /**
+       * Additional amounts associated with the card authorization, such as ATM
+       * surcharges fees. These are usually a subset of the `amount` field and are used
+       * to provide more detailed information about the transaction.
+       */
+      additional_amounts: CardIncrement.AdditionalAmounts;
+
+      /**
+       * The amount of this increment in the minor unit of the transaction's currency.
+       * For dollars, for example, this is cents.
+       */
+      amount: number;
+
+      /**
+       * The identifier for the Card Authorization this increments.
+       */
+      card_authorization_id: string;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the increment's
+       * currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The card network used to process this card authorization.
+       *
+       * - `visa` - Visa
+       * - `pulse` - Pulse
+       */
+      network: 'visa' | 'pulse';
+
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      network_identifiers: CardIncrement.NetworkIdentifiers;
+
+      /**
+       * The risk score generated by the card network. For Visa this is the Visa Advanced
+       * Authorization risk score, from 0 to 99, where 99 is the riskiest.
+       */
+      network_risk_score: number | null;
+
+      /**
+       * The identifier of the Pending Transaction associated with this Card Increment.
+       */
+      pending_transaction_id: string | null;
+
+      /**
+       * The amount of this increment in the minor unit of the transaction's presentment
+       * currency.
+       */
+      presentment_amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+       * transaction's presentment currency.
+       */
+      presentment_currency: string;
+
+      /**
+       * The identifier of the Real-Time Decision sent to approve or decline this
+       * incremental authorization.
+       */
+      real_time_decision_id: string | null;
+
+      /**
+       * The scheme fees associated with this card increment.
+       */
+      scheme_fees: Array<CardIncrement.SchemeFee>;
+
+      /**
+       * A constant representing the object's type. For this resource it will always be
+       * `card_increment`.
+       */
+      type: 'card_increment';
+
+      /**
+       * The updated authorization amount after this increment, in the minor unit of the
+       * transaction's currency. For dollars, for example, this is cents.
+       */
+      updated_authorization_amount: number;
+
+      [k: string]: unknown;
+    }
+
+    export namespace CardIncrement {
+      /**
+       * Additional amounts associated with the card authorization, such as ATM
+       * surcharges fees. These are usually a subset of the `amount` field and are used
+       * to provide more detailed information about the transaction.
+       */
+      export interface AdditionalAmounts {
+        /**
+         * The part of this transaction amount that was for clinic-related services.
+         */
+        clinic: AdditionalAmounts.Clinic | null;
+
+        /**
+         * The part of this transaction amount that was for dental-related services.
+         */
+        dental: AdditionalAmounts.Dental | null;
+
+        /**
+         * The original pre-authorized amount.
+         */
+        original: AdditionalAmounts.Original | null;
+
+        /**
+         * The part of this transaction amount that was for healthcare prescriptions.
+         */
+        prescription: AdditionalAmounts.Prescription | null;
+
+        /**
+         * The surcharge amount charged for this transaction by the merchant.
+         */
+        surcharge: AdditionalAmounts.Surcharge | null;
+
+        /**
+         * The total amount of a series of incremental authorizations, optionally provided.
+         */
+        total_cumulative: AdditionalAmounts.TotalCumulative | null;
+
+        /**
+         * The total amount of healthcare-related additional amounts.
+         */
+        total_healthcare: AdditionalAmounts.TotalHealthcare | null;
+
+        /**
+         * The part of this transaction amount that was for transit-related services.
+         */
+        transit: AdditionalAmounts.Transit | null;
+
+        /**
+         * An unknown additional amount.
+         */
+        unknown: AdditionalAmounts.Unknown | null;
+
+        /**
+         * The part of this transaction amount that was for vision-related services.
+         */
+        vision: AdditionalAmounts.Vision | null;
+      }
+
+      export namespace AdditionalAmounts {
+        /**
+         * The part of this transaction amount that was for clinic-related services.
+         */
+        export interface Clinic {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for dental-related services.
+         */
+        export interface Dental {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The original pre-authorized amount.
+         */
+        export interface Original {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for healthcare prescriptions.
+         */
+        export interface Prescription {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The surcharge amount charged for this transaction by the merchant.
+         */
+        export interface Surcharge {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The total amount of a series of incremental authorizations, optionally provided.
+         */
+        export interface TotalCumulative {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The total amount of healthcare-related additional amounts.
+         */
+        export interface TotalHealthcare {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for transit-related services.
+         */
+        export interface Transit {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * An unknown additional amount.
+         */
+        export interface Unknown {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for vision-related services.
+         */
+        export interface Vision {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+      }
+
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      export interface NetworkIdentifiers {
+        /**
+         * The randomly generated 6-character Authorization Identification Response code
+         * sent back to the acquirer in an approved response.
+         */
+        authorization_identification_response: string | null;
+
+        /**
+         * A life-cycle identifier used across e.g., an authorization and a reversal.
+         * Expected to be unique per acquirer within a window of time. For some card
+         * networks the retrieval reference number includes the trace counter.
+         */
+        retrieval_reference_number: string | null;
+
+        /**
+         * A counter used to verify an individual authorization. Expected to be unique per
+         * acquirer within a window of time.
+         */
+        trace_number: string | null;
+
+        /**
+         * A globally unique transaction identifier provided by the card network, used
+         * across multiple life-cycle requests.
+         */
+        transaction_id: string | null;
+      }
+
+      export interface SchemeFee {
+        /**
+         * The fee amount given as a string containing a decimal number.
+         */
+        amount: string;
+
+        /**
+         * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
+         * created.
+         */
+        created_at: string;
+
+        /**
+         * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+         * reimbursement.
+         *
+         * - `USD` - US Dollar (USD)
+         */
+        currency: 'USD';
+
+        /**
+         * The type of fee being assessed.
+         *
+         * - `visa_international_service_assessment_single_currency` - International
+         *   Service Assessment (ISA) single-currency is a fee assessed by the card network
+         *   for cross-border transactions presented and settled in the same currency.
+         * - `visa_international_service_assessment_cross_currency` - International Service
+         *   Assessment (ISA) cross-currency is a fee assessed by the card network for
+         *   cross-border transactions presented and settled in different currencies.
+         * - `visa_authorization_domestic_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for POS (Point-Of-Sale) authorization
+         *   transactions. Authorization is the process of approving or declining the
+         *   transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_international_point_of_sale` - Activity and charges for
+         *   Visa Settlement System processing for POS (Point-Of-Sale) International
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_canada_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for Canada Region POS (Point-of-Sale)
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified.
+         * - `visa_authorization_reversal_point_of_sale` - Activity only for Visa
+         *   Settlement System authorization processing of POS (Point-Of-Sale) reversal
+         *   transactions. Authorization reversal represents a VSS message that undoes the
+         *   complete or partial actions of a previous authorization request.
+         * - `visa_authorization_reversal_international_point_of_sale` - Activity only for
+         *   Visa Settlement System authorization processing of POS (Point-Of-Sale)
+         *   International reversal transactions. Authorization reversal represents a VSS
+         *   message that undoes the complete or partial actions of a previous
+         *   authorization request.
+         * - `visa_authorization_address_verification_service` - A per Address Verification
+         *   Service (AVS) result fee. Applies to all usable AVS result codes.
+         * - `visa_advanced_authorization` - Advanced Authorization is a fraud detection
+         *   tool that monitors and risk evaluates 100 percent of US VisaNet authorizations
+         *   in real-time. Activity related to Purchase (includes Signature Authenticated
+         *   Visa and PIN Authenticated Visa Debit (PAVD) transactions).
+         * - `visa_message_transmission` - Issuer Transactions Visa represents a charge
+         *   based on total actual monthly processing (Visa transactions only) through a
+         *   VisaNet Access Point (VAP). Charges are assessed to the processor for each
+         *   VisaNet Access Point.
+         * - `visa_account_verification_domestic` - Activity, per inquiry, related to the
+         *   domestic Issuer for Account Number Verification.
+         * - `visa_account_verification_international` - Activity, per inquiry, related to
+         *   the international Issuer for Account Number Verification.
+         * - `visa_account_verification_canada` - Activity, per inquiry, related to the
+         *   US-Canada Issuer for Account Number Verification.
+         * - `visa_corporate_acceptance_fee` - The Corporate Acceptance Fee is charged to
+         *   issuers and is based on the monthly sales volume on Commercial and Government
+         *   Debit, Prepaid, Credit, Charge, or Deferred Debit card transactions.
+         * - `visa_consumer_debit_acceptance_fee` - The Consumer Debit Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume of Consumer Debit
+         *   or Prepaid card transactions. The cashback portion of a Debit and Prepaid card
+         *   transaction is excluded from the sales volume calculation.
+         * - `visa_business_debit_acceptance_fee` - The Business Acceptance Fee is charged
+         *   to issuers and is based on the monthly sales volume on Business Debit,
+         *   Prepaid, Credit, Charge, or Deferred Debit card transactions. The cashback
+         *   portion is included in the sales volume calculation with the exception of a
+         *   Debit and Prepaid card transactions.
+         * - `visa_purchasing_acceptance_fee` - The Purchasing Card Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume on Commercial and
+         *   Government Debit, Prepaid, Credit, Charge, or Deferred Debit card
+         *   transactions.
+         * - `visa_purchase_domestic` - Activity and fees for the processing of a sales
+         *   draft original for a purchase transaction.
+         * - `visa_purchase_international` - Activity and fees for the processing of an
+         *   international sales draft original for a purchase transaction.
+         * - `visa_credit_purchase_token` - Apple Pay Credit Product Token Purchase
+         *   Original Transactions. This fee is billed by Visa on behalf of Apple Inc. for
+         *   Apple Pay transactions.
+         * - `visa_debit_purchase_token` - Apple Pay Debit Product Token Purchase Original
+         *   Transactions. This fee is billed by Visa on behalf of Apple Inc. for Apple Pay
+         *   transactions.
+         * - `visa_clearing_transmission` - A per transaction fee assessed for Base II
+         *   financial draft - Issuer.
+         * - `visa_direct_authorization` - Issuer charge for Non-Financial OCT/AFT
+         *   Authorization 0100 and Declined Financial OCT/AFT 0200 transactions.
+         * - `visa_direct_transaction_domestic` - Data processing charge for Visa Direct
+         *   OCTs for all business application identifiers (BAIs) other than money
+         *   transfer-bank initiated (BI). BASE II transactions.
+         * - `visa_service_commercial_credit` - Issuer card service fee for Commercial
+         *   Credit cards.
+         * - `visa_advertising_service_commercial_credit` - Issuer Advertising Service Fee
+         *   for Commercial Credit cards.
+         * - `visa_community_growth_acceleration_program` - Issuer Community Growth
+         *   Acceleration Program Fee.
+         * - `visa_processing_guarantee_commercial_credit` - Issuer Processing Guarantee
+         *   for Commercial Credit cards.
+         * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
+         *   for processing transactions on its network.
+         */
+        fee_type:
+          | 'visa_international_service_assessment_single_currency'
+          | 'visa_international_service_assessment_cross_currency'
+          | 'visa_authorization_domestic_point_of_sale'
+          | 'visa_authorization_international_point_of_sale'
+          | 'visa_authorization_canada_point_of_sale'
+          | 'visa_authorization_reversal_point_of_sale'
+          | 'visa_authorization_reversal_international_point_of_sale'
+          | 'visa_authorization_address_verification_service'
+          | 'visa_advanced_authorization'
+          | 'visa_message_transmission'
+          | 'visa_account_verification_domestic'
+          | 'visa_account_verification_international'
+          | 'visa_account_verification_canada'
+          | 'visa_corporate_acceptance_fee'
+          | 'visa_consumer_debit_acceptance_fee'
+          | 'visa_business_debit_acceptance_fee'
+          | 'visa_purchasing_acceptance_fee'
+          | 'visa_purchase_domestic'
+          | 'visa_purchase_international'
+          | 'visa_credit_purchase_token'
+          | 'visa_debit_purchase_token'
+          | 'visa_clearing_transmission'
+          | 'visa_direct_authorization'
+          | 'visa_direct_transaction_domestic'
+          | 'visa_service_commercial_credit'
+          | 'visa_advertising_service_commercial_credit'
+          | 'visa_community_growth_acceleration_program'
+          | 'visa_processing_guarantee_commercial_credit'
+          | 'pulse_switch_fee';
+
+        /**
+         * The fixed component of the fee, if applicable, given in major units of the fee
+         * amount.
+         */
+        fixed_component: string | null;
+
+        /**
+         * The variable rate component of the fee, if applicable, given as a decimal (e.g.,
+         * 0.015 for 1.5%).
+         */
+        variable_rate: string | null;
+      }
+    }
+
+    /**
+     * A Card Reversal object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_reversal`. Card Reversals cancel parts of
+     * or the entirety of an existing Card Authorization.
+     */
+    export interface CardReversal {
+      /**
+       * The Card Reversal identifier.
+       */
+      id: string;
+
+      /**
+       * The identifier for the Card Authorization this reverses.
+       */
+      card_authorization_id: string;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the reversal's
+       * currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The merchant identifier (commonly abbreviated as MID) of the merchant the card
+       * is transacting with.
+       */
+      merchant_acceptor_id: string;
+
+      /**
+       * The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+       * card is transacting with.
+       */
+      merchant_category_code: string;
+
+      /**
+       * The city the merchant resides in.
+       */
+      merchant_city: string | null;
+
+      /**
+       * The country the merchant resides in.
+       */
+      merchant_country: string | null;
+
+      /**
+       * The merchant descriptor of the merchant the card is transacting with.
+       */
+      merchant_descriptor: string;
+
+      /**
+       * The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
+       * ZIP code, where the first 5 and last 4 are separated by a dash.
+       */
+      merchant_postal_code: string | null;
+
+      /**
+       * The state the merchant resides in.
+       */
+      merchant_state: string | null;
+
+      /**
+       * The card network used to process this card authorization.
+       *
+       * - `visa` - Visa
+       * - `pulse` - Pulse
+       */
+      network: 'visa' | 'pulse';
+
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      network_identifiers: CardReversal.NetworkIdentifiers;
+
+      /**
+       * The identifier of the Pending Transaction associated with this Card Reversal.
+       */
+      pending_transaction_id: string | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the reversal's
+       * presentment currency.
+       */
+      presentment_currency: string;
+
+      /**
+       * The amount of this reversal in the minor unit of the transaction's currency. For
+       * dollars, for example, this is cents.
+       */
+      reversal_amount: number;
+
+      /**
+       * The amount of this reversal in the minor unit of the transaction's presentment
+       * currency. For dollars, for example, this is cents.
+       */
+      reversal_presentment_amount: number;
+
+      /**
+       * Why this reversal was initiated.
+       *
+       * - `reversed_by_customer` - The Card Reversal was initiated at the customer's
+       *   request.
+       * - `reversed_by_network_or_acquirer` - The Card Reversal was initiated by the
+       *   network or acquirer.
+       * - `reversed_by_point_of_sale` - The Card Reversal was initiated by the point of
+       *   sale device.
+       * - `partial_reversal` - The Card Reversal was a partial reversal, for any reason.
+       */
+      reversal_reason:
+        | 'reversed_by_customer'
+        | 'reversed_by_network_or_acquirer'
+        | 'reversed_by_point_of_sale'
+        | 'partial_reversal'
+        | null;
+
+      /**
+       * The scheme fees associated with this card reversal.
+       */
+      scheme_fees: Array<CardReversal.SchemeFee>;
+
+      /**
+       * The terminal identifier (commonly abbreviated as TID) of the terminal the card
+       * is transacting with.
+       */
+      terminal_id: string | null;
+
+      /**
+       * A constant representing the object's type. For this resource it will always be
+       * `card_reversal`.
+       */
+      type: 'card_reversal';
+
+      /**
+       * The amount left pending on the Card Authorization in the minor unit of the
+       * transaction's currency. For dollars, for example, this is cents.
+       */
+      updated_authorization_amount: number;
+
+      /**
+       * The amount left pending on the Card Authorization in the minor unit of the
+       * transaction's presentment currency. For dollars, for example, this is cents.
+       */
+      updated_authorization_presentment_amount: number;
+
+      [k: string]: unknown;
+    }
+
+    export namespace CardReversal {
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      export interface NetworkIdentifiers {
+        /**
+         * The randomly generated 6-character Authorization Identification Response code
+         * sent back to the acquirer in an approved response.
+         */
+        authorization_identification_response: string | null;
+
+        /**
+         * A life-cycle identifier used across e.g., an authorization and a reversal.
+         * Expected to be unique per acquirer within a window of time. For some card
+         * networks the retrieval reference number includes the trace counter.
+         */
+        retrieval_reference_number: string | null;
+
+        /**
+         * A counter used to verify an individual authorization. Expected to be unique per
+         * acquirer within a window of time.
+         */
+        trace_number: string | null;
+
+        /**
+         * A globally unique transaction identifier provided by the card network, used
+         * across multiple life-cycle requests.
+         */
+        transaction_id: string | null;
+      }
+
+      export interface SchemeFee {
+        /**
+         * The fee amount given as a string containing a decimal number.
+         */
+        amount: string;
+
+        /**
+         * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
+         * created.
+         */
+        created_at: string;
+
+        /**
+         * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+         * reimbursement.
+         *
+         * - `USD` - US Dollar (USD)
+         */
+        currency: 'USD';
+
+        /**
+         * The type of fee being assessed.
+         *
+         * - `visa_international_service_assessment_single_currency` - International
+         *   Service Assessment (ISA) single-currency is a fee assessed by the card network
+         *   for cross-border transactions presented and settled in the same currency.
+         * - `visa_international_service_assessment_cross_currency` - International Service
+         *   Assessment (ISA) cross-currency is a fee assessed by the card network for
+         *   cross-border transactions presented and settled in different currencies.
+         * - `visa_authorization_domestic_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for POS (Point-Of-Sale) authorization
+         *   transactions. Authorization is the process of approving or declining the
+         *   transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_international_point_of_sale` - Activity and charges for
+         *   Visa Settlement System processing for POS (Point-Of-Sale) International
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_canada_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for Canada Region POS (Point-of-Sale)
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified.
+         * - `visa_authorization_reversal_point_of_sale` - Activity only for Visa
+         *   Settlement System authorization processing of POS (Point-Of-Sale) reversal
+         *   transactions. Authorization reversal represents a VSS message that undoes the
+         *   complete or partial actions of a previous authorization request.
+         * - `visa_authorization_reversal_international_point_of_sale` - Activity only for
+         *   Visa Settlement System authorization processing of POS (Point-Of-Sale)
+         *   International reversal transactions. Authorization reversal represents a VSS
+         *   message that undoes the complete or partial actions of a previous
+         *   authorization request.
+         * - `visa_authorization_address_verification_service` - A per Address Verification
+         *   Service (AVS) result fee. Applies to all usable AVS result codes.
+         * - `visa_advanced_authorization` - Advanced Authorization is a fraud detection
+         *   tool that monitors and risk evaluates 100 percent of US VisaNet authorizations
+         *   in real-time. Activity related to Purchase (includes Signature Authenticated
+         *   Visa and PIN Authenticated Visa Debit (PAVD) transactions).
+         * - `visa_message_transmission` - Issuer Transactions Visa represents a charge
+         *   based on total actual monthly processing (Visa transactions only) through a
+         *   VisaNet Access Point (VAP). Charges are assessed to the processor for each
+         *   VisaNet Access Point.
+         * - `visa_account_verification_domestic` - Activity, per inquiry, related to the
+         *   domestic Issuer for Account Number Verification.
+         * - `visa_account_verification_international` - Activity, per inquiry, related to
+         *   the international Issuer for Account Number Verification.
+         * - `visa_account_verification_canada` - Activity, per inquiry, related to the
+         *   US-Canada Issuer for Account Number Verification.
+         * - `visa_corporate_acceptance_fee` - The Corporate Acceptance Fee is charged to
+         *   issuers and is based on the monthly sales volume on Commercial and Government
+         *   Debit, Prepaid, Credit, Charge, or Deferred Debit card transactions.
+         * - `visa_consumer_debit_acceptance_fee` - The Consumer Debit Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume of Consumer Debit
+         *   or Prepaid card transactions. The cashback portion of a Debit and Prepaid card
+         *   transaction is excluded from the sales volume calculation.
+         * - `visa_business_debit_acceptance_fee` - The Business Acceptance Fee is charged
+         *   to issuers and is based on the monthly sales volume on Business Debit,
+         *   Prepaid, Credit, Charge, or Deferred Debit card transactions. The cashback
+         *   portion is included in the sales volume calculation with the exception of a
+         *   Debit and Prepaid card transactions.
+         * - `visa_purchasing_acceptance_fee` - The Purchasing Card Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume on Commercial and
+         *   Government Debit, Prepaid, Credit, Charge, or Deferred Debit card
+         *   transactions.
+         * - `visa_purchase_domestic` - Activity and fees for the processing of a sales
+         *   draft original for a purchase transaction.
+         * - `visa_purchase_international` - Activity and fees for the processing of an
+         *   international sales draft original for a purchase transaction.
+         * - `visa_credit_purchase_token` - Apple Pay Credit Product Token Purchase
+         *   Original Transactions. This fee is billed by Visa on behalf of Apple Inc. for
+         *   Apple Pay transactions.
+         * - `visa_debit_purchase_token` - Apple Pay Debit Product Token Purchase Original
+         *   Transactions. This fee is billed by Visa on behalf of Apple Inc. for Apple Pay
+         *   transactions.
+         * - `visa_clearing_transmission` - A per transaction fee assessed for Base II
+         *   financial draft - Issuer.
+         * - `visa_direct_authorization` - Issuer charge for Non-Financial OCT/AFT
+         *   Authorization 0100 and Declined Financial OCT/AFT 0200 transactions.
+         * - `visa_direct_transaction_domestic` - Data processing charge for Visa Direct
+         *   OCTs for all business application identifiers (BAIs) other than money
+         *   transfer-bank initiated (BI). BASE II transactions.
+         * - `visa_service_commercial_credit` - Issuer card service fee for Commercial
+         *   Credit cards.
+         * - `visa_advertising_service_commercial_credit` - Issuer Advertising Service Fee
+         *   for Commercial Credit cards.
+         * - `visa_community_growth_acceleration_program` - Issuer Community Growth
+         *   Acceleration Program Fee.
+         * - `visa_processing_guarantee_commercial_credit` - Issuer Processing Guarantee
+         *   for Commercial Credit cards.
+         * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
+         *   for processing transactions on its network.
+         */
+        fee_type:
+          | 'visa_international_service_assessment_single_currency'
+          | 'visa_international_service_assessment_cross_currency'
+          | 'visa_authorization_domestic_point_of_sale'
+          | 'visa_authorization_international_point_of_sale'
+          | 'visa_authorization_canada_point_of_sale'
+          | 'visa_authorization_reversal_point_of_sale'
+          | 'visa_authorization_reversal_international_point_of_sale'
+          | 'visa_authorization_address_verification_service'
+          | 'visa_advanced_authorization'
+          | 'visa_message_transmission'
+          | 'visa_account_verification_domestic'
+          | 'visa_account_verification_international'
+          | 'visa_account_verification_canada'
+          | 'visa_corporate_acceptance_fee'
+          | 'visa_consumer_debit_acceptance_fee'
+          | 'visa_business_debit_acceptance_fee'
+          | 'visa_purchasing_acceptance_fee'
+          | 'visa_purchase_domestic'
+          | 'visa_purchase_international'
+          | 'visa_credit_purchase_token'
+          | 'visa_debit_purchase_token'
+          | 'visa_clearing_transmission'
+          | 'visa_direct_authorization'
+          | 'visa_direct_transaction_domestic'
+          | 'visa_service_commercial_credit'
+          | 'visa_advertising_service_commercial_credit'
+          | 'visa_community_growth_acceleration_program'
+          | 'visa_processing_guarantee_commercial_credit'
+          | 'pulse_switch_fee';
+
+        /**
+         * The fixed component of the fee, if applicable, given in major units of the fee
+         * amount.
+         */
+        fixed_component: string | null;
+
+        /**
+         * The variable rate component of the fee, if applicable, given as a decimal (e.g.,
+         * 0.015 for 1.5%).
+         */
+        variable_rate: string | null;
+      }
+    }
+
+    /**
+     * An Inbound Card Validation object. This field will be present in the JSON
+     * response if and only if `category` is equal to `card_validation`. Inbound Card
+     * Validations are requests from a merchant to verify that a card number and
+     * optionally its address and/or Card Verification Value are valid.
+     */
+    export interface CardValidation {
+      /**
+       * The Card Validation identifier.
+       */
+      id: string;
+
+      /**
+       * Whether this authorization was approved by Increase, the card network through
+       * stand-in processing, or the user through a real-time decision.
+       *
+       * - `user` - This object was actioned by the user through a real-time decision.
+       * - `increase` - This object was actioned by Increase without user intervention.
+       * - `network` - This object was actioned by the network, through stand-in
+       *   processing.
+       */
+      actioner: 'user' | 'increase' | 'network';
+
+      /**
+       * Additional amounts associated with the card authorization, such as ATM
+       * surcharges fees. These are usually a subset of the `amount` field and are used
+       * to provide more detailed information about the transaction.
+       */
+      additional_amounts: CardValidation.AdditionalAmounts;
+
+      /**
+       * The ID of the Card Payment this transaction belongs to.
+       */
+      card_payment_id: string;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+       * transaction's currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * If the authorization was made via a Digital Wallet Token (such as an Apple Pay
+       * purchase), the identifier of the token that was used.
+       */
+      digital_wallet_token_id: string | null;
+
+      /**
+       * The merchant identifier (commonly abbreviated as MID) of the merchant the card
+       * is transacting with.
+       */
+      merchant_acceptor_id: string;
+
+      /**
+       * The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+       * card is transacting with.
+       */
+      merchant_category_code: string;
+
+      /**
+       * The city the merchant resides in.
+       */
+      merchant_city: string | null;
+
+      /**
+       * The country the merchant resides in.
+       */
+      merchant_country: string;
+
+      /**
+       * The merchant descriptor of the merchant the card is transacting with.
+       */
+      merchant_descriptor: string;
+
+      /**
+       * The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
+       * ZIP code, where the first 5 and last 4 are separated by a dash.
+       */
+      merchant_postal_code: string | null;
+
+      /**
+       * The state the merchant resides in.
+       */
+      merchant_state: string | null;
+
+      /**
+       * Fields specific to the `network`.
+       */
+      network_details: CardValidation.NetworkDetails;
+
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      network_identifiers: CardValidation.NetworkIdentifiers;
+
+      /**
+       * The risk score generated by the card network. For Visa this is the Visa Advanced
+       * Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
+       * score is from 0 to 999, where 999 is the riskiest.
+       */
+      network_risk_score: number | null;
+
+      /**
+       * If the authorization was made in-person with a physical card, the Physical Card
+       * that was used.
+       */
+      physical_card_id: string | null;
+
+      /**
+       * The identifier of the Real-Time Decision sent to approve or decline this
+       * transaction.
+       */
+      real_time_decision_id: string | null;
+
+      /**
+       * The scheme fees associated with this card validation.
+       */
+      scheme_fees: Array<CardValidation.SchemeFee>;
+
+      /**
+       * The terminal identifier (commonly abbreviated as TID) of the terminal the card
+       * is transacting with.
+       */
+      terminal_id: string | null;
+
+      /**
+       * A constant representing the object's type. For this resource it will always be
+       * `inbound_card_validation`.
+       */
+      type: 'inbound_card_validation';
+
+      /**
+       * Fields related to verification of cardholder-provided values.
+       */
+      verification: CardValidation.Verification;
+
+      [k: string]: unknown;
+    }
+
+    export namespace CardValidation {
+      /**
+       * Additional amounts associated with the card authorization, such as ATM
+       * surcharges fees. These are usually a subset of the `amount` field and are used
+       * to provide more detailed information about the transaction.
+       */
+      export interface AdditionalAmounts {
+        /**
+         * The part of this transaction amount that was for clinic-related services.
+         */
+        clinic: AdditionalAmounts.Clinic | null;
+
+        /**
+         * The part of this transaction amount that was for dental-related services.
+         */
+        dental: AdditionalAmounts.Dental | null;
+
+        /**
+         * The original pre-authorized amount.
+         */
+        original: AdditionalAmounts.Original | null;
+
+        /**
+         * The part of this transaction amount that was for healthcare prescriptions.
+         */
+        prescription: AdditionalAmounts.Prescription | null;
+
+        /**
+         * The surcharge amount charged for this transaction by the merchant.
+         */
+        surcharge: AdditionalAmounts.Surcharge | null;
+
+        /**
+         * The total amount of a series of incremental authorizations, optionally provided.
+         */
+        total_cumulative: AdditionalAmounts.TotalCumulative | null;
+
+        /**
+         * The total amount of healthcare-related additional amounts.
+         */
+        total_healthcare: AdditionalAmounts.TotalHealthcare | null;
+
+        /**
+         * The part of this transaction amount that was for transit-related services.
+         */
+        transit: AdditionalAmounts.Transit | null;
+
+        /**
+         * An unknown additional amount.
+         */
+        unknown: AdditionalAmounts.Unknown | null;
+
+        /**
+         * The part of this transaction amount that was for vision-related services.
+         */
+        vision: AdditionalAmounts.Vision | null;
+      }
+
+      export namespace AdditionalAmounts {
+        /**
+         * The part of this transaction amount that was for clinic-related services.
+         */
+        export interface Clinic {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for dental-related services.
+         */
+        export interface Dental {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The original pre-authorized amount.
+         */
+        export interface Original {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for healthcare prescriptions.
+         */
+        export interface Prescription {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The surcharge amount charged for this transaction by the merchant.
+         */
+        export interface Surcharge {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The total amount of a series of incremental authorizations, optionally provided.
+         */
+        export interface TotalCumulative {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The total amount of healthcare-related additional amounts.
+         */
+        export interface TotalHealthcare {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for transit-related services.
+         */
+        export interface Transit {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * An unknown additional amount.
+         */
+        export interface Unknown {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+
+        /**
+         * The part of this transaction amount that was for vision-related services.
+         */
+        export interface Vision {
+          /**
+           * The amount in minor units of the `currency` field. The amount is positive if it
+           * is added to the amount (such as an ATM surcharge fee) and negative if it is
+           * subtracted from the amount (such as a discount).
+           */
+          amount: number;
+
+          /**
+           * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+           * amount's currency.
+           */
+          currency: string;
+        }
+      }
+
+      /**
+       * Fields specific to the `network`.
+       */
+      export interface NetworkDetails {
+        /**
+         * The payment network used to process this card authorization.
+         *
+         * - `visa` - Visa
+         * - `pulse` - Pulse
+         */
+        category: 'visa' | 'pulse';
+
+        /**
+         * Fields specific to the `pulse` network.
+         */
+        pulse: unknown | null;
+
+        /**
+         * Fields specific to the `visa` network.
+         */
+        visa: NetworkDetails.Visa | null;
+      }
+
+      export namespace NetworkDetails {
+        /**
+         * Fields specific to the `visa` network.
+         */
+        export interface Visa {
+          /**
+           * For electronic commerce transactions, this identifies the level of security used
+           * in obtaining the customer's payment credential. For mail or telephone order
+           * transactions, identifies the type of mail or telephone order.
+           *
+           * - `mail_phone_order` - Single transaction of a mail/phone order: Use to indicate
+           *   that the transaction is a mail/phone order purchase, not a recurring
+           *   transaction or installment payment. For domestic transactions in the US
+           *   region, this value may also indicate one bill payment transaction in the
+           *   card-present or card-absent environments.
+           * - `recurring` - Recurring transaction: Payment indicator used to indicate a
+           *   recurring transaction that originates from an acquirer in the US region.
+           * - `installment` - Installment payment: Payment indicator used to indicate one
+           *   purchase of goods or services that is billed to the account in multiple
+           *   charges over a period of time agreed upon by the cardholder and merchant from
+           *   transactions that originate from an acquirer in the US region.
+           * - `unknown_mail_phone_order` - Unknown classification: other mail order: Use to
+           *   indicate that the type of mail/telephone order is unknown.
+           * - `secure_electronic_commerce` - Secure electronic commerce transaction: Use to
+           *   indicate that the electronic commerce transaction has been authenticated using
+           *   e.g., 3-D Secure
+           * - `non_authenticated_security_transaction_at_3ds_capable_merchant` -
+           *   Non-authenticated security transaction at a 3-D Secure-capable merchant, and
+           *   merchant attempted to authenticate the cardholder using 3-D Secure: Use to
+           *   identify an electronic commerce transaction where the merchant attempted to
+           *   authenticate the cardholder using 3-D Secure, but was unable to complete the
+           *   authentication because the issuer or cardholder does not participate in the
+           *   3-D Secure program.
+           * - `non_authenticated_security_transaction` - Non-authenticated security
+           *   transaction: Use to identify an electronic commerce transaction that uses data
+           *   encryption for security however, cardholder authentication is not performed
+           *   using 3-D Secure.
+           * - `non_secure_transaction` - Non-secure transaction: Use to identify an
+           *   electronic commerce transaction that has no data protection.
+           */
+          electronic_commerce_indicator:
+            | 'mail_phone_order'
+            | 'recurring'
+            | 'installment'
+            | 'unknown_mail_phone_order'
+            | 'secure_electronic_commerce'
+            | 'non_authenticated_security_transaction_at_3ds_capable_merchant'
+            | 'non_authenticated_security_transaction'
+            | 'non_secure_transaction'
+            | null;
+
+          /**
+           * The method used to enter the cardholder's primary account number and card
+           * expiration date.
+           *
+           * - `unknown` - Unknown
+           * - `manual` - Manual key entry
+           * - `magnetic_stripe_no_cvv` - Magnetic stripe read, without card verification
+           *   value
+           * - `optical_code` - Optical code
+           * - `integrated_circuit_card` - Contact chip card
+           * - `contactless` - Contactless read of chip card
+           * - `credential_on_file` - Transaction initiated using a credential that has
+           *   previously been stored on file
+           * - `magnetic_stripe` - Magnetic stripe read
+           * - `contactless_magnetic_stripe` - Contactless read of magnetic stripe data
+           * - `integrated_circuit_card_no_cvv` - Contact chip card, without card
+           *   verification value
+           */
+          point_of_service_entry_mode:
+            | 'unknown'
+            | 'manual'
+            | 'magnetic_stripe_no_cvv'
+            | 'optical_code'
+            | 'integrated_circuit_card'
+            | 'contactless'
+            | 'credential_on_file'
+            | 'magnetic_stripe'
+            | 'contactless_magnetic_stripe'
+            | 'integrated_circuit_card_no_cvv'
+            | null;
+
+          /**
+           * Only present when `actioner: network`. Describes why a card authorization was
+           * approved or declined by Visa through stand-in processing.
+           *
+           * - `issuer_error` - Increase failed to process the authorization in a timely
+           *   manner.
+           * - `invalid_physical_card` - The physical card read had an invalid CVV or dCVV.
+           * - `invalid_cryptogram` - The card's authorization request cryptogram was
+           *   invalid. The cryptogram can be from a physical card or a Digital Wallet Token
+           *   purchase.
+           * - `invalid_cardholder_authentication_verification_value` - The 3DS cardholder
+           *   authentication verification value was invalid.
+           * - `internal_visa_error` - An internal Visa error occurred. Visa uses this reason
+           *   code for certain expected occurrences as well, such as Application Transaction
+           *   Counter (ATC) replays.
+           * - `merchant_transaction_advisory_service_authentication_required` - The merchant
+           *   has enabled Visa's Transaction Advisory Service and requires further
+           *   authentication to perform the transaction. In practice this is often utilized
+           *   at fuel pumps to tell the cardholder to see the cashier.
+           * - `payment_fraud_disruption_acquirer_block` - The transaction was blocked by
+           *   Visa's Payment Fraud Disruption service due to fraudulent Acquirer behavior,
+           *   such as card testing.
+           * - `other` - An unspecific reason for stand-in processing.
+           */
+          stand_in_processing_reason:
+            | 'issuer_error'
+            | 'invalid_physical_card'
+            | 'invalid_cryptogram'
+            | 'invalid_cardholder_authentication_verification_value'
+            | 'internal_visa_error'
+            | 'merchant_transaction_advisory_service_authentication_required'
+            | 'payment_fraud_disruption_acquirer_block'
+            | 'other'
+            | null;
+
+          /**
+           * The capability of the terminal being used to read the card. Shows whether a
+           * terminal can e.g., accept chip cards or if it only supports magnetic stripe
+           * reads. This reflects the highest capability of the terminal — for example, a
+           * terminal that supports both chip and magnetic stripe will be identified as
+           * chip-capable.
+           *
+           * - `unknown` - Unknown
+           * - `terminal_not_used` - No terminal was used for this transaction.
+           * - `magnetic_stripe` - The terminal can only read magnetic stripes and does not
+           *   have chip or contactless reading capability.
+           * - `barcode` - The terminal can only read barcodes.
+           * - `optical_character_recognition` - The terminal can only read cards via Optical
+           *   Character Recognition.
+           * - `chip_or_contactless` - The terminal supports contact chip cards and can also
+           *   read the magnetic stripe. If contact chip is supported, this value is used
+           *   regardless of whether contactless is also supported.
+           * - `contactless_only` - The terminal supports contactless reads but does not
+           *   support contact chip. Only used when the terminal lacks contact chip
+           *   capability.
+           * - `no_capability` - The terminal has no card reading capability.
+           */
+          terminal_entry_capability:
+            | 'unknown'
+            | 'terminal_not_used'
+            | 'magnetic_stripe'
+            | 'barcode'
+            | 'optical_character_recognition'
+            | 'chip_or_contactless'
+            | 'contactless_only'
+            | 'no_capability'
+            | null;
+        }
+      }
+
+      /**
+       * Network-specific identifiers for a specific request or transaction.
+       */
+      export interface NetworkIdentifiers {
+        /**
+         * The randomly generated 6-character Authorization Identification Response code
+         * sent back to the acquirer in an approved response.
+         */
+        authorization_identification_response: string | null;
+
+        /**
+         * A life-cycle identifier used across e.g., an authorization and a reversal.
+         * Expected to be unique per acquirer within a window of time. For some card
+         * networks the retrieval reference number includes the trace counter.
+         */
+        retrieval_reference_number: string | null;
+
+        /**
+         * A counter used to verify an individual authorization. Expected to be unique per
+         * acquirer within a window of time.
+         */
+        trace_number: string | null;
+
+        /**
+         * A globally unique transaction identifier provided by the card network, used
+         * across multiple life-cycle requests.
+         */
+        transaction_id: string | null;
+      }
+
+      export interface SchemeFee {
+        /**
+         * The fee amount given as a string containing a decimal number.
+         */
+        amount: string;
+
+        /**
+         * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
+         * created.
+         */
+        created_at: string;
+
+        /**
+         * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+         * reimbursement.
+         *
+         * - `USD` - US Dollar (USD)
+         */
+        currency: 'USD';
+
+        /**
+         * The type of fee being assessed.
+         *
+         * - `visa_international_service_assessment_single_currency` - International
+         *   Service Assessment (ISA) single-currency is a fee assessed by the card network
+         *   for cross-border transactions presented and settled in the same currency.
+         * - `visa_international_service_assessment_cross_currency` - International Service
+         *   Assessment (ISA) cross-currency is a fee assessed by the card network for
+         *   cross-border transactions presented and settled in different currencies.
+         * - `visa_authorization_domestic_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for POS (Point-Of-Sale) authorization
+         *   transactions. Authorization is the process of approving or declining the
+         *   transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_international_point_of_sale` - Activity and charges for
+         *   Visa Settlement System processing for POS (Point-Of-Sale) International
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified. The fee is assessed to the Issuer.
+         * - `visa_authorization_canada_point_of_sale` - Activity and charges for Visa
+         *   Settlement System processing for Canada Region POS (Point-of-Sale)
+         *   authorization transactions. Authorization is the process of approving or
+         *   declining the transaction amount specified.
+         * - `visa_authorization_reversal_point_of_sale` - Activity only for Visa
+         *   Settlement System authorization processing of POS (Point-Of-Sale) reversal
+         *   transactions. Authorization reversal represents a VSS message that undoes the
+         *   complete or partial actions of a previous authorization request.
+         * - `visa_authorization_reversal_international_point_of_sale` - Activity only for
+         *   Visa Settlement System authorization processing of POS (Point-Of-Sale)
+         *   International reversal transactions. Authorization reversal represents a VSS
+         *   message that undoes the complete or partial actions of a previous
+         *   authorization request.
+         * - `visa_authorization_address_verification_service` - A per Address Verification
+         *   Service (AVS) result fee. Applies to all usable AVS result codes.
+         * - `visa_advanced_authorization` - Advanced Authorization is a fraud detection
+         *   tool that monitors and risk evaluates 100 percent of US VisaNet authorizations
+         *   in real-time. Activity related to Purchase (includes Signature Authenticated
+         *   Visa and PIN Authenticated Visa Debit (PAVD) transactions).
+         * - `visa_message_transmission` - Issuer Transactions Visa represents a charge
+         *   based on total actual monthly processing (Visa transactions only) through a
+         *   VisaNet Access Point (VAP). Charges are assessed to the processor for each
+         *   VisaNet Access Point.
+         * - `visa_account_verification_domestic` - Activity, per inquiry, related to the
+         *   domestic Issuer for Account Number Verification.
+         * - `visa_account_verification_international` - Activity, per inquiry, related to
+         *   the international Issuer for Account Number Verification.
+         * - `visa_account_verification_canada` - Activity, per inquiry, related to the
+         *   US-Canada Issuer for Account Number Verification.
+         * - `visa_corporate_acceptance_fee` - The Corporate Acceptance Fee is charged to
+         *   issuers and is based on the monthly sales volume on Commercial and Government
+         *   Debit, Prepaid, Credit, Charge, or Deferred Debit card transactions.
+         * - `visa_consumer_debit_acceptance_fee` - The Consumer Debit Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume of Consumer Debit
+         *   or Prepaid card transactions. The cashback portion of a Debit and Prepaid card
+         *   transaction is excluded from the sales volume calculation.
+         * - `visa_business_debit_acceptance_fee` - The Business Acceptance Fee is charged
+         *   to issuers and is based on the monthly sales volume on Business Debit,
+         *   Prepaid, Credit, Charge, or Deferred Debit card transactions. The cashback
+         *   portion is included in the sales volume calculation with the exception of a
+         *   Debit and Prepaid card transactions.
+         * - `visa_purchasing_acceptance_fee` - The Purchasing Card Acceptance Fee is
+         *   charged to issuers and is based on the monthly sales volume on Commercial and
+         *   Government Debit, Prepaid, Credit, Charge, or Deferred Debit card
+         *   transactions.
+         * - `visa_purchase_domestic` - Activity and fees for the processing of a sales
+         *   draft original for a purchase transaction.
+         * - `visa_purchase_international` - Activity and fees for the processing of an
+         *   international sales draft original for a purchase transaction.
+         * - `visa_credit_purchase_token` - Apple Pay Credit Product Token Purchase
+         *   Original Transactions. This fee is billed by Visa on behalf of Apple Inc. for
+         *   Apple Pay transactions.
+         * - `visa_debit_purchase_token` - Apple Pay Debit Product Token Purchase Original
+         *   Transactions. This fee is billed by Visa on behalf of Apple Inc. for Apple Pay
+         *   transactions.
+         * - `visa_clearing_transmission` - A per transaction fee assessed for Base II
+         *   financial draft - Issuer.
+         * - `visa_direct_authorization` - Issuer charge for Non-Financial OCT/AFT
+         *   Authorization 0100 and Declined Financial OCT/AFT 0200 transactions.
+         * - `visa_direct_transaction_domestic` - Data processing charge for Visa Direct
+         *   OCTs for all business application identifiers (BAIs) other than money
+         *   transfer-bank initiated (BI). BASE II transactions.
+         * - `visa_service_commercial_credit` - Issuer card service fee for Commercial
+         *   Credit cards.
+         * - `visa_advertising_service_commercial_credit` - Issuer Advertising Service Fee
+         *   for Commercial Credit cards.
+         * - `visa_community_growth_acceleration_program` - Issuer Community Growth
+         *   Acceleration Program Fee.
+         * - `visa_processing_guarantee_commercial_credit` - Issuer Processing Guarantee
+         *   for Commercial Credit cards.
+         * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
+         *   for processing transactions on its network.
+         */
+        fee_type:
+          | 'visa_international_service_assessment_single_currency'
+          | 'visa_international_service_assessment_cross_currency'
+          | 'visa_authorization_domestic_point_of_sale'
+          | 'visa_authorization_international_point_of_sale'
+          | 'visa_authorization_canada_point_of_sale'
+          | 'visa_authorization_reversal_point_of_sale'
+          | 'visa_authorization_reversal_international_point_of_sale'
+          | 'visa_authorization_address_verification_service'
+          | 'visa_advanced_authorization'
+          | 'visa_message_transmission'
+          | 'visa_account_verification_domestic'
+          | 'visa_account_verification_international'
+          | 'visa_account_verification_canada'
+          | 'visa_corporate_acceptance_fee'
+          | 'visa_consumer_debit_acceptance_fee'
+          | 'visa_business_debit_acceptance_fee'
+          | 'visa_purchasing_acceptance_fee'
+          | 'visa_purchase_domestic'
+          | 'visa_purchase_international'
+          | 'visa_credit_purchase_token'
+          | 'visa_debit_purchase_token'
+          | 'visa_clearing_transmission'
+          | 'visa_direct_authorization'
+          | 'visa_direct_transaction_domestic'
+          | 'visa_service_commercial_credit'
+          | 'visa_advertising_service_commercial_credit'
+          | 'visa_community_growth_acceleration_program'
+          | 'visa_processing_guarantee_commercial_credit'
+          | 'pulse_switch_fee';
+
+        /**
+         * The fixed component of the fee, if applicable, given in major units of the fee
+         * amount.
+         */
+        fixed_component: string | null;
+
+        /**
+         * The variable rate component of the fee, if applicable, given as a decimal (e.g.,
+         * 0.015 for 1.5%).
+         */
+        variable_rate: string | null;
+      }
+
+      /**
+       * Fields related to verification of cardholder-provided values.
+       */
+      export interface Verification {
+        /**
+         * Fields related to verification of the Card Verification Code, a 3-digit code on
+         * the back of the card.
+         */
+        card_verification_code: Verification.CardVerificationCode;
+
+        /**
+         * Cardholder address provided in the authorization request and the address on file
+         * we verified it against.
+         */
+        cardholder_address: Verification.CardholderAddress;
+
+        /**
+         * Cardholder name provided in the authorization request.
+         */
+        cardholder_name: Verification.CardholderName | null;
+      }
+
+      export namespace Verification {
+        /**
+         * Fields related to verification of the Card Verification Code, a 3-digit code on
+         * the back of the card.
+         */
+        export interface CardVerificationCode {
+          /**
+           * The result of verifying the Card Verification Code.
+           *
+           * - `not_checked` - No card verification code was provided in the authorization
+           *   request.
+           * - `match` - The card verification code matched the one on file.
+           * - `no_match` - The card verification code did not match the one on file.
+           */
+          result: 'not_checked' | 'match' | 'no_match';
+        }
+
+        /**
+         * Cardholder address provided in the authorization request and the address on file
+         * we verified it against.
+         */
+        export interface CardholderAddress {
+          /**
+           * Line 1 of the address on file for the cardholder.
+           */
+          actual_line1: string | null;
+
+          /**
+           * The postal code of the address on file for the cardholder.
+           */
+          actual_postal_code: string | null;
+
+          /**
+           * The cardholder address line 1 provided for verification in the authorization
+           * request.
+           */
+          provided_line1: string | null;
+
+          /**
+           * The postal code provided for verification in the authorization request.
+           */
+          provided_postal_code: string | null;
+
+          /**
+           * The address verification result returned to the card network.
+           *
+           * - `not_checked` - No address information was provided in the authorization
+           *   request.
+           * - `postal_code_match_address_no_match` - Postal code matches, but the street
+           *   address does not match or was not provided.
+           * - `postal_code_no_match_address_match` - Postal code does not match, but the
+           *   street address matches or was not provided.
+           * - `match` - Postal code and street address match.
+           * - `no_match` - Postal code and street address do not match.
+           * - `postal_code_match_address_not_checked` - Postal code matches, but the street
+           *   address was not verified. (deprecated)
+           */
+          result:
+            | 'not_checked'
+            | 'postal_code_match_address_no_match'
+            | 'postal_code_no_match_address_match'
+            | 'match'
+            | 'no_match'
+            | 'postal_code_match_address_not_checked';
+        }
+
+        /**
+         * Cardholder name provided in the authorization request.
+         */
+        export interface CardholderName {
+          /**
+           * The first name provided for verification in the authorization request.
+           */
+          provided_first_name: string | null;
+
+          /**
+           * The last name provided for verification in the authorization request.
+           */
+          provided_last_name: string | null;
+
+          /**
+           * The middle name provided for verification in the authorization request.
+           */
+          provided_middle_name: string | null;
+        }
+      }
+    }
+  }
+
+  /**
+   * The summarized state of this card payment.
+   */
+  export interface State {
+    /**
+     * The total authorized amount in the minor unit of the transaction's currency. For
+     * dollars, for example, this is cents.
+     */
+    authorized_amount: number;
+
+    /**
+     * The total amount from fuel confirmations in the minor unit of the transaction's
+     * currency. For dollars, for example, this is cents.
+     */
+    fuel_confirmed_amount: number;
+
+    /**
+     * The total incrementally updated authorized amount in the minor unit of the
+     * transaction's currency. For dollars, for example, this is cents.
+     */
+    incremented_amount: number;
+
+    /**
+     * The total refund authorized amount in the minor unit of the transaction's
+     * currency. For dollars, for example, this is cents.
+     */
+    refund_authorized_amount: number;
+
+    /**
+     * The total refunded amount in the minor unit of the transaction's currency. For
+     * dollars, for example, this is cents.
+     */
+    refunded_amount: number;
+
+    /**
+     * The total reversed amount in the minor unit of the transaction's currency. For
+     * dollars, for example, this is cents.
+     */
+    reversed_amount: number;
+
+    /**
+     * The total settled amount in the minor unit of the transaction's currency. For
+     * dollars, for example, this is cents.
+     */
+    settled_amount: number;
+  }
+}
+
+/**
+ * A list of Card Payment objects.
+ */
+export interface CardPaymentListResponse {
+  /**
+   * The contents of the list.
+   */
+  data: Array<CardPayment>;
+
+  /**
+   * A pointer to a place in the list.
+   */
+  next_cursor: string | null;
+
+  [k: string]: unknown;
+}
+
+export interface CardPaymentListParams {
+  /**
+   * Filter Card Payments to ones belonging to the specified Account.
+   */
+  account_id?: string;
+
+  /**
+   * Filter Card Payments to ones belonging to the specified Card.
+   */
+  card_id?: string;
+
+  created_at?: CardPaymentListParams.CreatedAt;
+
+  /**
+   * Return the page of entries after this one.
+   */
+  cursor?: string;
+
+  /**
+   * Limit the size of the list that is returned. The default (and maximum) is 100
+   * objects.
+   */
+  limit?: number;
+}
+
+export namespace CardPaymentListParams {
+  export interface CreatedAt {
+    /**
+     * Return results after this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+     * timestamp.
+     */
+    after?: string;
+
+    /**
+     * Return results before this [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+     * timestamp.
+     */
+    before?: string;
+
+    /**
+     * Return results on or after this
+     * [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+     */
+    on_or_after?: string;
+
+    /**
+     * Return results on or before this
+     * [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp.
+     */
+    on_or_before?: string;
+  }
+}
+
+export declare namespace CardPayments {
+  export {
+    type CardPayment as CardPayment,
+    type CardPaymentListResponse as CardPaymentListResponse,
+    type CardPaymentListParams as CardPaymentListParams,
+  };
+}

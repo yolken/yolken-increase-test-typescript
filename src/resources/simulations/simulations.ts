@@ -1,0 +1,6789 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import { APIResource } from '../../core/resource';
+import * as SimulationsAPI from './simulations';
+import * as AccountStatementsAPI from '../account-statements';
+import * as CardPaymentsAPI from '../card-payments';
+import * as CardTokensAPI from '../card-tokens';
+import * as DeclinedTransactionsAPI from '../declined-transactions';
+import * as ExportsAPI from '../exports';
+import * as InboundACHTransfersAPI from '../inbound-ach-transfers';
+import * as InboundFednowTransfersAPI from '../inbound-fednow-transfers';
+import * as InboundMailItemsAPI from '../inbound-mail-items';
+import * as InboundRealTimePaymentsTransfersAPI from '../inbound-real-time-payments-transfers';
+import * as InboundWireDrawdownRequestsAPI from '../inbound-wire-drawdown-requests';
+import * as InboundWireTransfersAPI from '../inbound-wire-transfers';
+import * as PendingTransactionsAPI from '../pending-transactions';
+import * as ProgramsAPI from '../programs';
+import * as AccountTransfersAPI from './account-transfers';
+import { AccountTransfers } from './account-transfers';
+import * as ACHTransfersAPI from './ach-transfers';
+import {
+  ACHTransferCreateNotificationOfChangeParams,
+  ACHTransferReturnParams,
+  ACHTransferSettleParams,
+  ACHTransfers,
+} from './ach-transfers';
+import * as CardAuthenticationsAPI from './card-authentications';
+import {
+  CardAuthenticationCreateChallengeAttemptParams,
+  CardAuthenticationCreateParams,
+  CardAuthentications,
+} from './card-authentications';
+import * as CardDisputesAPI from './card-disputes';
+import { CardDisputeAdvanceStateParams, CardDisputes } from './card-disputes';
+import * as CheckDepositsAPI from './check-deposits';
+import { CheckDepositAdjustParams, CheckDepositSubmitParams, CheckDeposits } from './check-deposits';
+import * as CheckTransfersAPI from './check-transfers';
+import { CheckTransfers } from './check-transfers';
+import * as InboundCheckDepositsAPI from './inbound-check-deposits';
+import {
+  InboundCheckDepositAdjustParams,
+  InboundCheckDepositCreateParams,
+  InboundCheckDeposits,
+} from './inbound-check-deposits';
+import * as SimulationsPendingTransactionsAPI from './pending-transactions';
+import { PendingTransactions } from './pending-transactions';
+import * as PhysicalCardsAPI from './physical-cards';
+import {
+  PhysicalCardAdvanceShipmentParams,
+  PhysicalCardCreateTrackingUpdateParams,
+  PhysicalCards,
+} from './physical-cards';
+import * as RealTimePaymentsTransfersAPI from './real-time-payments-transfers';
+import {
+  RealTimePaymentsTransferCompleteParams,
+  RealTimePaymentsTransfers,
+} from './real-time-payments-transfers';
+import * as WireDrawdownRequestsAPI from './wire-drawdown-requests';
+import { WireDrawdownRequest, WireDrawdownRequests } from './wire-drawdown-requests';
+import * as WireTransfersAPI from './wire-transfers';
+import { WireTransfer, WireTransfers } from './wire-transfers';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+
+export class Simulations extends APIResource {
+  accountTransfers: AccountTransfersAPI.AccountTransfers = new AccountTransfersAPI.AccountTransfers(
+    this._client,
+  );
+  achTransfers: ACHTransfersAPI.ACHTransfers = new ACHTransfersAPI.ACHTransfers(this._client);
+  cardAuthentications: CardAuthenticationsAPI.CardAuthentications =
+    new CardAuthenticationsAPI.CardAuthentications(this._client);
+  cardDisputes: CardDisputesAPI.CardDisputes = new CardDisputesAPI.CardDisputes(this._client);
+  checkDeposits: CheckDepositsAPI.CheckDeposits = new CheckDepositsAPI.CheckDeposits(this._client);
+  checkTransfers: CheckTransfersAPI.CheckTransfers = new CheckTransfersAPI.CheckTransfers(this._client);
+  inboundCheckDeposits: InboundCheckDepositsAPI.InboundCheckDeposits =
+    new InboundCheckDepositsAPI.InboundCheckDeposits(this._client);
+  pendingTransactions: SimulationsPendingTransactionsAPI.PendingTransactions =
+    new SimulationsPendingTransactionsAPI.PendingTransactions(this._client);
+  physicalCards: PhysicalCardsAPI.PhysicalCards = new PhysicalCardsAPI.PhysicalCards(this._client);
+  realTimePaymentsTransfers: RealTimePaymentsTransfersAPI.RealTimePaymentsTransfers =
+    new RealTimePaymentsTransfersAPI.RealTimePaymentsTransfers(this._client);
+  wireDrawdownRequests: WireDrawdownRequestsAPI.WireDrawdownRequests =
+    new WireDrawdownRequestsAPI.WireDrawdownRequests(this._client);
+  wireTransfers: WireTransfersAPI.WireTransfers = new WireTransfersAPI.WireTransfers(this._client);
+
+  /**
+   * Simulates the fuel confirmation of an authorization by a card acquirer. This
+   * happens asynchronously right after a fuel pump transaction is completed. A fuel
+   * confirmation can only happen once per authorization.
+   *
+   * @example
+   * ```ts
+   * const cardPayment =
+   *   await client.simulations.confirmFuelAuthorization({
+   *     amount: 5000,
+   *     card_payment_id: 'card_payment_nd3k2kacrqjli8482ave',
+   *   });
+   * ```
+   */
+  confirmFuelAuthorization(
+    body: SimulationConfirmFuelAuthorizationParams,
+    options?: RequestOptions,
+  ): APIPromise<CardPaymentsAPI.CardPayment> {
+    return this._client.post('/simulations/card_fuel_confirmations', { body, ...options });
+  }
+
+  /**
+   * Simulates an [Account Statement](#account-statements) being created for an
+   * account. In production, Account Statements are generated once per month.
+   *
+   * @example
+   * ```ts
+   * const accountStatement =
+   *   await client.simulations.createAccountStatement({
+   *     account_id: 'account_in71c4amph0vgo2qllky',
+   *   });
+   * ```
+   */
+  createAccountStatement(
+    body: SimulationCreateAccountStatementParams,
+    options?: RequestOptions,
+  ): APIPromise<AccountStatementsAPI.AccountStatement> {
+    return this._client.post('/simulations/account_statements', { body, ...options });
+  }
+
+  /**
+   * Simulates a purchase authorization on a [Card](#cards). Depending on the balance
+   * available to the card and the `amount` submitted, the authorization activity
+   * will result in a [Pending Transaction](#pending-transactions) of type
+   * `card_authorization` or a [Declined Transaction](#declined-transactions) of type
+   * `card_decline`. You can pass either a Card id or a
+   * [Digital Wallet Token](#digital-wallet-tokens) id to simulate the two different
+   * ways purchases can be made.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.simulations.createCardAuthorization({
+   *     amount: 1000,
+   *   });
+   * ```
+   */
+  createCardAuthorization(
+    body: SimulationCreateCardAuthorizationParams,
+    options?: RequestOptions,
+  ): APIPromise<SimulationCreateCardAuthorizationResponse> {
+    return this._client.post('/simulations/card_authorizations', { body, ...options });
+  }
+
+  /**
+   * Simulates a balance inquiry on a [Card](#cards).
+   *
+   * @example
+   * ```ts
+   * const cardPayment =
+   *   await client.simulations.createCardBalanceInquiry();
+   * ```
+   */
+  createCardBalanceInquiry(
+    body: SimulationCreateCardBalanceInquiryParams,
+    options?: RequestOptions,
+  ): APIPromise<CardPaymentsAPI.CardPayment> {
+    return this._client.post('/simulations/card_balance_inquiries', { body, ...options });
+  }
+
+  /**
+   * Simulates tokenizing a card in the sandbox environment.
+   *
+   * @example
+   * ```ts
+   * const cardToken =
+   *   await client.simulations.createCardToken();
+   * ```
+   */
+  createCardToken(
+    body: SimulationCreateCardTokenParams,
+    options?: RequestOptions,
+  ): APIPromise<CardTokensAPI.CardToken> {
+    return this._client.post('/simulations/card_tokens', { body, ...options });
+  }
+
+  /**
+   * Simulates a user attempting to add a [Card](#cards) to a digital wallet such as
+   * Apple Pay.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.simulations.createDigitalWalletTokenRequest({
+   *     card_id: 'card_oubs0hwk5rn6knuecxg2',
+   *   });
+   * ```
+   */
+  createDigitalWalletTokenRequest(
+    body: SimulationCreateDigitalWalletTokenRequestParams,
+    options?: RequestOptions,
+  ): APIPromise<SimulationCreateDigitalWalletTokenRequestResponse> {
+    return this._client.post('/simulations/digital_wallet_token_requests', { body, ...options });
+  }
+
+  /**
+   * Simulates an inbound ACH transfer to your account. This imitates initiating a
+   * transfer to an Increase account from a different financial institution. The
+   * transfer may be either a credit or a debit depending on if the `amount` is
+   * positive or negative. The result of calling this API will contain the created
+   * transfer. You can pass a `resolve_at` parameter to allow for a window to
+   * [action on the Inbound ACH Transfer](https://increase.com/documentation/receiving-ach-transfers).
+   * Alternatively, if you don't pass the `resolve_at` parameter the result will
+   * contain either a [Transaction](#transactions) or a
+   * [Declined Transaction](#declined-transactions) depending on whether or not the
+   * transfer is allowed.
+   *
+   * @example
+   * ```ts
+   * const inboundACHTransfer =
+   *   await client.simulations.createInboundACHTransfer({
+   *     account_number_id:
+   *       'account_number_v18nkfqm6afpsrvy82b2',
+   *     amount: 1000,
+   *   });
+   * ```
+   */
+  createInboundACHTransfer(
+    body: SimulationCreateInboundACHTransferParams,
+    options?: RequestOptions,
+  ): APIPromise<InboundACHTransfersAPI.InboundACHTransfer> {
+    return this._client.post('/simulations/inbound_ach_transfers', { body, ...options });
+  }
+
+  /**
+   * Simulates an [Inbound FedNow Transfer](#inbound-fednow-transfers) to your
+   * account.
+   *
+   * @example
+   * ```ts
+   * const inboundFednowTransfer =
+   *   await client.simulations.createInboundFednowTransfer({
+   *     account_number_id:
+   *       'account_number_v18nkfqm6afpsrvy82b2',
+   *     amount: 1000,
+   *   });
+   * ```
+   */
+  createInboundFednowTransfer(
+    body: SimulationCreateInboundFednowTransferParams,
+    options?: RequestOptions,
+  ): APIPromise<InboundFednowTransfersAPI.InboundFednowTransfer> {
+    return this._client.post('/simulations/inbound_fednow_transfers', { body, ...options });
+  }
+
+  /**
+   * Simulates an inbound mail item to your account, as if someone had mailed a
+   * physical check to one of your account's Lockboxes.
+   *
+   * @example
+   * ```ts
+   * const inboundMailItem =
+   *   await client.simulations.createInboundMailItem({
+   *     amount: 1000,
+   *     lockbox_id: 'lockbox_3xt21ok13q19advds4t5',
+   *   });
+   * ```
+   */
+  createInboundMailItem(
+    body: SimulationCreateInboundMailItemParams,
+    options?: RequestOptions,
+  ): APIPromise<InboundMailItemsAPI.InboundMailItem> {
+    return this._client.post('/simulations/inbound_mail_items', { body, ...options });
+  }
+
+  /**
+   * Simulates an
+   * [Inbound Real-Time Payments Transfer](#inbound-real-time-payments-transfers) to
+   * your account. Real-Time Payments are a beta feature.
+   *
+   * @example
+   * ```ts
+   * const inboundRealTimePaymentTransfer =
+   *   await client.simulations.createInboundRealTimePaymentsTransfer(
+   *     {
+   *       account_number_id:
+   *         'account_number_v18nkfqm6afpsrvy82b2',
+   *       amount: 1000,
+   *     },
+   *   );
+   * ```
+   */
+  createInboundRealTimePaymentsTransfer(
+    body: SimulationCreateInboundRealTimePaymentsTransferParams,
+    options?: RequestOptions,
+  ): APIPromise<InboundRealTimePaymentsTransfersAPI.InboundRealTimePaymentTransfer> {
+    return this._client.post('/simulations/inbound_real_time_payments_transfers', { body, ...options });
+  }
+
+  /**
+   * Simulates receiving an
+   * [Inbound Wire Drawdown Request](#inbound-wire-drawdown-requests).
+   *
+   * @example
+   * ```ts
+   * const inboundWireDrawdownRequest =
+   *   await client.simulations.createInboundWireDrawdownRequest(
+   *     {
+   *       amount: 10000,
+   *       creditor_account_number: '987654321',
+   *       creditor_routing_number: '101050001',
+   *       currency: 'USD',
+   *       recipient_account_number_id:
+   *         'account_number_v18nkfqm6afpsrvy82b2',
+   *     },
+   *   );
+   * ```
+   */
+  createInboundWireDrawdownRequest(
+    body: SimulationCreateInboundWireDrawdownRequestParams,
+    options?: RequestOptions,
+  ): APIPromise<InboundWireDrawdownRequestsAPI.InboundWireDrawdownRequest> {
+    return this._client.post('/simulations/inbound_wire_drawdown_requests', { body, ...options });
+  }
+
+  /**
+   * Simulates an [Inbound Wire Transfer](#inbound-wire-transfers) to your account.
+   *
+   * @example
+   * ```ts
+   * const inboundWireTransfer =
+   *   await client.simulations.createInboundWireTransfer({
+   *     account_number_id:
+   *       'account_number_v18nkfqm6afpsrvy82b2',
+   *     amount: 1000,
+   *   });
+   * ```
+   */
+  createInboundWireTransfer(
+    body: SimulationCreateInboundWireTransferParams,
+    options?: RequestOptions,
+  ): APIPromise<InboundWireTransfersAPI.InboundWireTransfer> {
+    return this._client.post('/simulations/inbound_wire_transfers', { body, ...options });
+  }
+
+  /**
+   * Simulates an interest payment to your account. In production, this happens
+   * automatically on the first of each month.
+   *
+   * @example
+   * ```ts
+   * const transaction =
+   *   await client.simulations.createInterestPayment({
+   *     account_id: 'account_in71c4amph0vgo2qllky',
+   *     amount: 1000,
+   *   });
+   * ```
+   */
+  createInterestPayment(
+    body: SimulationCreateInterestPaymentParams,
+    options?: RequestOptions,
+  ): APIPromise<Transaction> {
+    return this._client.post('/simulations/interest_payments', { body, ...options });
+  }
+
+  /**
+   * Simulates a [Program](#programs) being created in your group. By default, your
+   * group has one program called Commercial Banking. Note that when your group
+   * operates more than one program, `program_id` is a required field when creating
+   * accounts.
+   *
+   * @example
+   * ```ts
+   * const program = await client.simulations.createProgram({
+   *   name: 'For Benefit Of',
+   * });
+   * ```
+   */
+  createProgram(
+    body: SimulationCreateProgramParams,
+    options?: RequestOptions,
+  ): APIPromise<ProgramsAPI.Program> {
+    return this._client.post('/simulations/programs', { body, ...options });
+  }
+
+  /**
+   * Simulates expiring a Card Authorization immediately.
+   *
+   * @example
+   * ```ts
+   * const cardPayment =
+   *   await client.simulations.expireCardAuthorization({
+   *     card_payment_id: 'card_payment_nd3k2kacrqjli8482ave',
+   *   });
+   * ```
+   */
+  expireCardAuthorization(
+    body: SimulationExpireCardAuthorizationParams,
+    options?: RequestOptions,
+  ): APIPromise<CardPaymentsAPI.CardPayment> {
+    return this._client.post('/simulations/card_authorization_expirations', { body, ...options });
+  }
+
+  /**
+   * Many exports are created by you via POST /exports or in the Dashboard. Some
+   * exports are created automatically by Increase. For example, tax documents are
+   * published once a year. In sandbox, you can trigger the arrival of an export that
+   * would normally only be created automatically via this simulation.
+   *
+   * @example
+   * ```ts
+   * const _export =
+   *   await client.simulations.generateTaxFormExport({
+   *     category: 'form_1099_int',
+   *   });
+   * ```
+   */
+  generateTaxFormExport(
+    body: SimulationGenerateTaxFormExportParams,
+    options?: RequestOptions,
+  ): APIPromise<ExportsAPI.Export> {
+    return this._client.post('/simulations/exports', { body, ...options });
+  }
+
+  /**
+   * Simulates the increment of an authorization by a card acquirer. An authorization
+   * can be incremented multiple times.
+   *
+   * @example
+   * ```ts
+   * const cardPayment =
+   *   await client.simulations.incrementCardAuthorization({
+   *     amount: 500,
+   *     card_payment_id: 'card_payment_nd3k2kacrqjli8482ave',
+   *   });
+   * ```
+   */
+  incrementCardAuthorization(
+    body: SimulationIncrementCardAuthorizationParams,
+    options?: RequestOptions,
+  ): APIPromise<CardPaymentsAPI.CardPayment> {
+    return this._client.post('/simulations/card_increments', { body, ...options });
+  }
+
+  /**
+   * Simulates refunding a card transaction. The full value of the original sandbox
+   * transaction is refunded.
+   *
+   * @example
+   * ```ts
+   * const transaction =
+   *   await client.simulations.refundCardTransaction();
+   * ```
+   */
+  refundCardTransaction(
+    body: SimulationRefundCardTransactionParams,
+    options?: RequestOptions,
+  ): APIPromise<Transaction> {
+    return this._client.post('/simulations/card_refunds', { body, ...options });
+  }
+
+  /**
+   * Simulates the reversal of an authorization by a card acquirer. An authorization
+   * can be partially reversed multiple times, up until the total authorized amount.
+   * Marks the pending transaction as complete if the authorization is fully
+   * reversed.
+   *
+   * @example
+   * ```ts
+   * const cardPayment =
+   *   await client.simulations.reverseCardAuthorization({
+   *     card_payment_id: 'card_payment_nd3k2kacrqjli8482ave',
+   *   });
+   * ```
+   */
+  reverseCardAuthorization(
+    body: SimulationReverseCardAuthorizationParams,
+    options?: RequestOptions,
+  ): APIPromise<CardPaymentsAPI.CardPayment> {
+    return this._client.post('/simulations/card_reversals', { body, ...options });
+  }
+
+  /**
+   * Simulates the settlement of an authorization by a card acquirer. After a card
+   * authorization is created, the merchant will eventually send a settlement. This
+   * simulates that event, which may occur many days after the purchase in
+   * production. The amount settled can be different from the amount originally
+   * authorized, for example, when adding a tip to a restaurant bill.
+   *
+   * @example
+   * ```ts
+   * const transaction =
+   *   await client.simulations.settleCardAuthorization({
+   *     card_id: 'card_oubs0hwk5rn6knuecxg2',
+   *     pending_transaction_id:
+   *       'pending_transaction_k1sfetcau2qbvjbzgju4',
+   *   });
+   * ```
+   */
+  settleCardAuthorization(
+    body: SimulationSettleCardAuthorizationParams,
+    options?: RequestOptions,
+  ): APIPromise<Transaction> {
+    return this._client.post('/simulations/card_settlements', { body, ...options });
+  }
+}
+
+/**
+ * Card Financials are temporary holds placed on a customer's funds with the intent
+ * to later clear a transaction.
+ */
+export interface CardFinancial {
+  /**
+   * The Card Financial identifier.
+   */
+  id: string;
+
+  /**
+   * Whether this financial was approved by Increase, the card network through
+   * stand-in processing, or the user through a real-time decision.
+   *
+   * - `user` - This object was actioned by the user through a real-time decision.
+   * - `increase` - This object was actioned by Increase without user intervention.
+   * - `network` - This object was actioned by the network, through stand-in
+   *   processing.
+   */
+  actioner: 'user' | 'increase' | 'network';
+
+  /**
+   * Additional amounts associated with the card authorization, such as ATM
+   * surcharges fees. These are usually a subset of the `amount` field and are used
+   * to provide more detailed information about the transaction.
+   */
+  additional_amounts: CardFinancial.AdditionalAmounts;
+
+  /**
+   * The pending amount in the minor unit of the transaction's currency. For dollars,
+   * for example, this is cents.
+   */
+  amount: number;
+
+  /**
+   * The ID of the Card Payment this transaction belongs to.
+   */
+  card_payment_id: string;
+
+  /**
+   * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+   * transaction's currency.
+   *
+   * - `USD` - US Dollar (USD)
+   */
+  currency: 'USD';
+
+  /**
+   * If the authorization was made via a Digital Wallet Token (such as an Apple Pay
+   * purchase), the identifier of the token that was used.
+   */
+  digital_wallet_token_id: string | null;
+
+  /**
+   * The direction describes the direction the funds will move, either from the
+   * cardholder to the merchant or from the merchant to the cardholder.
+   *
+   * - `settlement` - A regular card authorization where funds are debited from the
+   *   cardholder.
+   * - `refund` - A refund card authorization, sometimes referred to as a credit
+   *   voucher authorization, where funds are credited to the cardholder.
+   */
+  direction: 'settlement' | 'refund';
+
+  /**
+   * The merchant identifier (commonly abbreviated as MID) of the merchant the card
+   * is transacting with.
+   */
+  merchant_acceptor_id: string;
+
+  /**
+   * The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+   * card is transacting with.
+   */
+  merchant_category_code: string;
+
+  /**
+   * The city the merchant resides in.
+   */
+  merchant_city: string | null;
+
+  /**
+   * The country the merchant resides in.
+   */
+  merchant_country: string;
+
+  /**
+   * The merchant descriptor of the merchant the card is transacting with.
+   */
+  merchant_descriptor: string;
+
+  /**
+   * The merchant's postal code. For US merchants this is either a 5-digit or 9-digit
+   * ZIP code, where the first 5 and last 4 are separated by a dash.
+   */
+  merchant_postal_code: string | null;
+
+  /**
+   * The state the merchant resides in.
+   */
+  merchant_state: string | null;
+
+  /**
+   * Fields specific to the `network`.
+   */
+  network_details: CardFinancial.NetworkDetails;
+
+  /**
+   * Network-specific identifiers for a specific request or transaction.
+   */
+  network_identifiers: CardFinancial.NetworkIdentifiers;
+
+  /**
+   * The risk score generated by the card network. For Visa this is the Visa Advanced
+   * Authorization risk score, from 0 to 99, where 99 is the riskiest. For Pulse the
+   * score is from 0 to 999, where 999 is the riskiest.
+   */
+  network_risk_score: number | null;
+
+  /**
+   * If the authorization was made in-person with a physical card, the Physical Card
+   * that was used.
+   */
+  physical_card_id: string | null;
+
+  /**
+   * The pending amount in the minor unit of the transaction's presentment currency.
+   */
+  presentment_amount: number;
+
+  /**
+   * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+   * transaction's presentment currency.
+   */
+  presentment_currency: string;
+
+  /**
+   * The processing category describes the intent behind the financial, such as
+   * whether it was used for bill payments or an automatic fuel dispenser.
+   *
+   * - `account_funding` - Account funding transactions are transactions used to
+   *   e.g., fund an account or transfer funds between accounts.
+   * - `automatic_fuel_dispenser` - Automatic fuel dispenser authorizations occur
+   *   when a card is used at a gas pump, prior to the actual transaction amount
+   *   being known. They are followed by an advice message that updates the amount of
+   *   the pending transaction.
+   * - `bill_payment` - A transaction used to pay a bill.
+   * - `original_credit` - Original credit transactions are used to send money to a
+   *   cardholder.
+   * - `purchase` - A regular purchase.
+   * - `quasi_cash` - Quasi-cash transactions represent purchases of items which may
+   *   be convertible to cash.
+   * - `refund` - A refund card authorization, sometimes referred to as a credit
+   *   voucher authorization, where funds are credited to the cardholder.
+   * - `cash_disbursement` - Cash disbursement transactions are used to withdraw cash
+   *   from an ATM or a point of sale.
+   * - `balance_inquiry` - A balance inquiry transaction is used to check the balance
+   *   of an account associated with a card.
+   * - `unknown` - The processing category is unknown.
+   */
+  processing_category:
+    | 'account_funding'
+    | 'automatic_fuel_dispenser'
+    | 'bill_payment'
+    | 'original_credit'
+    | 'purchase'
+    | 'quasi_cash'
+    | 'refund'
+    | 'cash_disbursement'
+    | 'balance_inquiry'
+    | 'unknown';
+
+  /**
+   * The identifier of the Real-Time Decision sent to approve or decline this
+   * transaction.
+   */
+  real_time_decision_id: string | null;
+
+  /**
+   * The scheme fees associated with this card financial.
+   */
+  scheme_fees: Array<CardFinancial.SchemeFee>;
+
+  /**
+   * The terminal identifier (commonly abbreviated as TID) of the terminal the card
+   * is transacting with.
+   */
+  terminal_id: string | null;
+
+  /**
+   * The identifier of the Transaction associated with this Transaction.
+   */
+  transaction_id: string;
+
+  /**
+   * A constant representing the object's type. For this resource it will always be
+   * `card_financial`.
+   */
+  type: 'card_financial';
+
+  /**
+   * Fields related to verification of cardholder-provided values.
+   */
+  verification: CardFinancial.Verification;
+
+  [k: string]: unknown;
+}
+
+export namespace CardFinancial {
+  /**
+   * Additional amounts associated with the card authorization, such as ATM
+   * surcharges fees. These are usually a subset of the `amount` field and are used
+   * to provide more detailed information about the transaction.
+   */
+  export interface AdditionalAmounts {
+    /**
+     * The part of this transaction amount that was for clinic-related services.
+     */
+    clinic: AdditionalAmounts.Clinic | null;
+
+    /**
+     * The part of this transaction amount that was for dental-related services.
+     */
+    dental: AdditionalAmounts.Dental | null;
+
+    /**
+     * The original pre-authorized amount.
+     */
+    original: AdditionalAmounts.Original | null;
+
+    /**
+     * The part of this transaction amount that was for healthcare prescriptions.
+     */
+    prescription: AdditionalAmounts.Prescription | null;
+
+    /**
+     * The surcharge amount charged for this transaction by the merchant.
+     */
+    surcharge: AdditionalAmounts.Surcharge | null;
+
+    /**
+     * The total amount of a series of incremental authorizations, optionally provided.
+     */
+    total_cumulative: AdditionalAmounts.TotalCumulative | null;
+
+    /**
+     * The total amount of healthcare-related additional amounts.
+     */
+    total_healthcare: AdditionalAmounts.TotalHealthcare | null;
+
+    /**
+     * The part of this transaction amount that was for transit-related services.
+     */
+    transit: AdditionalAmounts.Transit | null;
+
+    /**
+     * An unknown additional amount.
+     */
+    unknown: AdditionalAmounts.Unknown | null;
+
+    /**
+     * The part of this transaction amount that was for vision-related services.
+     */
+    vision: AdditionalAmounts.Vision | null;
+  }
+
+  export namespace AdditionalAmounts {
+    /**
+     * The part of this transaction amount that was for clinic-related services.
+     */
+    export interface Clinic {
+      /**
+       * The amount in minor units of the `currency` field. The amount is positive if it
+       * is added to the amount (such as an ATM surcharge fee) and negative if it is
+       * subtracted from the amount (such as a discount).
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+       * amount's currency.
+       */
+      currency: string;
+    }
+
+    /**
+     * The part of this transaction amount that was for dental-related services.
+     */
+    export interface Dental {
+      /**
+       * The amount in minor units of the `currency` field. The amount is positive if it
+       * is added to the amount (such as an ATM surcharge fee) and negative if it is
+       * subtracted from the amount (such as a discount).
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+       * amount's currency.
+       */
+      currency: string;
+    }
+
+    /**
+     * The original pre-authorized amount.
+     */
+    export interface Original {
+      /**
+       * The amount in minor units of the `currency` field. The amount is positive if it
+       * is added to the amount (such as an ATM surcharge fee) and negative if it is
+       * subtracted from the amount (such as a discount).
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+       * amount's currency.
+       */
+      currency: string;
+    }
+
+    /**
+     * The part of this transaction amount that was for healthcare prescriptions.
+     */
+    export interface Prescription {
+      /**
+       * The amount in minor units of the `currency` field. The amount is positive if it
+       * is added to the amount (such as an ATM surcharge fee) and negative if it is
+       * subtracted from the amount (such as a discount).
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+       * amount's currency.
+       */
+      currency: string;
+    }
+
+    /**
+     * The surcharge amount charged for this transaction by the merchant.
+     */
+    export interface Surcharge {
+      /**
+       * The amount in minor units of the `currency` field. The amount is positive if it
+       * is added to the amount (such as an ATM surcharge fee) and negative if it is
+       * subtracted from the amount (such as a discount).
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+       * amount's currency.
+       */
+      currency: string;
+    }
+
+    /**
+     * The total amount of a series of incremental authorizations, optionally provided.
+     */
+    export interface TotalCumulative {
+      /**
+       * The amount in minor units of the `currency` field. The amount is positive if it
+       * is added to the amount (such as an ATM surcharge fee) and negative if it is
+       * subtracted from the amount (such as a discount).
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+       * amount's currency.
+       */
+      currency: string;
+    }
+
+    /**
+     * The total amount of healthcare-related additional amounts.
+     */
+    export interface TotalHealthcare {
+      /**
+       * The amount in minor units of the `currency` field. The amount is positive if it
+       * is added to the amount (such as an ATM surcharge fee) and negative if it is
+       * subtracted from the amount (such as a discount).
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+       * amount's currency.
+       */
+      currency: string;
+    }
+
+    /**
+     * The part of this transaction amount that was for transit-related services.
+     */
+    export interface Transit {
+      /**
+       * The amount in minor units of the `currency` field. The amount is positive if it
+       * is added to the amount (such as an ATM surcharge fee) and negative if it is
+       * subtracted from the amount (such as a discount).
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+       * amount's currency.
+       */
+      currency: string;
+    }
+
+    /**
+     * An unknown additional amount.
+     */
+    export interface Unknown {
+      /**
+       * The amount in minor units of the `currency` field. The amount is positive if it
+       * is added to the amount (such as an ATM surcharge fee) and negative if it is
+       * subtracted from the amount (such as a discount).
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+       * amount's currency.
+       */
+      currency: string;
+    }
+
+    /**
+     * The part of this transaction amount that was for vision-related services.
+     */
+    export interface Vision {
+      /**
+       * The amount in minor units of the `currency` field. The amount is positive if it
+       * is added to the amount (such as an ATM surcharge fee) and negative if it is
+       * subtracted from the amount (such as a discount).
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the additional
+       * amount's currency.
+       */
+      currency: string;
+    }
+  }
+
+  /**
+   * Fields specific to the `network`.
+   */
+  export interface NetworkDetails {
+    /**
+     * The payment network used to process this card authorization.
+     *
+     * - `visa` - Visa
+     * - `pulse` - Pulse
+     */
+    category: 'visa' | 'pulse';
+
+    /**
+     * Fields specific to the `pulse` network.
+     */
+    pulse: unknown | null;
+
+    /**
+     * Fields specific to the `visa` network.
+     */
+    visa: NetworkDetails.Visa | null;
+  }
+
+  export namespace NetworkDetails {
+    /**
+     * Fields specific to the `visa` network.
+     */
+    export interface Visa {
+      /**
+       * For electronic commerce transactions, this identifies the level of security used
+       * in obtaining the customer's payment credential. For mail or telephone order
+       * transactions, identifies the type of mail or telephone order.
+       *
+       * - `mail_phone_order` - Single transaction of a mail/phone order: Use to indicate
+       *   that the transaction is a mail/phone order purchase, not a recurring
+       *   transaction or installment payment. For domestic transactions in the US
+       *   region, this value may also indicate one bill payment transaction in the
+       *   card-present or card-absent environments.
+       * - `recurring` - Recurring transaction: Payment indicator used to indicate a
+       *   recurring transaction that originates from an acquirer in the US region.
+       * - `installment` - Installment payment: Payment indicator used to indicate one
+       *   purchase of goods or services that is billed to the account in multiple
+       *   charges over a period of time agreed upon by the cardholder and merchant from
+       *   transactions that originate from an acquirer in the US region.
+       * - `unknown_mail_phone_order` - Unknown classification: other mail order: Use to
+       *   indicate that the type of mail/telephone order is unknown.
+       * - `secure_electronic_commerce` - Secure electronic commerce transaction: Use to
+       *   indicate that the electronic commerce transaction has been authenticated using
+       *   e.g., 3-D Secure
+       * - `non_authenticated_security_transaction_at_3ds_capable_merchant` -
+       *   Non-authenticated security transaction at a 3-D Secure-capable merchant, and
+       *   merchant attempted to authenticate the cardholder using 3-D Secure: Use to
+       *   identify an electronic commerce transaction where the merchant attempted to
+       *   authenticate the cardholder using 3-D Secure, but was unable to complete the
+       *   authentication because the issuer or cardholder does not participate in the
+       *   3-D Secure program.
+       * - `non_authenticated_security_transaction` - Non-authenticated security
+       *   transaction: Use to identify an electronic commerce transaction that uses data
+       *   encryption for security however, cardholder authentication is not performed
+       *   using 3-D Secure.
+       * - `non_secure_transaction` - Non-secure transaction: Use to identify an
+       *   electronic commerce transaction that has no data protection.
+       */
+      electronic_commerce_indicator:
+        | 'mail_phone_order'
+        | 'recurring'
+        | 'installment'
+        | 'unknown_mail_phone_order'
+        | 'secure_electronic_commerce'
+        | 'non_authenticated_security_transaction_at_3ds_capable_merchant'
+        | 'non_authenticated_security_transaction'
+        | 'non_secure_transaction'
+        | null;
+
+      /**
+       * The method used to enter the cardholder's primary account number and card
+       * expiration date.
+       *
+       * - `unknown` - Unknown
+       * - `manual` - Manual key entry
+       * - `magnetic_stripe_no_cvv` - Magnetic stripe read, without card verification
+       *   value
+       * - `optical_code` - Optical code
+       * - `integrated_circuit_card` - Contact chip card
+       * - `contactless` - Contactless read of chip card
+       * - `credential_on_file` - Transaction initiated using a credential that has
+       *   previously been stored on file
+       * - `magnetic_stripe` - Magnetic stripe read
+       * - `contactless_magnetic_stripe` - Contactless read of magnetic stripe data
+       * - `integrated_circuit_card_no_cvv` - Contact chip card, without card
+       *   verification value
+       */
+      point_of_service_entry_mode:
+        | 'unknown'
+        | 'manual'
+        | 'magnetic_stripe_no_cvv'
+        | 'optical_code'
+        | 'integrated_circuit_card'
+        | 'contactless'
+        | 'credential_on_file'
+        | 'magnetic_stripe'
+        | 'contactless_magnetic_stripe'
+        | 'integrated_circuit_card_no_cvv'
+        | null;
+
+      /**
+       * Only present when `actioner: network`. Describes why a card authorization was
+       * approved or declined by Visa through stand-in processing.
+       *
+       * - `issuer_error` - Increase failed to process the authorization in a timely
+       *   manner.
+       * - `invalid_physical_card` - The physical card read had an invalid CVV or dCVV.
+       * - `invalid_cryptogram` - The card's authorization request cryptogram was
+       *   invalid. The cryptogram can be from a physical card or a Digital Wallet Token
+       *   purchase.
+       * - `invalid_cardholder_authentication_verification_value` - The 3DS cardholder
+       *   authentication verification value was invalid.
+       * - `internal_visa_error` - An internal Visa error occurred. Visa uses this reason
+       *   code for certain expected occurrences as well, such as Application Transaction
+       *   Counter (ATC) replays.
+       * - `merchant_transaction_advisory_service_authentication_required` - The merchant
+       *   has enabled Visa's Transaction Advisory Service and requires further
+       *   authentication to perform the transaction. In practice this is often utilized
+       *   at fuel pumps to tell the cardholder to see the cashier.
+       * - `payment_fraud_disruption_acquirer_block` - The transaction was blocked by
+       *   Visa's Payment Fraud Disruption service due to fraudulent Acquirer behavior,
+       *   such as card testing.
+       * - `other` - An unspecific reason for stand-in processing.
+       */
+      stand_in_processing_reason:
+        | 'issuer_error'
+        | 'invalid_physical_card'
+        | 'invalid_cryptogram'
+        | 'invalid_cardholder_authentication_verification_value'
+        | 'internal_visa_error'
+        | 'merchant_transaction_advisory_service_authentication_required'
+        | 'payment_fraud_disruption_acquirer_block'
+        | 'other'
+        | null;
+
+      /**
+       * The capability of the terminal being used to read the card. Shows whether a
+       * terminal can e.g., accept chip cards or if it only supports magnetic stripe
+       * reads. This reflects the highest capability of the terminal — for example, a
+       * terminal that supports both chip and magnetic stripe will be identified as
+       * chip-capable.
+       *
+       * - `unknown` - Unknown
+       * - `terminal_not_used` - No terminal was used for this transaction.
+       * - `magnetic_stripe` - The terminal can only read magnetic stripes and does not
+       *   have chip or contactless reading capability.
+       * - `barcode` - The terminal can only read barcodes.
+       * - `optical_character_recognition` - The terminal can only read cards via Optical
+       *   Character Recognition.
+       * - `chip_or_contactless` - The terminal supports contact chip cards and can also
+       *   read the magnetic stripe. If contact chip is supported, this value is used
+       *   regardless of whether contactless is also supported.
+       * - `contactless_only` - The terminal supports contactless reads but does not
+       *   support contact chip. Only used when the terminal lacks contact chip
+       *   capability.
+       * - `no_capability` - The terminal has no card reading capability.
+       */
+      terminal_entry_capability:
+        | 'unknown'
+        | 'terminal_not_used'
+        | 'magnetic_stripe'
+        | 'barcode'
+        | 'optical_character_recognition'
+        | 'chip_or_contactless'
+        | 'contactless_only'
+        | 'no_capability'
+        | null;
+    }
+  }
+
+  /**
+   * Network-specific identifiers for a specific request or transaction.
+   */
+  export interface NetworkIdentifiers {
+    /**
+     * The randomly generated 6-character Authorization Identification Response code
+     * sent back to the acquirer in an approved response.
+     */
+    authorization_identification_response: string | null;
+
+    /**
+     * A life-cycle identifier used across e.g., an authorization and a reversal.
+     * Expected to be unique per acquirer within a window of time. For some card
+     * networks the retrieval reference number includes the trace counter.
+     */
+    retrieval_reference_number: string | null;
+
+    /**
+     * A counter used to verify an individual authorization. Expected to be unique per
+     * acquirer within a window of time.
+     */
+    trace_number: string | null;
+
+    /**
+     * A globally unique transaction identifier provided by the card network, used
+     * across multiple life-cycle requests.
+     */
+    transaction_id: string | null;
+  }
+
+  export interface SchemeFee {
+    /**
+     * The fee amount given as a string containing a decimal number.
+     */
+    amount: string;
+
+    /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
+     * created.
+     */
+    created_at: string;
+
+    /**
+     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+     * reimbursement.
+     *
+     * - `USD` - US Dollar (USD)
+     */
+    currency: 'USD';
+
+    /**
+     * The type of fee being assessed.
+     *
+     * - `visa_international_service_assessment_single_currency` - International
+     *   Service Assessment (ISA) single-currency is a fee assessed by the card network
+     *   for cross-border transactions presented and settled in the same currency.
+     * - `visa_international_service_assessment_cross_currency` - International Service
+     *   Assessment (ISA) cross-currency is a fee assessed by the card network for
+     *   cross-border transactions presented and settled in different currencies.
+     * - `visa_authorization_domestic_point_of_sale` - Activity and charges for Visa
+     *   Settlement System processing for POS (Point-Of-Sale) authorization
+     *   transactions. Authorization is the process of approving or declining the
+     *   transaction amount specified. The fee is assessed to the Issuer.
+     * - `visa_authorization_international_point_of_sale` - Activity and charges for
+     *   Visa Settlement System processing for POS (Point-Of-Sale) International
+     *   authorization transactions. Authorization is the process of approving or
+     *   declining the transaction amount specified. The fee is assessed to the Issuer.
+     * - `visa_authorization_canada_point_of_sale` - Activity and charges for Visa
+     *   Settlement System processing for Canada Region POS (Point-of-Sale)
+     *   authorization transactions. Authorization is the process of approving or
+     *   declining the transaction amount specified.
+     * - `visa_authorization_reversal_point_of_sale` - Activity only for Visa
+     *   Settlement System authorization processing of POS (Point-Of-Sale) reversal
+     *   transactions. Authorization reversal represents a VSS message that undoes the
+     *   complete or partial actions of a previous authorization request.
+     * - `visa_authorization_reversal_international_point_of_sale` - Activity only for
+     *   Visa Settlement System authorization processing of POS (Point-Of-Sale)
+     *   International reversal transactions. Authorization reversal represents a VSS
+     *   message that undoes the complete or partial actions of a previous
+     *   authorization request.
+     * - `visa_authorization_address_verification_service` - A per Address Verification
+     *   Service (AVS) result fee. Applies to all usable AVS result codes.
+     * - `visa_advanced_authorization` - Advanced Authorization is a fraud detection
+     *   tool that monitors and risk evaluates 100 percent of US VisaNet authorizations
+     *   in real-time. Activity related to Purchase (includes Signature Authenticated
+     *   Visa and PIN Authenticated Visa Debit (PAVD) transactions).
+     * - `visa_message_transmission` - Issuer Transactions Visa represents a charge
+     *   based on total actual monthly processing (Visa transactions only) through a
+     *   VisaNet Access Point (VAP). Charges are assessed to the processor for each
+     *   VisaNet Access Point.
+     * - `visa_account_verification_domestic` - Activity, per inquiry, related to the
+     *   domestic Issuer for Account Number Verification.
+     * - `visa_account_verification_international` - Activity, per inquiry, related to
+     *   the international Issuer for Account Number Verification.
+     * - `visa_account_verification_canada` - Activity, per inquiry, related to the
+     *   US-Canada Issuer for Account Number Verification.
+     * - `visa_corporate_acceptance_fee` - The Corporate Acceptance Fee is charged to
+     *   issuers and is based on the monthly sales volume on Commercial and Government
+     *   Debit, Prepaid, Credit, Charge, or Deferred Debit card transactions.
+     * - `visa_consumer_debit_acceptance_fee` - The Consumer Debit Acceptance Fee is
+     *   charged to issuers and is based on the monthly sales volume of Consumer Debit
+     *   or Prepaid card transactions. The cashback portion of a Debit and Prepaid card
+     *   transaction is excluded from the sales volume calculation.
+     * - `visa_business_debit_acceptance_fee` - The Business Acceptance Fee is charged
+     *   to issuers and is based on the monthly sales volume on Business Debit,
+     *   Prepaid, Credit, Charge, or Deferred Debit card transactions. The cashback
+     *   portion is included in the sales volume calculation with the exception of a
+     *   Debit and Prepaid card transactions.
+     * - `visa_purchasing_acceptance_fee` - The Purchasing Card Acceptance Fee is
+     *   charged to issuers and is based on the monthly sales volume on Commercial and
+     *   Government Debit, Prepaid, Credit, Charge, or Deferred Debit card
+     *   transactions.
+     * - `visa_purchase_domestic` - Activity and fees for the processing of a sales
+     *   draft original for a purchase transaction.
+     * - `visa_purchase_international` - Activity and fees for the processing of an
+     *   international sales draft original for a purchase transaction.
+     * - `visa_credit_purchase_token` - Apple Pay Credit Product Token Purchase
+     *   Original Transactions. This fee is billed by Visa on behalf of Apple Inc. for
+     *   Apple Pay transactions.
+     * - `visa_debit_purchase_token` - Apple Pay Debit Product Token Purchase Original
+     *   Transactions. This fee is billed by Visa on behalf of Apple Inc. for Apple Pay
+     *   transactions.
+     * - `visa_clearing_transmission` - A per transaction fee assessed for Base II
+     *   financial draft - Issuer.
+     * - `visa_direct_authorization` - Issuer charge for Non-Financial OCT/AFT
+     *   Authorization 0100 and Declined Financial OCT/AFT 0200 transactions.
+     * - `visa_direct_transaction_domestic` - Data processing charge for Visa Direct
+     *   OCTs for all business application identifiers (BAIs) other than money
+     *   transfer-bank initiated (BI). BASE II transactions.
+     * - `visa_service_commercial_credit` - Issuer card service fee for Commercial
+     *   Credit cards.
+     * - `visa_advertising_service_commercial_credit` - Issuer Advertising Service Fee
+     *   for Commercial Credit cards.
+     * - `visa_community_growth_acceleration_program` - Issuer Community Growth
+     *   Acceleration Program Fee.
+     * - `visa_processing_guarantee_commercial_credit` - Issuer Processing Guarantee
+     *   for Commercial Credit cards.
+     * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
+     *   for processing transactions on its network.
+     */
+    fee_type:
+      | 'visa_international_service_assessment_single_currency'
+      | 'visa_international_service_assessment_cross_currency'
+      | 'visa_authorization_domestic_point_of_sale'
+      | 'visa_authorization_international_point_of_sale'
+      | 'visa_authorization_canada_point_of_sale'
+      | 'visa_authorization_reversal_point_of_sale'
+      | 'visa_authorization_reversal_international_point_of_sale'
+      | 'visa_authorization_address_verification_service'
+      | 'visa_advanced_authorization'
+      | 'visa_message_transmission'
+      | 'visa_account_verification_domestic'
+      | 'visa_account_verification_international'
+      | 'visa_account_verification_canada'
+      | 'visa_corporate_acceptance_fee'
+      | 'visa_consumer_debit_acceptance_fee'
+      | 'visa_business_debit_acceptance_fee'
+      | 'visa_purchasing_acceptance_fee'
+      | 'visa_purchase_domestic'
+      | 'visa_purchase_international'
+      | 'visa_credit_purchase_token'
+      | 'visa_debit_purchase_token'
+      | 'visa_clearing_transmission'
+      | 'visa_direct_authorization'
+      | 'visa_direct_transaction_domestic'
+      | 'visa_service_commercial_credit'
+      | 'visa_advertising_service_commercial_credit'
+      | 'visa_community_growth_acceleration_program'
+      | 'visa_processing_guarantee_commercial_credit'
+      | 'pulse_switch_fee';
+
+    /**
+     * The fixed component of the fee, if applicable, given in major units of the fee
+     * amount.
+     */
+    fixed_component: string | null;
+
+    /**
+     * The variable rate component of the fee, if applicable, given as a decimal (e.g.,
+     * 0.015 for 1.5%).
+     */
+    variable_rate: string | null;
+  }
+
+  /**
+   * Fields related to verification of cardholder-provided values.
+   */
+  export interface Verification {
+    /**
+     * Fields related to verification of the Card Verification Code, a 3-digit code on
+     * the back of the card.
+     */
+    card_verification_code: Verification.CardVerificationCode;
+
+    /**
+     * Cardholder address provided in the authorization request and the address on file
+     * we verified it against.
+     */
+    cardholder_address: Verification.CardholderAddress;
+
+    /**
+     * Cardholder name provided in the authorization request.
+     */
+    cardholder_name: Verification.CardholderName | null;
+  }
+
+  export namespace Verification {
+    /**
+     * Fields related to verification of the Card Verification Code, a 3-digit code on
+     * the back of the card.
+     */
+    export interface CardVerificationCode {
+      /**
+       * The result of verifying the Card Verification Code.
+       *
+       * - `not_checked` - No card verification code was provided in the authorization
+       *   request.
+       * - `match` - The card verification code matched the one on file.
+       * - `no_match` - The card verification code did not match the one on file.
+       */
+      result: 'not_checked' | 'match' | 'no_match';
+    }
+
+    /**
+     * Cardholder address provided in the authorization request and the address on file
+     * we verified it against.
+     */
+    export interface CardholderAddress {
+      /**
+       * Line 1 of the address on file for the cardholder.
+       */
+      actual_line1: string | null;
+
+      /**
+       * The postal code of the address on file for the cardholder.
+       */
+      actual_postal_code: string | null;
+
+      /**
+       * The cardholder address line 1 provided for verification in the authorization
+       * request.
+       */
+      provided_line1: string | null;
+
+      /**
+       * The postal code provided for verification in the authorization request.
+       */
+      provided_postal_code: string | null;
+
+      /**
+       * The address verification result returned to the card network.
+       *
+       * - `not_checked` - No address information was provided in the authorization
+       *   request.
+       * - `postal_code_match_address_no_match` - Postal code matches, but the street
+       *   address does not match or was not provided.
+       * - `postal_code_no_match_address_match` - Postal code does not match, but the
+       *   street address matches or was not provided.
+       * - `match` - Postal code and street address match.
+       * - `no_match` - Postal code and street address do not match.
+       * - `postal_code_match_address_not_checked` - Postal code matches, but the street
+       *   address was not verified. (deprecated)
+       */
+      result:
+        | 'not_checked'
+        | 'postal_code_match_address_no_match'
+        | 'postal_code_no_match_address_match'
+        | 'match'
+        | 'no_match'
+        | 'postal_code_match_address_not_checked';
+    }
+
+    /**
+     * Cardholder name provided in the authorization request.
+     */
+    export interface CardholderName {
+      /**
+       * The first name provided for verification in the authorization request.
+       */
+      provided_first_name: string | null;
+
+      /**
+       * The last name provided for verification in the authorization request.
+       */
+      provided_last_name: string | null;
+
+      /**
+       * The middle name provided for verification in the authorization request.
+       */
+      provided_middle_name: string | null;
+    }
+  }
+}
+
+/**
+ * Card Refunds move money back to the cardholder. While they are usually connected
+ * to a Card Settlement, an acquirer can also refund money directly to a card
+ * without relation to a transaction.
+ */
+export interface CardRefund {
+  /**
+   * The Card Refund identifier.
+   */
+  id: string;
+
+  /**
+   * The amount in the minor unit of the transaction's settlement currency. For
+   * dollars, for example, this is cents.
+   */
+  amount: number;
+
+  /**
+   * The ID of the Card Payment this transaction belongs to.
+   */
+  card_payment_id: string;
+
+  /**
+   * Cashback debited for this transaction, if eligible. Cashback is paid out in
+   * aggregate, monthly.
+   */
+  cashback: CardRefund.Cashback | null;
+
+  /**
+   * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+   * transaction's settlement currency.
+   *
+   * - `USD` - US Dollar (USD)
+   */
+  currency: 'USD';
+
+  /**
+   * Interchange assessed as a part of this transaction.
+   */
+  interchange: CardRefund.Interchange | null;
+
+  /**
+   * The merchant identifier (commonly abbreviated as MID) of the merchant the card
+   * is transacting with.
+   */
+  merchant_acceptor_id: string;
+
+  /**
+   * The 4-digit MCC describing the merchant's business.
+   */
+  merchant_category_code: string;
+
+  /**
+   * The city the merchant resides in.
+   */
+  merchant_city: string;
+
+  /**
+   * The country the merchant resides in.
+   */
+  merchant_country: string;
+
+  /**
+   * The name of the merchant.
+   */
+  merchant_name: string;
+
+  /**
+   * The merchant's postal code. For US merchants this is always a 5-digit ZIP code.
+   */
+  merchant_postal_code: string | null;
+
+  /**
+   * The state the merchant resides in.
+   */
+  merchant_state: string | null;
+
+  /**
+   * Network-specific identifiers for this refund.
+   */
+  network_identifiers: CardRefund.NetworkIdentifiers;
+
+  /**
+   * The amount in the minor unit of the transaction's presentment currency.
+   */
+  presentment_amount: number;
+
+  /**
+   * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+   * transaction's presentment currency.
+   */
+  presentment_currency: string;
+
+  /**
+   * Additional details about the card purchase, such as tax and industry-specific
+   * fields.
+   */
+  purchase_details: CardRefund.PurchaseDetails | null;
+
+  /**
+   * The scheme fees associated with this card refund.
+   */
+  scheme_fees: Array<CardRefund.SchemeFee>;
+
+  /**
+   * The identifier of the Transaction associated with this Transaction.
+   */
+  transaction_id: string;
+
+  /**
+   * A constant representing the object's type. For this resource it will always be
+   * `card_refund`.
+   */
+  type: 'card_refund';
+
+  [k: string]: unknown;
+}
+
+export namespace CardRefund {
+  /**
+   * Cashback debited for this transaction, if eligible. Cashback is paid out in
+   * aggregate, monthly.
+   */
+  export interface Cashback {
+    /**
+     * The cashback amount given as a string containing a decimal number. The amount is
+     * a positive number if it will be credited to you (e.g., settlements) and a
+     * negative number if it will be debited (e.g., refunds).
+     */
+    amount: string;
+
+    /**
+     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the cashback.
+     *
+     * - `USD` - US Dollar (USD)
+     */
+    currency: 'USD';
+  }
+
+  /**
+   * Interchange assessed as a part of this transaction.
+   */
+  export interface Interchange {
+    /**
+     * The interchange amount given as a string containing a decimal number in major
+     * units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
+     * credited to Increase (e.g., settlements) and a negative number if it is debited
+     * (e.g., refunds).
+     */
+    amount: string;
+
+    /**
+     * The card network specific interchange code.
+     */
+    code: string | null;
+
+    /**
+     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
+     * reimbursement.
+     *
+     * - `USD` - US Dollar (USD)
+     */
+    currency: 'USD';
+  }
+
+  /**
+   * Network-specific identifiers for this refund.
+   */
+  export interface NetworkIdentifiers {
+    /**
+     * A network assigned business ID that identifies the acquirer that processed this
+     * transaction.
+     */
+    acquirer_business_id: string;
+
+    /**
+     * A globally unique identifier for this settlement.
+     */
+    acquirer_reference_number: string;
+
+    /**
+     * The randomly generated 6-character Authorization Identification Response code
+     * sent back to the acquirer in an approved response.
+     */
+    authorization_identification_response: string | null;
+
+    /**
+     * A globally unique transaction identifier provided by the card network, used
+     * across multiple life-cycle requests.
+     */
+    transaction_id: string | null;
+  }
+
+  /**
+   * Additional details about the card purchase, such as tax and industry-specific
+   * fields.
+   */
+  export interface PurchaseDetails {
+    /**
+     * Fields specific to car rentals.
+     */
+    car_rental: PurchaseDetails.CarRental | null;
+
+    /**
+     * An identifier from the merchant for the customer or consumer.
+     */
+    customer_reference_identifier: string | null;
+
+    /**
+     * The state or provincial tax amount in minor units.
+     */
+    local_tax_amount: number | null;
+
+    /**
+     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+     * assessed.
+     */
+    local_tax_currency: string | null;
+
+    /**
+     * Fields specific to lodging.
+     */
+    lodging: PurchaseDetails.Lodging | null;
+
+    /**
+     * The national tax amount in minor units.
+     */
+    national_tax_amount: number | null;
+
+    /**
+     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+     * assessed.
+     */
+    national_tax_currency: string | null;
+
+    /**
+     * An identifier from the merchant for the purchase to the issuer and cardholder.
+     */
+    purchase_identifier: string | null;
+
+    /**
+     * The format of the purchase identifier.
+     *
+     * - `free_text` - Free text
+     * - `order_number` - Order number
+     * - `rental_agreement_number` - Rental agreement number
+     * - `hotel_folio_number` - Hotel folio number
+     * - `invoice_number` - Invoice number
+     */
+    purchase_identifier_format:
+      | 'free_text'
+      | 'order_number'
+      | 'rental_agreement_number'
+      | 'hotel_folio_number'
+      | 'invoice_number'
+      | null;
+
+    /**
+     * Fields specific to travel.
+     */
+    travel: PurchaseDetails.Travel | null;
+  }
+
+  export namespace PurchaseDetails {
+    /**
+     * Fields specific to car rentals.
+     */
+    export interface CarRental {
+      /**
+       * Code indicating the vehicle's class.
+       */
+      car_class_code: string | null;
+
+      /**
+       * Date the customer picked up the car or, in the case of a no-show or pre-pay
+       * transaction, the scheduled pick up date.
+       */
+      checkout_date: string | null;
+
+      /**
+       * Daily rate being charged for the vehicle.
+       */
+      daily_rental_rate_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily rental
+       * rate.
+       */
+      daily_rental_rate_currency: string | null;
+
+      /**
+       * Number of days the vehicle was rented.
+       */
+      days_rented: number | null;
+
+      /**
+       * Additional charges (gas, late fee, etc.) being billed.
+       *
+       * - `no_extra_charge` - No extra charge
+       * - `gas` - Gas
+       * - `extra_mileage` - Extra mileage
+       * - `late_return` - Late return
+       * - `one_way_service_fee` - One way service fee
+       * - `parking_violation` - Parking violation
+       */
+      extra_charges:
+        | 'no_extra_charge'
+        | 'gas'
+        | 'extra_mileage'
+        | 'late_return'
+        | 'one_way_service_fee'
+        | 'parking_violation'
+        | null;
+
+      /**
+       * Fuel charges for the vehicle.
+       */
+      fuel_charges_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel charges
+       * assessed.
+       */
+      fuel_charges_currency: string | null;
+
+      /**
+       * Any insurance being charged for the vehicle.
+       */
+      insurance_charges_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the insurance
+       * charges assessed.
+       */
+      insurance_charges_currency: string | null;
+
+      /**
+       * An indicator that the cardholder is being billed for a reserved vehicle that was
+       * not actually rented (that is, a "no-show" charge).
+       *
+       * - `not_applicable` - Not applicable
+       * - `no_show_for_specialized_vehicle` - No show for specialized vehicle
+       */
+      no_show_indicator: 'not_applicable' | 'no_show_for_specialized_vehicle' | null;
+
+      /**
+       * Charges for returning the vehicle at a different location than where it was
+       * picked up.
+       */
+      one_way_drop_off_charges_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the one-way
+       * drop-off charges assessed.
+       */
+      one_way_drop_off_charges_currency: string | null;
+
+      /**
+       * Name of the person renting the vehicle.
+       */
+      renter_name: string | null;
+
+      /**
+       * Weekly rate being charged for the vehicle.
+       */
+      weekly_rental_rate_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
+       * rental rate.
+       */
+      weekly_rental_rate_currency: string | null;
+    }
+
+    /**
+     * Fields specific to lodging.
+     */
+    export interface Lodging {
+      /**
+       * Date the customer checked in.
+       */
+      check_in_date: string | null;
+
+      /**
+       * Daily rate being charged for the room.
+       */
+      daily_room_rate_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily room
+       * rate.
+       */
+      daily_room_rate_currency: string | null;
+
+      /**
+       * Additional charges (phone, late check-out, etc.) being billed.
+       *
+       * - `no_extra_charge` - No extra charge
+       * - `restaurant` - Restaurant
+       * - `gift_shop` - Gift shop
+       * - `mini_bar` - Mini bar
+       * - `telephone` - Telephone
+       * - `other` - Other
+       * - `laundry` - Laundry
+       */
+      extra_charges:
+        | 'no_extra_charge'
+        | 'restaurant'
+        | 'gift_shop'
+        | 'mini_bar'
+        | 'telephone'
+        | 'other'
+        | 'laundry'
+        | null;
+
+      /**
+       * Folio cash advances for the room.
+       */
+      folio_cash_advances_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the folio cash
+       * advances.
+       */
+      folio_cash_advances_currency: string | null;
+
+      /**
+       * Food and beverage charges for the room.
+       */
+      food_beverage_charges_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
+       * beverage charges.
+       */
+      food_beverage_charges_currency: string | null;
+
+      /**
+       * Indicator that the cardholder is being billed for a reserved room that was not
+       * actually used.
+       *
+       * - `not_applicable` - Not applicable
+       * - `no_show` - No show
+       */
+      no_show_indicator: 'not_applicable' | 'no_show' | null;
+
+      /**
+       * Prepaid expenses being charged for the room.
+       */
+      prepaid_expenses_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the prepaid
+       * expenses.
+       */
+      prepaid_expenses_currency: string | null;
+
+      /**
+       * Number of nights the room was rented.
+       */
+      room_nights: number | null;
+
+      /**
+       * Total room tax being charged.
+       */
+      total_room_tax_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total room
+       * tax.
+       */
+      total_room_tax_currency: string | null;
+
+      /**
+       * Total tax being charged for the room.
+       */
+      total_tax_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
+       * assessed.
+       */
+      total_tax_currency: string | null;
+    }
+
+    /**
+     * Fields specific to travel.
+     */
+    export interface Travel {
+      /**
+       * Ancillary purchases in addition to the airfare.
+       */
+      ancillary: Travel.Ancillary | null;
+
+      /**
+       * Indicates the computerized reservation system used to book the ticket.
+       */
+      computerized_reservation_system: string | null;
+
+      /**
+       * Indicates the reason for a credit to the cardholder.
+       *
+       * - `no_credit` - No credit
+       * - `passenger_transport_ancillary_purchase_cancellation` - Passenger transport
+       *   ancillary purchase cancellation
+       * - `airline_ticket_and_passenger_transport_ancillary_purchase_cancellation` -
+       *   Airline ticket and passenger transport ancillary purchase cancellation
+       * - `airline_ticket_cancellation` - Airline ticket cancellation
+       * - `other` - Other
+       * - `partial_refund_of_airline_ticket` - Partial refund of airline ticket
+       */
+      credit_reason_indicator:
+        | 'no_credit'
+        | 'passenger_transport_ancillary_purchase_cancellation'
+        | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation'
+        | 'airline_ticket_cancellation'
+        | 'other'
+        | 'partial_refund_of_airline_ticket'
+        | null;
+
+      /**
+       * Date of departure.
+       */
+      departure_date: string | null;
+
+      /**
+       * Code for the originating city or airport.
+       */
+      origination_city_airport_code: string | null;
+
+      /**
+       * Name of the passenger.
+       */
+      passenger_name: string | null;
+
+      /**
+       * Indicates whether this ticket is non-refundable.
+       *
+       * - `no_restrictions` - No restrictions
+       * - `restricted_non_refundable_ticket` - Restricted non-refundable ticket
+       */
+      restricted_ticket_indicator: 'no_restrictions' | 'restricted_non_refundable_ticket' | null;
+
+      /**
+       * Indicates why a ticket was changed.
+       *
+       * - `none` - None
+       * - `change_to_existing_ticket` - Change to existing ticket
+       * - `new_ticket` - New ticket
+       */
+      ticket_change_indicator: 'none' | 'change_to_existing_ticket' | 'new_ticket' | null;
+
+      /**
+       * Ticket number.
+       */
+      ticket_number: string | null;
+
+      /**
+       * Code for the travel agency if the ticket was issued by a travel agency.
+       */
+      travel_agency_code: string | null;
+
+      /**
+       * Name of the travel agency if the ticket was issued by a travel agency.
+       */
+      travel_agency_name: string | null;
+
+      /**
+       * Fields specific to each leg of the journey.
+       */
+      trip_legs: Array<Travel.TripLeg> | null;
+    }
+
+    export namespace Travel {
+      /**
+       * Ancillary purchases in addition to the airfare.
+       */
+      export interface Ancillary {
+        /**
+         * If this purchase has a connection or relationship to another purchase, such as a
+         * baggage fee for a passenger transport ticket, this field should contain the
+         * ticket document number for the other purchase.
+         */
+        connected_ticket_document_number: string | null;
+
+        /**
+         * Indicates the reason for a credit to the cardholder.
+         *
+         * - `no_credit` - No credit
+         * - `passenger_transport_ancillary_purchase_cancellation` - Passenger transport
+         *   ancillary purchase cancellation
+         * - `airline_ticket_and_passenger_transport_ancillary_purchase_cancellation` -
+         *   Airline ticket and passenger transport ancillary purchase cancellation
+         * - `other` - Other
+         */
+        credit_reason_indicator:
+          | 'no_credit'
+          | 'passenger_transport_ancillary_purchase_cancellation'
+          | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation'
+          | 'other'
+          | null;
+
+        /**
+         * Name of the passenger or description of the ancillary purchase.
+         */
+        passenger_name_or_description: string | null;
+
+        /**
+         * Additional travel charges, such as baggage fees.
+         */
+        services: Array<Ancillary.Service>;
+
+        /**
+         * Ticket document number.
+         */
+        ticket_document_number: string | null;
+      }
+
+      export namespace Ancillary {
+        export interface Service {
+          /**
+           * Category of the ancillary service.
+           *
+           * - `none` - None
+           * - `bundled_service` - Bundled service
+           * - `baggage_fee` - Baggage fee
+           * - `change_fee` - Change fee
+           * - `cargo` - Cargo
+           * - `carbon_offset` - Carbon offset
+           * - `frequent_flyer` - Frequent flyer
+           * - `gift_card` - Gift card
+           * - `ground_transport` - Ground transport
+           * - `in_flight_entertainment` - In-flight entertainment
+           * - `lounge` - Lounge
+           * - `medical` - Medical
+           * - `meal_beverage` - Meal beverage
+           * - `other` - Other
+           * - `passenger_assist_fee` - Passenger assist fee
+           * - `pets` - Pets
+           * - `seat_fees` - Seat fees
+           * - `standby` - Standby
+           * - `service_fee` - Service fee
+           * - `store` - Store
+           * - `travel_service` - Travel service
+           * - `unaccompanied_travel` - Unaccompanied travel
+           * - `upgrades` - Upgrades
+           * - `wifi` - Wi-fi
+           */
+          category:
+            | 'none'
+            | 'bundled_service'
+            | 'baggage_fee'
+            | 'change_fee'
+            | 'cargo'
+            | 'carbon_offset'
+            | 'frequent_flyer'
+            | 'gift_card'
+            | 'ground_transport'
+            | 'in_flight_entertainment'
+            | 'lounge'
+            | 'medical'
+            | 'meal_beverage'
+            | 'other'
+            | 'passenger_assist_fee'
+            | 'pets'
+            | 'seat_fees'
+            | 'standby'
+            | 'service_fee'
+            | 'store'
+            | 'travel_service'
+            | 'unaccompanied_travel'
+            | 'upgrades'
+            | 'wifi'
+            | null;
+
+          /**
+           * Sub-category of the ancillary service, free-form.
+           */
+          sub_category: string | null;
+        }
+      }
+
+      export interface TripLeg {
+        /**
+         * Carrier code (e.g., United Airlines, Jet Blue, etc.).
+         */
+        carrier_code: string | null;
+
+        /**
+         * Code for the destination city or airport.
+         */
+        destination_city_airport_code: string | null;
+
+        /**
+         * Fare basis code.
+         */
+        fare_basis_code: string | null;
+
+        /**
+         * Flight number.
+         */
+        flight_number: string | null;
+
+        /**
+         * Service class (e.g., first class, business class, etc.).
+         */
+        service_class: string | null;
+
+        /**
+         * Indicates whether a stopover is allowed on this ticket.
+         *
+         * - `none` - None
+         * - `stop_over_allowed` - Stop over allowed
+         * - `stop_over_not_allowed` - Stop over not allowed
+         */
+        stop_over_code: 'none' | 'stop_over_allowed' | 'stop_over_not_allowed' | null;
+      }
+    }
+  }
+
+  export interface SchemeFee {
+    /**
+     * The fee amount given as a string containing a decimal number.
+     */
+    amount: string;
+
+    /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
+     * created.
+     */
+    created_at: string;
+
+    /**
+     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+     * reimbursement.
+     *
+     * - `USD` - US Dollar (USD)
+     */
+    currency: 'USD';
+
+    /**
+     * The type of fee being assessed.
+     *
+     * - `visa_international_service_assessment_single_currency` - International
+     *   Service Assessment (ISA) single-currency is a fee assessed by the card network
+     *   for cross-border transactions presented and settled in the same currency.
+     * - `visa_international_service_assessment_cross_currency` - International Service
+     *   Assessment (ISA) cross-currency is a fee assessed by the card network for
+     *   cross-border transactions presented and settled in different currencies.
+     * - `visa_authorization_domestic_point_of_sale` - Activity and charges for Visa
+     *   Settlement System processing for POS (Point-Of-Sale) authorization
+     *   transactions. Authorization is the process of approving or declining the
+     *   transaction amount specified. The fee is assessed to the Issuer.
+     * - `visa_authorization_international_point_of_sale` - Activity and charges for
+     *   Visa Settlement System processing for POS (Point-Of-Sale) International
+     *   authorization transactions. Authorization is the process of approving or
+     *   declining the transaction amount specified. The fee is assessed to the Issuer.
+     * - `visa_authorization_canada_point_of_sale` - Activity and charges for Visa
+     *   Settlement System processing for Canada Region POS (Point-of-Sale)
+     *   authorization transactions. Authorization is the process of approving or
+     *   declining the transaction amount specified.
+     * - `visa_authorization_reversal_point_of_sale` - Activity only for Visa
+     *   Settlement System authorization processing of POS (Point-Of-Sale) reversal
+     *   transactions. Authorization reversal represents a VSS message that undoes the
+     *   complete or partial actions of a previous authorization request.
+     * - `visa_authorization_reversal_international_point_of_sale` - Activity only for
+     *   Visa Settlement System authorization processing of POS (Point-Of-Sale)
+     *   International reversal transactions. Authorization reversal represents a VSS
+     *   message that undoes the complete or partial actions of a previous
+     *   authorization request.
+     * - `visa_authorization_address_verification_service` - A per Address Verification
+     *   Service (AVS) result fee. Applies to all usable AVS result codes.
+     * - `visa_advanced_authorization` - Advanced Authorization is a fraud detection
+     *   tool that monitors and risk evaluates 100 percent of US VisaNet authorizations
+     *   in real-time. Activity related to Purchase (includes Signature Authenticated
+     *   Visa and PIN Authenticated Visa Debit (PAVD) transactions).
+     * - `visa_message_transmission` - Issuer Transactions Visa represents a charge
+     *   based on total actual monthly processing (Visa transactions only) through a
+     *   VisaNet Access Point (VAP). Charges are assessed to the processor for each
+     *   VisaNet Access Point.
+     * - `visa_account_verification_domestic` - Activity, per inquiry, related to the
+     *   domestic Issuer for Account Number Verification.
+     * - `visa_account_verification_international` - Activity, per inquiry, related to
+     *   the international Issuer for Account Number Verification.
+     * - `visa_account_verification_canada` - Activity, per inquiry, related to the
+     *   US-Canada Issuer for Account Number Verification.
+     * - `visa_corporate_acceptance_fee` - The Corporate Acceptance Fee is charged to
+     *   issuers and is based on the monthly sales volume on Commercial and Government
+     *   Debit, Prepaid, Credit, Charge, or Deferred Debit card transactions.
+     * - `visa_consumer_debit_acceptance_fee` - The Consumer Debit Acceptance Fee is
+     *   charged to issuers and is based on the monthly sales volume of Consumer Debit
+     *   or Prepaid card transactions. The cashback portion of a Debit and Prepaid card
+     *   transaction is excluded from the sales volume calculation.
+     * - `visa_business_debit_acceptance_fee` - The Business Acceptance Fee is charged
+     *   to issuers and is based on the monthly sales volume on Business Debit,
+     *   Prepaid, Credit, Charge, or Deferred Debit card transactions. The cashback
+     *   portion is included in the sales volume calculation with the exception of a
+     *   Debit and Prepaid card transactions.
+     * - `visa_purchasing_acceptance_fee` - The Purchasing Card Acceptance Fee is
+     *   charged to issuers and is based on the monthly sales volume on Commercial and
+     *   Government Debit, Prepaid, Credit, Charge, or Deferred Debit card
+     *   transactions.
+     * - `visa_purchase_domestic` - Activity and fees for the processing of a sales
+     *   draft original for a purchase transaction.
+     * - `visa_purchase_international` - Activity and fees for the processing of an
+     *   international sales draft original for a purchase transaction.
+     * - `visa_credit_purchase_token` - Apple Pay Credit Product Token Purchase
+     *   Original Transactions. This fee is billed by Visa on behalf of Apple Inc. for
+     *   Apple Pay transactions.
+     * - `visa_debit_purchase_token` - Apple Pay Debit Product Token Purchase Original
+     *   Transactions. This fee is billed by Visa on behalf of Apple Inc. for Apple Pay
+     *   transactions.
+     * - `visa_clearing_transmission` - A per transaction fee assessed for Base II
+     *   financial draft - Issuer.
+     * - `visa_direct_authorization` - Issuer charge for Non-Financial OCT/AFT
+     *   Authorization 0100 and Declined Financial OCT/AFT 0200 transactions.
+     * - `visa_direct_transaction_domestic` - Data processing charge for Visa Direct
+     *   OCTs for all business application identifiers (BAIs) other than money
+     *   transfer-bank initiated (BI). BASE II transactions.
+     * - `visa_service_commercial_credit` - Issuer card service fee for Commercial
+     *   Credit cards.
+     * - `visa_advertising_service_commercial_credit` - Issuer Advertising Service Fee
+     *   for Commercial Credit cards.
+     * - `visa_community_growth_acceleration_program` - Issuer Community Growth
+     *   Acceleration Program Fee.
+     * - `visa_processing_guarantee_commercial_credit` - Issuer Processing Guarantee
+     *   for Commercial Credit cards.
+     * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
+     *   for processing transactions on its network.
+     */
+    fee_type:
+      | 'visa_international_service_assessment_single_currency'
+      | 'visa_international_service_assessment_cross_currency'
+      | 'visa_authorization_domestic_point_of_sale'
+      | 'visa_authorization_international_point_of_sale'
+      | 'visa_authorization_canada_point_of_sale'
+      | 'visa_authorization_reversal_point_of_sale'
+      | 'visa_authorization_reversal_international_point_of_sale'
+      | 'visa_authorization_address_verification_service'
+      | 'visa_advanced_authorization'
+      | 'visa_message_transmission'
+      | 'visa_account_verification_domestic'
+      | 'visa_account_verification_international'
+      | 'visa_account_verification_canada'
+      | 'visa_corporate_acceptance_fee'
+      | 'visa_consumer_debit_acceptance_fee'
+      | 'visa_business_debit_acceptance_fee'
+      | 'visa_purchasing_acceptance_fee'
+      | 'visa_purchase_domestic'
+      | 'visa_purchase_international'
+      | 'visa_credit_purchase_token'
+      | 'visa_debit_purchase_token'
+      | 'visa_clearing_transmission'
+      | 'visa_direct_authorization'
+      | 'visa_direct_transaction_domestic'
+      | 'visa_service_commercial_credit'
+      | 'visa_advertising_service_commercial_credit'
+      | 'visa_community_growth_acceleration_program'
+      | 'visa_processing_guarantee_commercial_credit'
+      | 'pulse_switch_fee';
+
+    /**
+     * The fixed component of the fee, if applicable, given in major units of the fee
+     * amount.
+     */
+    fixed_component: string | null;
+
+    /**
+     * The variable rate component of the fee, if applicable, given as a decimal (e.g.,
+     * 0.015 for 1.5%).
+     */
+    variable_rate: string | null;
+  }
+}
+
+/**
+ * Card Settlements are card transactions that have cleared and settled. While a
+ * settlement is usually preceded by an authorization, an acquirer can also
+ * directly clear a transaction without first authorizing it.
+ */
+export interface CardSettlement {
+  /**
+   * The Card Settlement identifier.
+   */
+  id: string;
+
+  /**
+   * The amount in the minor unit of the transaction's settlement currency. For
+   * dollars, for example, this is cents.
+   */
+  amount: number;
+
+  /**
+   * The Card Authorization that was created prior to this Card Settlement, if one
+   * exists.
+   */
+  card_authorization: string | null;
+
+  /**
+   * The ID of the Card Payment this transaction belongs to.
+   */
+  card_payment_id: string;
+
+  /**
+   * Cashback earned on this transaction, if eligible. Cashback is paid out in
+   * aggregate, monthly.
+   */
+  cashback: CardSettlement.Cashback | null;
+
+  /**
+   * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+   * transaction's settlement currency.
+   *
+   * - `USD` - US Dollar (USD)
+   */
+  currency: 'USD';
+
+  /**
+   * Interchange assessed as a part of this transaction.
+   */
+  interchange: CardSettlement.Interchange | null;
+
+  /**
+   * The merchant identifier (commonly abbreviated as MID) of the merchant the card
+   * is transacting with.
+   */
+  merchant_acceptor_id: string;
+
+  /**
+   * The 4-digit MCC describing the merchant's business.
+   */
+  merchant_category_code: string;
+
+  /**
+   * The city the merchant resides in.
+   */
+  merchant_city: string;
+
+  /**
+   * The country the merchant resides in.
+   */
+  merchant_country: string;
+
+  /**
+   * The name of the merchant.
+   */
+  merchant_name: string;
+
+  /**
+   * The merchant's postal code. For US merchants this is always a 5-digit ZIP code.
+   */
+  merchant_postal_code: string | null;
+
+  /**
+   * The state the merchant resides in.
+   */
+  merchant_state: string | null;
+
+  /**
+   * The card network on which this transaction was processed.
+   *
+   * - `visa` - Visa
+   * - `pulse` - Pulse
+   */
+  network: 'visa' | 'pulse';
+
+  /**
+   * Network-specific identifiers for this refund.
+   */
+  network_identifiers: CardSettlement.NetworkIdentifiers;
+
+  /**
+   * The identifier of the Pending Transaction associated with this Transaction.
+   */
+  pending_transaction_id: string | null;
+
+  /**
+   * The amount in the minor unit of the transaction's presentment currency.
+   */
+  presentment_amount: number;
+
+  /**
+   * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+   * transaction's presentment currency.
+   */
+  presentment_currency: string;
+
+  /**
+   * Additional details about the card purchase, such as tax and industry-specific
+   * fields.
+   */
+  purchase_details: CardSettlement.PurchaseDetails | null;
+
+  /**
+   * The scheme fees associated with this card settlement.
+   */
+  scheme_fees: Array<CardSettlement.SchemeFee>;
+
+  /**
+   * Surcharge amount details, if applicable. The amount is positive if the surcharge
+   * is added to the overall transaction amount (surcharge), and negative if the
+   * surcharge is deducted from the overall transaction amount (discount).
+   */
+  surcharge: CardSettlement.Surcharge | null;
+
+  /**
+   * The identifier of the Transaction associated with this Transaction.
+   */
+  transaction_id: string;
+
+  /**
+   * A constant representing the object's type. For this resource it will always be
+   * `card_settlement`.
+   */
+  type: 'card_settlement';
+
+  [k: string]: unknown;
+}
+
+export namespace CardSettlement {
+  /**
+   * Cashback earned on this transaction, if eligible. Cashback is paid out in
+   * aggregate, monthly.
+   */
+  export interface Cashback {
+    /**
+     * The cashback amount given as a string containing a decimal number. The amount is
+     * a positive number if it will be credited to you (e.g., settlements) and a
+     * negative number if it will be debited (e.g., refunds).
+     */
+    amount: string;
+
+    /**
+     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the cashback.
+     *
+     * - `USD` - US Dollar (USD)
+     */
+    currency: 'USD';
+  }
+
+  /**
+   * Interchange assessed as a part of this transaction.
+   */
+  export interface Interchange {
+    /**
+     * The interchange amount given as a string containing a decimal number in major
+     * units (so e.g., "3.14" for $3.14). The amount is a positive number if it is
+     * credited to Increase (e.g., settlements) and a negative number if it is debited
+     * (e.g., refunds).
+     */
+    amount: string;
+
+    /**
+     * The card network specific interchange code.
+     */
+    code: string | null;
+
+    /**
+     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the interchange
+     * reimbursement.
+     *
+     * - `USD` - US Dollar (USD)
+     */
+    currency: 'USD';
+  }
+
+  /**
+   * Network-specific identifiers for this refund.
+   */
+  export interface NetworkIdentifiers {
+    /**
+     * A network assigned business ID that identifies the acquirer that processed this
+     * transaction.
+     */
+    acquirer_business_id: string;
+
+    /**
+     * A globally unique identifier for this settlement.
+     */
+    acquirer_reference_number: string;
+
+    /**
+     * The randomly generated 6-character Authorization Identification Response code
+     * sent back to the acquirer in an approved response.
+     */
+    authorization_identification_response: string | null;
+
+    /**
+     * A globally unique transaction identifier provided by the card network, used
+     * across multiple life-cycle requests.
+     */
+    transaction_id: string | null;
+  }
+
+  /**
+   * Additional details about the card purchase, such as tax and industry-specific
+   * fields.
+   */
+  export interface PurchaseDetails {
+    /**
+     * Fields specific to car rentals.
+     */
+    car_rental: PurchaseDetails.CarRental | null;
+
+    /**
+     * An identifier from the merchant for the customer or consumer.
+     */
+    customer_reference_identifier: string | null;
+
+    /**
+     * The state or provincial tax amount in minor units.
+     */
+    local_tax_amount: number | null;
+
+    /**
+     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+     * assessed.
+     */
+    local_tax_currency: string | null;
+
+    /**
+     * Fields specific to lodging.
+     */
+    lodging: PurchaseDetails.Lodging | null;
+
+    /**
+     * The national tax amount in minor units.
+     */
+    national_tax_amount: number | null;
+
+    /**
+     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the local tax
+     * assessed.
+     */
+    national_tax_currency: string | null;
+
+    /**
+     * An identifier from the merchant for the purchase to the issuer and cardholder.
+     */
+    purchase_identifier: string | null;
+
+    /**
+     * The format of the purchase identifier.
+     *
+     * - `free_text` - Free text
+     * - `order_number` - Order number
+     * - `rental_agreement_number` - Rental agreement number
+     * - `hotel_folio_number` - Hotel folio number
+     * - `invoice_number` - Invoice number
+     */
+    purchase_identifier_format:
+      | 'free_text'
+      | 'order_number'
+      | 'rental_agreement_number'
+      | 'hotel_folio_number'
+      | 'invoice_number'
+      | null;
+
+    /**
+     * Fields specific to travel.
+     */
+    travel: PurchaseDetails.Travel | null;
+  }
+
+  export namespace PurchaseDetails {
+    /**
+     * Fields specific to car rentals.
+     */
+    export interface CarRental {
+      /**
+       * Code indicating the vehicle's class.
+       */
+      car_class_code: string | null;
+
+      /**
+       * Date the customer picked up the car or, in the case of a no-show or pre-pay
+       * transaction, the scheduled pick up date.
+       */
+      checkout_date: string | null;
+
+      /**
+       * Daily rate being charged for the vehicle.
+       */
+      daily_rental_rate_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily rental
+       * rate.
+       */
+      daily_rental_rate_currency: string | null;
+
+      /**
+       * Number of days the vehicle was rented.
+       */
+      days_rented: number | null;
+
+      /**
+       * Additional charges (gas, late fee, etc.) being billed.
+       *
+       * - `no_extra_charge` - No extra charge
+       * - `gas` - Gas
+       * - `extra_mileage` - Extra mileage
+       * - `late_return` - Late return
+       * - `one_way_service_fee` - One way service fee
+       * - `parking_violation` - Parking violation
+       */
+      extra_charges:
+        | 'no_extra_charge'
+        | 'gas'
+        | 'extra_mileage'
+        | 'late_return'
+        | 'one_way_service_fee'
+        | 'parking_violation'
+        | null;
+
+      /**
+       * Fuel charges for the vehicle.
+       */
+      fuel_charges_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fuel charges
+       * assessed.
+       */
+      fuel_charges_currency: string | null;
+
+      /**
+       * Any insurance being charged for the vehicle.
+       */
+      insurance_charges_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the insurance
+       * charges assessed.
+       */
+      insurance_charges_currency: string | null;
+
+      /**
+       * An indicator that the cardholder is being billed for a reserved vehicle that was
+       * not actually rented (that is, a "no-show" charge).
+       *
+       * - `not_applicable` - Not applicable
+       * - `no_show_for_specialized_vehicle` - No show for specialized vehicle
+       */
+      no_show_indicator: 'not_applicable' | 'no_show_for_specialized_vehicle' | null;
+
+      /**
+       * Charges for returning the vehicle at a different location than where it was
+       * picked up.
+       */
+      one_way_drop_off_charges_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the one-way
+       * drop-off charges assessed.
+       */
+      one_way_drop_off_charges_currency: string | null;
+
+      /**
+       * Name of the person renting the vehicle.
+       */
+      renter_name: string | null;
+
+      /**
+       * Weekly rate being charged for the vehicle.
+       */
+      weekly_rental_rate_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the weekly
+       * rental rate.
+       */
+      weekly_rental_rate_currency: string | null;
+    }
+
+    /**
+     * Fields specific to lodging.
+     */
+    export interface Lodging {
+      /**
+       * Date the customer checked in.
+       */
+      check_in_date: string | null;
+
+      /**
+       * Daily rate being charged for the room.
+       */
+      daily_room_rate_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the daily room
+       * rate.
+       */
+      daily_room_rate_currency: string | null;
+
+      /**
+       * Additional charges (phone, late check-out, etc.) being billed.
+       *
+       * - `no_extra_charge` - No extra charge
+       * - `restaurant` - Restaurant
+       * - `gift_shop` - Gift shop
+       * - `mini_bar` - Mini bar
+       * - `telephone` - Telephone
+       * - `other` - Other
+       * - `laundry` - Laundry
+       */
+      extra_charges:
+        | 'no_extra_charge'
+        | 'restaurant'
+        | 'gift_shop'
+        | 'mini_bar'
+        | 'telephone'
+        | 'other'
+        | 'laundry'
+        | null;
+
+      /**
+       * Folio cash advances for the room.
+       */
+      folio_cash_advances_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the folio cash
+       * advances.
+       */
+      folio_cash_advances_currency: string | null;
+
+      /**
+       * Food and beverage charges for the room.
+       */
+      food_beverage_charges_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the food and
+       * beverage charges.
+       */
+      food_beverage_charges_currency: string | null;
+
+      /**
+       * Indicator that the cardholder is being billed for a reserved room that was not
+       * actually used.
+       *
+       * - `not_applicable` - Not applicable
+       * - `no_show` - No show
+       */
+      no_show_indicator: 'not_applicable' | 'no_show' | null;
+
+      /**
+       * Prepaid expenses being charged for the room.
+       */
+      prepaid_expenses_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the prepaid
+       * expenses.
+       */
+      prepaid_expenses_currency: string | null;
+
+      /**
+       * Number of nights the room was rented.
+       */
+      room_nights: number | null;
+
+      /**
+       * Total room tax being charged.
+       */
+      total_room_tax_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total room
+       * tax.
+       */
+      total_room_tax_currency: string | null;
+
+      /**
+       * Total tax being charged for the room.
+       */
+      total_tax_amount: number | null;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the total tax
+       * assessed.
+       */
+      total_tax_currency: string | null;
+    }
+
+    /**
+     * Fields specific to travel.
+     */
+    export interface Travel {
+      /**
+       * Ancillary purchases in addition to the airfare.
+       */
+      ancillary: Travel.Ancillary | null;
+
+      /**
+       * Indicates the computerized reservation system used to book the ticket.
+       */
+      computerized_reservation_system: string | null;
+
+      /**
+       * Indicates the reason for a credit to the cardholder.
+       *
+       * - `no_credit` - No credit
+       * - `passenger_transport_ancillary_purchase_cancellation` - Passenger transport
+       *   ancillary purchase cancellation
+       * - `airline_ticket_and_passenger_transport_ancillary_purchase_cancellation` -
+       *   Airline ticket and passenger transport ancillary purchase cancellation
+       * - `airline_ticket_cancellation` - Airline ticket cancellation
+       * - `other` - Other
+       * - `partial_refund_of_airline_ticket` - Partial refund of airline ticket
+       */
+      credit_reason_indicator:
+        | 'no_credit'
+        | 'passenger_transport_ancillary_purchase_cancellation'
+        | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation'
+        | 'airline_ticket_cancellation'
+        | 'other'
+        | 'partial_refund_of_airline_ticket'
+        | null;
+
+      /**
+       * Date of departure.
+       */
+      departure_date: string | null;
+
+      /**
+       * Code for the originating city or airport.
+       */
+      origination_city_airport_code: string | null;
+
+      /**
+       * Name of the passenger.
+       */
+      passenger_name: string | null;
+
+      /**
+       * Indicates whether this ticket is non-refundable.
+       *
+       * - `no_restrictions` - No restrictions
+       * - `restricted_non_refundable_ticket` - Restricted non-refundable ticket
+       */
+      restricted_ticket_indicator: 'no_restrictions' | 'restricted_non_refundable_ticket' | null;
+
+      /**
+       * Indicates why a ticket was changed.
+       *
+       * - `none` - None
+       * - `change_to_existing_ticket` - Change to existing ticket
+       * - `new_ticket` - New ticket
+       */
+      ticket_change_indicator: 'none' | 'change_to_existing_ticket' | 'new_ticket' | null;
+
+      /**
+       * Ticket number.
+       */
+      ticket_number: string | null;
+
+      /**
+       * Code for the travel agency if the ticket was issued by a travel agency.
+       */
+      travel_agency_code: string | null;
+
+      /**
+       * Name of the travel agency if the ticket was issued by a travel agency.
+       */
+      travel_agency_name: string | null;
+
+      /**
+       * Fields specific to each leg of the journey.
+       */
+      trip_legs: Array<Travel.TripLeg> | null;
+    }
+
+    export namespace Travel {
+      /**
+       * Ancillary purchases in addition to the airfare.
+       */
+      export interface Ancillary {
+        /**
+         * If this purchase has a connection or relationship to another purchase, such as a
+         * baggage fee for a passenger transport ticket, this field should contain the
+         * ticket document number for the other purchase.
+         */
+        connected_ticket_document_number: string | null;
+
+        /**
+         * Indicates the reason for a credit to the cardholder.
+         *
+         * - `no_credit` - No credit
+         * - `passenger_transport_ancillary_purchase_cancellation` - Passenger transport
+         *   ancillary purchase cancellation
+         * - `airline_ticket_and_passenger_transport_ancillary_purchase_cancellation` -
+         *   Airline ticket and passenger transport ancillary purchase cancellation
+         * - `other` - Other
+         */
+        credit_reason_indicator:
+          | 'no_credit'
+          | 'passenger_transport_ancillary_purchase_cancellation'
+          | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation'
+          | 'other'
+          | null;
+
+        /**
+         * Name of the passenger or description of the ancillary purchase.
+         */
+        passenger_name_or_description: string | null;
+
+        /**
+         * Additional travel charges, such as baggage fees.
+         */
+        services: Array<Ancillary.Service>;
+
+        /**
+         * Ticket document number.
+         */
+        ticket_document_number: string | null;
+      }
+
+      export namespace Ancillary {
+        export interface Service {
+          /**
+           * Category of the ancillary service.
+           *
+           * - `none` - None
+           * - `bundled_service` - Bundled service
+           * - `baggage_fee` - Baggage fee
+           * - `change_fee` - Change fee
+           * - `cargo` - Cargo
+           * - `carbon_offset` - Carbon offset
+           * - `frequent_flyer` - Frequent flyer
+           * - `gift_card` - Gift card
+           * - `ground_transport` - Ground transport
+           * - `in_flight_entertainment` - In-flight entertainment
+           * - `lounge` - Lounge
+           * - `medical` - Medical
+           * - `meal_beverage` - Meal beverage
+           * - `other` - Other
+           * - `passenger_assist_fee` - Passenger assist fee
+           * - `pets` - Pets
+           * - `seat_fees` - Seat fees
+           * - `standby` - Standby
+           * - `service_fee` - Service fee
+           * - `store` - Store
+           * - `travel_service` - Travel service
+           * - `unaccompanied_travel` - Unaccompanied travel
+           * - `upgrades` - Upgrades
+           * - `wifi` - Wi-fi
+           */
+          category:
+            | 'none'
+            | 'bundled_service'
+            | 'baggage_fee'
+            | 'change_fee'
+            | 'cargo'
+            | 'carbon_offset'
+            | 'frequent_flyer'
+            | 'gift_card'
+            | 'ground_transport'
+            | 'in_flight_entertainment'
+            | 'lounge'
+            | 'medical'
+            | 'meal_beverage'
+            | 'other'
+            | 'passenger_assist_fee'
+            | 'pets'
+            | 'seat_fees'
+            | 'standby'
+            | 'service_fee'
+            | 'store'
+            | 'travel_service'
+            | 'unaccompanied_travel'
+            | 'upgrades'
+            | 'wifi'
+            | null;
+
+          /**
+           * Sub-category of the ancillary service, free-form.
+           */
+          sub_category: string | null;
+        }
+      }
+
+      export interface TripLeg {
+        /**
+         * Carrier code (e.g., United Airlines, Jet Blue, etc.).
+         */
+        carrier_code: string | null;
+
+        /**
+         * Code for the destination city or airport.
+         */
+        destination_city_airport_code: string | null;
+
+        /**
+         * Fare basis code.
+         */
+        fare_basis_code: string | null;
+
+        /**
+         * Flight number.
+         */
+        flight_number: string | null;
+
+        /**
+         * Service class (e.g., first class, business class, etc.).
+         */
+        service_class: string | null;
+
+        /**
+         * Indicates whether a stopover is allowed on this ticket.
+         *
+         * - `none` - None
+         * - `stop_over_allowed` - Stop over allowed
+         * - `stop_over_not_allowed` - Stop over not allowed
+         */
+        stop_over_code: 'none' | 'stop_over_allowed' | 'stop_over_not_allowed' | null;
+      }
+    }
+  }
+
+  export interface SchemeFee {
+    /**
+     * The fee amount given as a string containing a decimal number.
+     */
+    amount: string;
+
+    /**
+     * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) time at which the fee was
+     * created.
+     */
+    created_at: string;
+
+    /**
+     * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the fee
+     * reimbursement.
+     *
+     * - `USD` - US Dollar (USD)
+     */
+    currency: 'USD';
+
+    /**
+     * The type of fee being assessed.
+     *
+     * - `visa_international_service_assessment_single_currency` - International
+     *   Service Assessment (ISA) single-currency is a fee assessed by the card network
+     *   for cross-border transactions presented and settled in the same currency.
+     * - `visa_international_service_assessment_cross_currency` - International Service
+     *   Assessment (ISA) cross-currency is a fee assessed by the card network for
+     *   cross-border transactions presented and settled in different currencies.
+     * - `visa_authorization_domestic_point_of_sale` - Activity and charges for Visa
+     *   Settlement System processing for POS (Point-Of-Sale) authorization
+     *   transactions. Authorization is the process of approving or declining the
+     *   transaction amount specified. The fee is assessed to the Issuer.
+     * - `visa_authorization_international_point_of_sale` - Activity and charges for
+     *   Visa Settlement System processing for POS (Point-Of-Sale) International
+     *   authorization transactions. Authorization is the process of approving or
+     *   declining the transaction amount specified. The fee is assessed to the Issuer.
+     * - `visa_authorization_canada_point_of_sale` - Activity and charges for Visa
+     *   Settlement System processing for Canada Region POS (Point-of-Sale)
+     *   authorization transactions. Authorization is the process of approving or
+     *   declining the transaction amount specified.
+     * - `visa_authorization_reversal_point_of_sale` - Activity only for Visa
+     *   Settlement System authorization processing of POS (Point-Of-Sale) reversal
+     *   transactions. Authorization reversal represents a VSS message that undoes the
+     *   complete or partial actions of a previous authorization request.
+     * - `visa_authorization_reversal_international_point_of_sale` - Activity only for
+     *   Visa Settlement System authorization processing of POS (Point-Of-Sale)
+     *   International reversal transactions. Authorization reversal represents a VSS
+     *   message that undoes the complete or partial actions of a previous
+     *   authorization request.
+     * - `visa_authorization_address_verification_service` - A per Address Verification
+     *   Service (AVS) result fee. Applies to all usable AVS result codes.
+     * - `visa_advanced_authorization` - Advanced Authorization is a fraud detection
+     *   tool that monitors and risk evaluates 100 percent of US VisaNet authorizations
+     *   in real-time. Activity related to Purchase (includes Signature Authenticated
+     *   Visa and PIN Authenticated Visa Debit (PAVD) transactions).
+     * - `visa_message_transmission` - Issuer Transactions Visa represents a charge
+     *   based on total actual monthly processing (Visa transactions only) through a
+     *   VisaNet Access Point (VAP). Charges are assessed to the processor for each
+     *   VisaNet Access Point.
+     * - `visa_account_verification_domestic` - Activity, per inquiry, related to the
+     *   domestic Issuer for Account Number Verification.
+     * - `visa_account_verification_international` - Activity, per inquiry, related to
+     *   the international Issuer for Account Number Verification.
+     * - `visa_account_verification_canada` - Activity, per inquiry, related to the
+     *   US-Canada Issuer for Account Number Verification.
+     * - `visa_corporate_acceptance_fee` - The Corporate Acceptance Fee is charged to
+     *   issuers and is based on the monthly sales volume on Commercial and Government
+     *   Debit, Prepaid, Credit, Charge, or Deferred Debit card transactions.
+     * - `visa_consumer_debit_acceptance_fee` - The Consumer Debit Acceptance Fee is
+     *   charged to issuers and is based on the monthly sales volume of Consumer Debit
+     *   or Prepaid card transactions. The cashback portion of a Debit and Prepaid card
+     *   transaction is excluded from the sales volume calculation.
+     * - `visa_business_debit_acceptance_fee` - The Business Acceptance Fee is charged
+     *   to issuers and is based on the monthly sales volume on Business Debit,
+     *   Prepaid, Credit, Charge, or Deferred Debit card transactions. The cashback
+     *   portion is included in the sales volume calculation with the exception of a
+     *   Debit and Prepaid card transactions.
+     * - `visa_purchasing_acceptance_fee` - The Purchasing Card Acceptance Fee is
+     *   charged to issuers and is based on the monthly sales volume on Commercial and
+     *   Government Debit, Prepaid, Credit, Charge, or Deferred Debit card
+     *   transactions.
+     * - `visa_purchase_domestic` - Activity and fees for the processing of a sales
+     *   draft original for a purchase transaction.
+     * - `visa_purchase_international` - Activity and fees for the processing of an
+     *   international sales draft original for a purchase transaction.
+     * - `visa_credit_purchase_token` - Apple Pay Credit Product Token Purchase
+     *   Original Transactions. This fee is billed by Visa on behalf of Apple Inc. for
+     *   Apple Pay transactions.
+     * - `visa_debit_purchase_token` - Apple Pay Debit Product Token Purchase Original
+     *   Transactions. This fee is billed by Visa on behalf of Apple Inc. for Apple Pay
+     *   transactions.
+     * - `visa_clearing_transmission` - A per transaction fee assessed for Base II
+     *   financial draft - Issuer.
+     * - `visa_direct_authorization` - Issuer charge for Non-Financial OCT/AFT
+     *   Authorization 0100 and Declined Financial OCT/AFT 0200 transactions.
+     * - `visa_direct_transaction_domestic` - Data processing charge for Visa Direct
+     *   OCTs for all business application identifiers (BAIs) other than money
+     *   transfer-bank initiated (BI). BASE II transactions.
+     * - `visa_service_commercial_credit` - Issuer card service fee for Commercial
+     *   Credit cards.
+     * - `visa_advertising_service_commercial_credit` - Issuer Advertising Service Fee
+     *   for Commercial Credit cards.
+     * - `visa_community_growth_acceleration_program` - Issuer Community Growth
+     *   Acceleration Program Fee.
+     * - `visa_processing_guarantee_commercial_credit` - Issuer Processing Guarantee
+     *   for Commercial Credit cards.
+     * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
+     *   for processing transactions on its network.
+     */
+    fee_type:
+      | 'visa_international_service_assessment_single_currency'
+      | 'visa_international_service_assessment_cross_currency'
+      | 'visa_authorization_domestic_point_of_sale'
+      | 'visa_authorization_international_point_of_sale'
+      | 'visa_authorization_canada_point_of_sale'
+      | 'visa_authorization_reversal_point_of_sale'
+      | 'visa_authorization_reversal_international_point_of_sale'
+      | 'visa_authorization_address_verification_service'
+      | 'visa_advanced_authorization'
+      | 'visa_message_transmission'
+      | 'visa_account_verification_domestic'
+      | 'visa_account_verification_international'
+      | 'visa_account_verification_canada'
+      | 'visa_corporate_acceptance_fee'
+      | 'visa_consumer_debit_acceptance_fee'
+      | 'visa_business_debit_acceptance_fee'
+      | 'visa_purchasing_acceptance_fee'
+      | 'visa_purchase_domestic'
+      | 'visa_purchase_international'
+      | 'visa_credit_purchase_token'
+      | 'visa_debit_purchase_token'
+      | 'visa_clearing_transmission'
+      | 'visa_direct_authorization'
+      | 'visa_direct_transaction_domestic'
+      | 'visa_service_commercial_credit'
+      | 'visa_advertising_service_commercial_credit'
+      | 'visa_community_growth_acceleration_program'
+      | 'visa_processing_guarantee_commercial_credit'
+      | 'pulse_switch_fee';
+
+    /**
+     * The fixed component of the fee, if applicable, given in major units of the fee
+     * amount.
+     */
+    fixed_component: string | null;
+
+    /**
+     * The variable rate component of the fee, if applicable, given as a decimal (e.g.,
+     * 0.015 for 1.5%).
+     */
+    variable_rate: string | null;
+  }
+
+  /**
+   * Surcharge amount details, if applicable. The amount is positive if the surcharge
+   * is added to the overall transaction amount (surcharge), and negative if the
+   * surcharge is deducted from the overall transaction amount (discount).
+   */
+  export interface Surcharge {
+    /**
+     * The surcharge amount in the minor unit of the transaction's settlement currency.
+     */
+    amount: number;
+
+    /**
+     * The surcharge amount in the minor unit of the transaction's presentment
+     * currency.
+     */
+    presentment_amount: number;
+  }
+}
+
+/**
+ * Transactions are the immutable additions and removals of money from your bank
+ * account. They're the equivalent of line items on your bank statement. To learn
+ * more, see [Transactions and Transfers](/documentation/transactions-transfers).
+ */
+export interface Transaction {
+  /**
+   * The Transaction identifier.
+   */
+  id: string;
+
+  /**
+   * The identifier for the Account the Transaction belongs to.
+   */
+  account_id: string;
+
+  /**
+   * The Transaction amount in the minor unit of its currency. For dollars, for
+   * example, this is cents.
+   */
+  amount: number;
+
+  /**
+   * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date on which the
+   * Transaction occurred.
+   */
+  created_at: string;
+
+  /**
+   * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+   * Transaction's currency. This will match the currency on the Transaction's
+   * Account.
+   *
+   * - `USD` - US Dollar (USD)
+   */
+  currency: 'USD';
+
+  /**
+   * An informational message describing this transaction. Use the fields in `source`
+   * to get more detailed information. This field appears as the line-item on the
+   * statement.
+   */
+  description: string;
+
+  /**
+   * The identifier for the route this Transaction came through. Routes are things
+   * like cards and ACH details.
+   */
+  route_id: string | null;
+
+  /**
+   * The type of the route this Transaction came through.
+   *
+   * - `account_number` - An Account Number.
+   * - `card` - A Card.
+   * - `lockbox` - A Lockbox.
+   */
+  route_type: 'account_number' | 'card' | 'lockbox' | null;
+
+  /**
+   * This is an object giving more details on the network-level event that caused the
+   * Transaction. Note that for backwards compatibility reasons, additional
+   * undocumented keys may appear in this object. These should be treated as
+   * deprecated and will be removed in the future.
+   */
+  source: Transaction.Source;
+
+  /**
+   * A constant representing the object's type. For this resource it will always be
+   * `transaction`.
+   */
+  type: 'transaction';
+
+  [k: string]: unknown;
+}
+
+export namespace Transaction {
+  /**
+   * This is an object giving more details on the network-level event that caused the
+   * Transaction. Note that for backwards compatibility reasons, additional
+   * undocumented keys may appear in this object. These should be treated as
+   * deprecated and will be removed in the future.
+   */
+  export interface Source {
+    /**
+     * The type of the resource. We may add additional possible values for this enum
+     * over time; your application should be able to handle such additions gracefully.
+     *
+     * - `account_transfer_intention` - Account Transfer Intention: details will be
+     *   under the `account_transfer_intention` object.
+     * - `ach_transfer_intention` - ACH Transfer Intention: details will be under the
+     *   `ach_transfer_intention` object.
+     * - `ach_transfer_rejection` - ACH Transfer Rejection: details will be under the
+     *   `ach_transfer_rejection` object.
+     * - `ach_transfer_return` - ACH Transfer Return: details will be under the
+     *   `ach_transfer_return` object.
+     * - `cashback_payment` - Cashback Payment: details will be under the
+     *   `cashback_payment` object.
+     * - `card_dispute_acceptance` - Legacy Card Dispute Acceptance: details will be
+     *   under the `card_dispute_acceptance` object.
+     * - `card_dispute_financial` - Card Dispute Financial: details will be under the
+     *   `card_dispute_financial` object.
+     * - `card_dispute_loss` - Legacy Card Dispute Loss: details will be under the
+     *   `card_dispute_loss` object.
+     * - `card_refund` - Card Refund: details will be under the `card_refund` object.
+     * - `card_settlement` - Card Settlement: details will be under the
+     *   `card_settlement` object.
+     * - `card_financial` - Card Financial: details will be under the `card_financial`
+     *   object.
+     * - `card_revenue_payment` - Card Revenue Payment: details will be under the
+     *   `card_revenue_payment` object.
+     * - `check_deposit_acceptance` - Check Deposit Acceptance: details will be under
+     *   the `check_deposit_acceptance` object.
+     * - `check_deposit_return` - Check Deposit Return: details will be under the
+     *   `check_deposit_return` object.
+     * - `fednow_transfer_acknowledgement` - FedNow Transfer Acknowledgement: details
+     *   will be under the `fednow_transfer_acknowledgement` object.
+     * - `check_transfer_deposit` - Check Transfer Deposit: details will be under the
+     *   `check_transfer_deposit` object.
+     * - `fee_payment` - Fee Payment: details will be under the `fee_payment` object.
+     * - `inbound_ach_transfer` - Inbound ACH Transfer Intention: details will be under
+     *   the `inbound_ach_transfer` object.
+     * - `inbound_ach_transfer_return_intention` - Inbound ACH Transfer Return
+     *   Intention: details will be under the `inbound_ach_transfer_return_intention`
+     *   object.
+     * - `inbound_check_deposit_return_intention` - Inbound Check Deposit Return
+     *   Intention: details will be under the `inbound_check_deposit_return_intention`
+     *   object.
+     * - `inbound_check_adjustment` - Inbound Check Adjustment: details will be under
+     *   the `inbound_check_adjustment` object.
+     * - `inbound_fednow_transfer_confirmation` - Inbound FedNow Transfer Confirmation:
+     *   details will be under the `inbound_fednow_transfer_confirmation` object.
+     * - `inbound_real_time_payments_transfer_confirmation` - Inbound Real-Time
+     *   Payments Transfer Confirmation: details will be under the
+     *   `inbound_real_time_payments_transfer_confirmation` object.
+     * - `inbound_wire_reversal` - Inbound Wire Reversal: details will be under the
+     *   `inbound_wire_reversal` object.
+     * - `inbound_wire_transfer` - Inbound Wire Transfer Intention: details will be
+     *   under the `inbound_wire_transfer` object.
+     * - `inbound_wire_transfer_reversal` - Inbound Wire Transfer Reversal Intention:
+     *   details will be under the `inbound_wire_transfer_reversal` object.
+     * - `interest_payment` - Interest Payment: details will be under the
+     *   `interest_payment` object.
+     * - `internal_source` - Internal Source: details will be under the
+     *   `internal_source` object.
+     * - `real_time_payments_transfer_acknowledgement` - Real-Time Payments Transfer
+     *   Acknowledgement: details will be under the
+     *   `real_time_payments_transfer_acknowledgement` object.
+     * - `sample_funds` - Sample Funds: details will be under the `sample_funds`
+     *   object.
+     * - `wire_transfer_intention` - Wire Transfer Intention: details will be under the
+     *   `wire_transfer_intention` object.
+     * - `swift_transfer_intention` - Swift Transfer Intention: details will be under
+     *   the `swift_transfer_intention` object.
+     * - `swift_transfer_return` - Swift Transfer Return: details will be under the
+     *   `swift_transfer_return` object.
+     * - `card_push_transfer_acceptance` - Card Push Transfer Acceptance: details will
+     *   be under the `card_push_transfer_acceptance` object.
+     * - `account_revenue_payment` - Account Revenue Payment: details will be under the
+     *   `account_revenue_payment` object.
+     * - `blockchain_onramp_transfer_intention` - Blockchain On-Ramp Transfer
+     *   Intention: details will be under the `blockchain_onramp_transfer_intention`
+     *   object.
+     * - `blockchain_offramp_transfer_settlement` - Blockchain Off-Ramp Transfer
+     *   Settlement: details will be under the `blockchain_offramp_transfer_settlement`
+     *   object.
+     * - `other` - The Transaction was made for an undocumented or deprecated reason.
+     */
+    category:
+      | 'account_transfer_intention'
+      | 'ach_transfer_intention'
+      | 'ach_transfer_rejection'
+      | 'ach_transfer_return'
+      | 'cashback_payment'
+      | 'card_dispute_acceptance'
+      | 'card_dispute_financial'
+      | 'card_dispute_loss'
+      | 'card_refund'
+      | 'card_settlement'
+      | 'card_financial'
+      | 'card_revenue_payment'
+      | 'check_deposit_acceptance'
+      | 'check_deposit_return'
+      | 'fednow_transfer_acknowledgement'
+      | 'check_transfer_deposit'
+      | 'fee_payment'
+      | 'inbound_ach_transfer'
+      | 'inbound_ach_transfer_return_intention'
+      | 'inbound_check_deposit_return_intention'
+      | 'inbound_check_adjustment'
+      | 'inbound_fednow_transfer_confirmation'
+      | 'inbound_real_time_payments_transfer_confirmation'
+      | 'inbound_wire_reversal'
+      | 'inbound_wire_transfer'
+      | 'inbound_wire_transfer_reversal'
+      | 'interest_payment'
+      | 'internal_source'
+      | 'real_time_payments_transfer_acknowledgement'
+      | 'sample_funds'
+      | 'wire_transfer_intention'
+      | 'swift_transfer_intention'
+      | 'swift_transfer_return'
+      | 'card_push_transfer_acceptance'
+      | 'account_revenue_payment'
+      | 'blockchain_onramp_transfer_intention'
+      | 'blockchain_offramp_transfer_settlement'
+      | 'other';
+
+    /**
+     * An Account Revenue Payment object. This field will be present in the JSON
+     * response if and only if `category` is equal to `account_revenue_payment`. An
+     * Account Revenue Payment represents a payment made to an account from the bank.
+     * Account revenue is a type of non-interest income.
+     */
+    account_revenue_payment?: Source.AccountRevenuePayment | null;
+
+    /**
+     * An Account Transfer Intention object. This field will be present in the JSON
+     * response if and only if `category` is equal to `account_transfer_intention`. Two
+     * Account Transfer Intentions are created from each Account Transfer. One
+     * decrements the source account, and the other increments the destination account.
+     */
+    account_transfer_intention?: Source.AccountTransferIntention | null;
+
+    /**
+     * An ACH Transfer Intention object. This field will be present in the JSON
+     * response if and only if `category` is equal to `ach_transfer_intention`. An ACH
+     * Transfer Intention is created from an ACH Transfer. It reflects the intention to
+     * move money into or out of an Increase account via the ACH network.
+     */
+    ach_transfer_intention?: Source.ACHTransferIntention | null;
+
+    /**
+     * An ACH Transfer Rejection object. This field will be present in the JSON
+     * response if and only if `category` is equal to `ach_transfer_rejection`. An ACH
+     * Transfer Rejection is created when an ACH Transfer is rejected by Increase. It
+     * offsets the ACH Transfer Intention. These rejections are rare.
+     */
+    ach_transfer_rejection?: Source.ACHTransferRejection | null;
+
+    /**
+     * An ACH Transfer Return object. This field will be present in the JSON response
+     * if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer
+     * Return is created when an ACH Transfer is returned by the receiving bank. It
+     * offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within
+     * the first two business days after the transfer is initiated, but can occur much
+     * later.
+     */
+    ach_transfer_return?: Source.ACHTransferReturn | null;
+
+    /**
+     * A Blockchain Off-Ramp Transfer Settlement object. This field will be present in
+     * the JSON response if and only if `category` is equal to
+     * `blockchain_offramp_transfer_settlement`.
+     */
+    blockchain_offramp_transfer_settlement?: Source.BlockchainOfframpTransferSettlement | null;
+
+    /**
+     * A Blockchain On-Ramp Transfer Intention object. This field will be present in
+     * the JSON response if and only if `category` is equal to
+     * `blockchain_onramp_transfer_intention`.
+     */
+    blockchain_onramp_transfer_intention?: Source.BlockchainOnrampTransferIntention | null;
+
+    /**
+     * A Legacy Card Dispute Acceptance object. This field will be present in the JSON
+     * response if and only if `category` is equal to `card_dispute_acceptance`.
+     * Contains the details of a successful Card Dispute.
+     */
+    card_dispute_acceptance?: Source.CardDisputeAcceptance | null;
+
+    /**
+     * A Card Dispute Financial object. This field will be present in the JSON response
+     * if and only if `category` is equal to `card_dispute_financial`. Financial event
+     * related to a Card Dispute.
+     */
+    card_dispute_financial?: Source.CardDisputeFinancial | null;
+
+    /**
+     * A Legacy Card Dispute Loss object. This field will be present in the JSON
+     * response if and only if `category` is equal to `card_dispute_loss`. Contains the
+     * details of a lost Card Dispute.
+     */
+    card_dispute_loss?: Source.CardDisputeLoss | null;
+
+    /**
+     * A Card Financial object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_financial`. Card Financials are temporary
+     * holds placed on a customer's funds with the intent to later clear a transaction.
+     */
+    card_financial?: SimulationsAPI.CardFinancial | null;
+
+    /**
+     * A Card Push Transfer Acceptance object. This field will be present in the JSON
+     * response if and only if `category` is equal to `card_push_transfer_acceptance`.
+     * A Card Push Transfer Acceptance is created when an Outbound Card Push Transfer
+     * sent from Increase is accepted by the receiving bank.
+     */
+    card_push_transfer_acceptance?: Source.CardPushTransferAcceptance | null;
+
+    /**
+     * A Card Refund object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_refund`. Card Refunds move money back to
+     * the cardholder. While they are usually connected to a Card Settlement, an
+     * acquirer can also refund money directly to a card without relation to a
+     * transaction.
+     */
+    card_refund?: SimulationsAPI.CardRefund | null;
+
+    /**
+     * A Card Revenue Payment object. This field will be present in the JSON response
+     * if and only if `category` is equal to `card_revenue_payment`. Card Revenue
+     * Payments reflect earnings from fees on card transactions.
+     */
+    card_revenue_payment?: Source.CardRevenuePayment | null;
+
+    /**
+     * A Card Settlement object. This field will be present in the JSON response if and
+     * only if `category` is equal to `card_settlement`. Card Settlements are card
+     * transactions that have cleared and settled. While a settlement is usually
+     * preceded by an authorization, an acquirer can also directly clear a transaction
+     * without first authorizing it.
+     */
+    card_settlement?: SimulationsAPI.CardSettlement | null;
+
+    /**
+     * A Cashback Payment object. This field will be present in the JSON response if
+     * and only if `category` is equal to `cashback_payment`. A Cashback Payment
+     * represents the cashback paid to a cardholder for a given period. Cashback is
+     * usually paid monthly for the prior month's transactions.
+     */
+    cashback_payment?: Source.CashbackPayment | null;
+
+    /**
+     * A Check Deposit Acceptance object. This field will be present in the JSON
+     * response if and only if `category` is equal to `check_deposit_acceptance`. A
+     * Check Deposit Acceptance is created when a Check Deposit is processed and its
+     * details confirmed. Check Deposits may be returned by the receiving bank, which
+     * will appear as a Check Deposit Return.
+     */
+    check_deposit_acceptance?: Source.CheckDepositAcceptance | null;
+
+    /**
+     * A Check Deposit Return object. This field will be present in the JSON response
+     * if and only if `category` is equal to `check_deposit_return`. A Check Deposit
+     * Return is created when a Check Deposit is returned by the bank holding the
+     * account it was drawn against. Check Deposits may be returned for a variety of
+     * reasons, including insufficient funds or a mismatched account number. Usually,
+     * checks are returned within the first 7 days after the deposit is made.
+     */
+    check_deposit_return?: Source.CheckDepositReturn | null;
+
+    /**
+     * A Check Transfer Deposit object. This field will be present in the JSON response
+     * if and only if `category` is equal to `check_transfer_deposit`. An Inbound Check
+     * is a check drawn on an Increase account that has been deposited by an external
+     * bank account. These types of checks are not pre-registered.
+     */
+    check_transfer_deposit?: Source.CheckTransferDeposit | null;
+
+    /**
+     * A FedNow Transfer Acknowledgement object. This field will be present in the JSON
+     * response if and only if `category` is equal to
+     * `fednow_transfer_acknowledgement`. A FedNow Transfer Acknowledgement is created
+     * when a FedNow Transfer sent from Increase is acknowledged by the receiving bank.
+     */
+    fednow_transfer_acknowledgement?: Source.FednowTransferAcknowledgement | null;
+
+    /**
+     * A Fee Payment object. This field will be present in the JSON response if and
+     * only if `category` is equal to `fee_payment`. A Fee Payment represents a payment
+     * made to Increase.
+     */
+    fee_payment?: Source.FeePayment | null;
+
+    /**
+     * An Inbound ACH Transfer Intention object. This field will be present in the JSON
+     * response if and only if `category` is equal to `inbound_ach_transfer`. An
+     * Inbound ACH Transfer Intention is created when an ACH transfer is initiated at
+     * another bank and received by Increase.
+     */
+    inbound_ach_transfer?: Source.InboundACHTransfer | null;
+
+    /**
+     * An Inbound ACH Transfer Return Intention object. This field will be present in
+     * the JSON response if and only if `category` is equal to
+     * `inbound_ach_transfer_return_intention`. An Inbound ACH Transfer Return
+     * Intention is created when an ACH transfer is initiated at another bank and
+     * returned by Increase.
+     */
+    inbound_ach_transfer_return_intention?: Source.InboundACHTransferReturnIntention | null;
+
+    /**
+     * An Inbound Check Adjustment object. This field will be present in the JSON
+     * response if and only if `category` is equal to `inbound_check_adjustment`. An
+     * Inbound Check Adjustment is created when Increase receives an adjustment for a
+     * check or return deposited through Check21.
+     */
+    inbound_check_adjustment?: Source.InboundCheckAdjustment | null;
+
+    /**
+     * An Inbound Check Deposit Return Intention object. This field will be present in
+     * the JSON response if and only if `category` is equal to
+     * `inbound_check_deposit_return_intention`. An Inbound Check Deposit Return
+     * Intention is created when Increase receives an Inbound Check and the User
+     * requests that it be returned.
+     */
+    inbound_check_deposit_return_intention?: Source.InboundCheckDepositReturnIntention | null;
+
+    /**
+     * An Inbound FedNow Transfer Confirmation object. This field will be present in
+     * the JSON response if and only if `category` is equal to
+     * `inbound_fednow_transfer_confirmation`. An Inbound FedNow Transfer Confirmation
+     * is created when a FedNow transfer is initiated at another bank and received by
+     * Increase.
+     */
+    inbound_fednow_transfer_confirmation?: Source.InboundFednowTransferConfirmation | null;
+
+    /**
+     * An Inbound Real-Time Payments Transfer Confirmation object. This field will be
+     * present in the JSON response if and only if `category` is equal to
+     * `inbound_real_time_payments_transfer_confirmation`. An Inbound Real-Time
+     * Payments Transfer Confirmation is created when a Real-Time Payments transfer is
+     * initiated at another bank and received by Increase.
+     */
+    inbound_real_time_payments_transfer_confirmation?: Source.InboundRealTimePaymentsTransferConfirmation | null;
+
+    /**
+     * An Inbound Wire Reversal object. This field will be present in the JSON response
+     * if and only if `category` is equal to `inbound_wire_reversal`. An Inbound Wire
+     * Reversal represents a reversal of a wire transfer that was initiated via
+     * Increase. The other bank is sending the money back. This most often happens when
+     * the original destination account details were incorrect.
+     */
+    inbound_wire_reversal?: Source.InboundWireReversal | null;
+
+    /**
+     * An Inbound Wire Transfer Intention object. This field will be present in the
+     * JSON response if and only if `category` is equal to `inbound_wire_transfer`. An
+     * Inbound Wire Transfer Intention is created when a wire transfer is initiated at
+     * another bank and received by Increase.
+     */
+    inbound_wire_transfer?: Source.InboundWireTransfer | null;
+
+    /**
+     * An Inbound Wire Transfer Reversal Intention object. This field will be present
+     * in the JSON response if and only if `category` is equal to
+     * `inbound_wire_transfer_reversal`. An Inbound Wire Transfer Reversal Intention is
+     * created when Increase has received a wire and the User requests that it be
+     * reversed.
+     */
+    inbound_wire_transfer_reversal?: PendingTransactionsAPI.InboundWireTransferReversal | null;
+
+    /**
+     * An Interest Payment object. This field will be present in the JSON response if
+     * and only if `category` is equal to `interest_payment`. An Interest Payment
+     * represents a payment of interest on an account. Interest is usually paid
+     * monthly.
+     */
+    interest_payment?: Source.InterestPayment | null;
+
+    /**
+     * An Internal Source object. This field will be present in the JSON response if
+     * and only if `category` is equal to `internal_source`. A transaction between the
+     * user and Increase. See the `reason` attribute for more information.
+     */
+    internal_source?: Source.InternalSource | null;
+
+    /**
+     * If the category of this Transaction source is equal to `other`, this field will
+     * contain an empty object, otherwise it will contain null.
+     */
+    other?: unknown | null;
+
+    /**
+     * A Real-Time Payments Transfer Acknowledgement object. This field will be present
+     * in the JSON response if and only if `category` is equal to
+     * `real_time_payments_transfer_acknowledgement`. A Real-Time Payments Transfer
+     * Acknowledgement is created when a Real-Time Payments Transfer sent from Increase
+     * is acknowledged by the receiving bank.
+     */
+    real_time_payments_transfer_acknowledgement?: Source.RealTimePaymentsTransferAcknowledgement | null;
+
+    /**
+     * A Sample Funds object. This field will be present in the JSON response if and
+     * only if `category` is equal to `sample_funds`. Sample funds for testing
+     * purposes.
+     */
+    sample_funds?: Source.SampleFunds | null;
+
+    /**
+     * A Swift Transfer Intention object. This field will be present in the JSON
+     * response if and only if `category` is equal to `swift_transfer_intention`. A
+     * Swift Transfer initiated via Increase.
+     */
+    swift_transfer_intention?: Source.SwiftTransferIntention | null;
+
+    /**
+     * A Swift Transfer Return object. This field will be present in the JSON response
+     * if and only if `category` is equal to `swift_transfer_return`. A Swift Transfer
+     * Return is created when a Swift Transfer is returned by the receiving bank.
+     */
+    swift_transfer_return?: Source.SwiftTransferReturn | null;
+
+    /**
+     * A Wire Transfer Intention object. This field will be present in the JSON
+     * response if and only if `category` is equal to `wire_transfer_intention`. A Wire
+     * Transfer initiated via Increase and sent to a different bank.
+     */
+    wire_transfer_intention?: Source.WireTransferIntention | null;
+
+    [k: string]: unknown;
+  }
+
+  export namespace Source {
+    /**
+     * An Account Revenue Payment object. This field will be present in the JSON
+     * response if and only if `category` is equal to `account_revenue_payment`. An
+     * Account Revenue Payment represents a payment made to an account from the bank.
+     * Account revenue is a type of non-interest income.
+     */
+    export interface AccountRevenuePayment {
+      /**
+       * The account on which the account revenue was accrued.
+       */
+      accrued_on_account_id: string;
+
+      /**
+       * The end of the period for which this transaction paid account revenue.
+       */
+      period_end: string;
+
+      /**
+       * The start of the period for which this transaction paid account revenue.
+       */
+      period_start: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An Account Transfer Intention object. This field will be present in the JSON
+     * response if and only if `category` is equal to `account_transfer_intention`. Two
+     * Account Transfer Intentions are created from each Account Transfer. One
+     * decrements the source account, and the other increments the destination account.
+     */
+    export interface AccountTransferIntention {
+      /**
+       * The pending amount in the minor unit of the transaction's currency. For dollars,
+       * for example, this is cents.
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the destination
+       * account currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The description you chose to give the transfer.
+       */
+      description: string;
+
+      /**
+       * The identifier of the Account to where the Account Transfer was sent.
+       */
+      destination_account_id: string;
+
+      /**
+       * The identifier of the Account from where the Account Transfer was sent.
+       */
+      source_account_id: string;
+
+      /**
+       * The identifier of the Account Transfer that led to this Pending Transaction.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An ACH Transfer Intention object. This field will be present in the JSON
+     * response if and only if `category` is equal to `ach_transfer_intention`. An ACH
+     * Transfer Intention is created from an ACH Transfer. It reflects the intention to
+     * move money into or out of an Increase account via the ACH network.
+     */
+    export interface ACHTransferIntention {
+      /**
+       * The account number for the destination account.
+       */
+      account_number: string;
+
+      /**
+       * The amount in the minor unit of the transaction's currency. For dollars, for
+       * example, this is cents.
+       */
+      amount: number;
+
+      /**
+       * The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
+       * destination account.
+       */
+      routing_number: string;
+
+      /**
+       * A description set when the ACH Transfer was created.
+       */
+      statement_descriptor: string;
+
+      /**
+       * The identifier of the ACH Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An ACH Transfer Rejection object. This field will be present in the JSON
+     * response if and only if `category` is equal to `ach_transfer_rejection`. An ACH
+     * Transfer Rejection is created when an ACH Transfer is rejected by Increase. It
+     * offsets the ACH Transfer Intention. These rejections are rare.
+     */
+    export interface ACHTransferRejection {
+      /**
+       * The identifier of the ACH Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An ACH Transfer Return object. This field will be present in the JSON response
+     * if and only if `category` is equal to `ach_transfer_return`. An ACH Transfer
+     * Return is created when an ACH Transfer is returned by the receiving bank. It
+     * offsets the ACH Transfer Intention. ACH Transfer Returns usually occur within
+     * the first two business days after the transfer is initiated, but can occur much
+     * later.
+     */
+    export interface ACHTransferReturn {
+      /**
+       * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+       * the transfer was created.
+       */
+      created_at: string;
+
+      /**
+       * The three character ACH return code, in the range R01 to R85.
+       */
+      raw_return_reason_code: string;
+
+      /**
+       * Why the ACH Transfer was returned. This reason code is sent by the receiving
+       * bank back to Increase.
+       *
+       * - `insufficient_fund` - Code R01. Insufficient funds in the receiving account.
+       *   Sometimes abbreviated to "NSF."
+       * - `no_account` - Code R03. The account does not exist or the receiving bank was
+       *   unable to locate it.
+       * - `account_closed` - Code R02. The account is closed at the receiving bank.
+       * - `invalid_account_number_structure` - Code R04. The account number is invalid
+       *   at the receiving bank.
+       * - `account_frozen_entry_returned_per_ofac_instruction` - Code R16. This return
+       *   code has two separate meanings. (1) The receiving bank froze the account or
+       *   (2) the Office of Foreign Assets Control (OFAC) instructed the receiving bank
+       *   to return the entry.
+       * - `credit_entry_refused_by_receiver` - Code R23. The receiving bank refused the
+       *   credit transfer.
+       * - `unauthorized_debit_to_consumer_account_using_corporate_sec_code` - Code R05.
+       *   The receiving bank rejected because of an incorrect Standard Entry Class code.
+       *   Consumer accounts cannot be debited as `corporate_credit_or_debit` or
+       *   `corporate_trade_exchange`.
+       * - `corporate_customer_advised_not_authorized` - Code R29. The corporate customer
+       *   at the receiving bank reversed the transfer.
+       * - `payment_stopped` - Code R08. The receiving bank stopped payment on this
+       *   transfer.
+       * - `non_transaction_account` - Code R20. The account is not eligible for ACH,
+       *   such as a savings account with transaction limits.
+       * - `uncollected_funds` - Code R09. The receiving bank account does not have
+       *   enough available balance for the transfer.
+       * - `routing_number_check_digit_error` - Code R28. The routing number is
+       *   incorrect.
+       * - `customer_advised_unauthorized_improper_ineligible_or_incomplete` - Code R10.
+       *   The customer at the receiving bank reversed the transfer.
+       * - `amount_field_error` - Code R19. The amount field is incorrect or too large.
+       * - `authorization_revoked_by_customer` - Code R07. The customer revoked their
+       *   authorization for a previously authorized transfer.
+       * - `invalid_ach_routing_number` - Code R13. The routing number is invalid.
+       * - `file_record_edit_criteria` - Code R17. The receiving bank is unable to
+       *   process a field in the transfer.
+       * - `enr_invalid_individual_name` - Code R45. A rare return reason. The individual
+       *   name field was invalid.
+       * - `returned_per_odfi_request` - Code R06. The originating financial institution
+       *   asked for this transfer to be returned. The receiving bank is complying with
+       *   the request.
+       * - `limited_participation_dfi` - Code R34. The receiving bank's regulatory
+       *   supervisor has limited their participation in the ACH network.
+       * - `incorrectly_coded_outbound_international_payment` - Code R85. The outbound
+       *   international ACH transfer was incorrect.
+       * - `account_sold_to_another_dfi` - Code R12. A rare return reason. The account
+       *   was sold to another bank.
+       * - `addenda_error` - Code R25. The addenda record is incorrect or missing.
+       * - `beneficiary_or_account_holder_deceased` - Code R15. A rare return reason. The
+       *   account holder is deceased.
+       * - `customer_advised_not_within_authorization_terms` - Code R11. A rare return
+       *   reason. The customer authorized some payment to the sender, but this payment
+       *   was not in error.
+       * - `corrected_return` - Code R74. A rare return reason. Sent in response to a
+       *   return that was returned with code `field_error`. The latest return should
+       *   include the corrected field(s).
+       * - `duplicate_entry` - Code R24. A rare return reason. The receiving bank
+       *   received an exact duplicate entry with the same trace number and amount.
+       * - `duplicate_return` - Code R67. A rare return reason. The return this message
+       *   refers to was a duplicate.
+       * - `enr_duplicate_enrollment` - Code R47. A rare return reason. Only used for US
+       *   Government agency non-monetary automatic enrollment messages.
+       * - `enr_invalid_dfi_account_number` - Code R43. A rare return reason. Only used
+       *   for US Government agency non-monetary automatic enrollment messages.
+       * - `enr_invalid_individual_id_number` - Code R44. A rare return reason. Only used
+       *   for US Government agency non-monetary automatic enrollment messages.
+       * - `enr_invalid_representative_payee_indicator` - Code R46. A rare return reason.
+       *   Only used for US Government agency non-monetary automatic enrollment messages.
+       * - `enr_invalid_transaction_code` - Code R41. A rare return reason. Only used for
+       *   US Government agency non-monetary automatic enrollment messages.
+       * - `enr_return_of_enr_entry` - Code R40. A rare return reason. Only used for US
+       *   Government agency non-monetary automatic enrollment messages.
+       * - `enr_routing_number_check_digit_error` - Code R42. A rare return reason. Only
+       *   used for US Government agency non-monetary automatic enrollment messages.
+       * - `entry_not_processed_by_gateway` - Code R84. A rare return reason. The
+       *   International ACH Transfer cannot be processed by the gateway.
+       * - `field_error` - Code R69. A rare return reason. One or more of the fields in
+       *   the ACH were malformed.
+       * - `foreign_receiving_dfi_unable_to_settle` - Code R83. A rare return reason. The
+       *   Foreign receiving bank was unable to settle this ACH transfer.
+       * - `iat_entry_coding_error` - Code R80. A rare return reason. The International
+       *   ACH Transfer is malformed.
+       * - `improper_effective_entry_date` - Code R18. A rare return reason. The ACH has
+       *   an improper effective entry date field.
+       * - `improper_source_document_source_document_presented` - Code R39. A rare return
+       *   reason. The source document related to this ACH, usually an ACH check
+       *   conversion, was presented to the bank.
+       * - `invalid_company_id` - Code R21. A rare return reason. The Company ID field of
+       *   the ACH was invalid.
+       * - `invalid_foreign_receiving_dfi_identification` - Code R82. A rare return
+       *   reason. The foreign receiving bank identifier for an International ACH
+       *   Transfer was invalid.
+       * - `invalid_individual_id_number` - Code R22. A rare return reason. The
+       *   Individual ID number field of the ACH was invalid.
+       * - `item_and_rck_entry_presented_for_payment` - Code R53. A rare return reason.
+       *   Both the Represented Check ("RCK") entry and the original check were presented
+       *   to the bank.
+       * - `item_related_to_rck_entry_is_ineligible` - Code R51. A rare return reason.
+       *   The Represented Check ("RCK") entry is ineligible.
+       * - `mandatory_field_error` - Code R26. A rare return reason. The ACH is missing a
+       *   required field.
+       * - `misrouted_dishonored_return` - Code R71. A rare return reason. The receiving
+       *   bank does not recognize the routing number in a dishonored return entry.
+       * - `misrouted_return` - Code R61. A rare return reason. The receiving bank does
+       *   not recognize the routing number in a return entry.
+       * - `no_errors_found` - Code R76. A rare return reason. Sent in response to a
+       *   return, the bank does not find the errors alleged by the returning bank.
+       * - `non_acceptance_of_r62_dishonored_return` - Code R77. A rare return reason.
+       *   The receiving bank does not accept the return of the erroneous debit. The
+       *   funds are not available at the receiving bank.
+       * - `non_participant_in_iat_program` - Code R81. A rare return reason. The
+       *   receiving bank does not accept International ACH Transfers.
+       * - `permissible_return_entry` - Code R31. A rare return reason. A return that has
+       *   been agreed to be accepted by the receiving bank, despite falling outside of
+       *   the usual return timeframe.
+       * - `permissible_return_entry_not_accepted` - Code R70. A rare return reason. The
+       *   receiving bank had not approved this return.
+       * - `rdfi_non_settlement` - Code R32. A rare return reason. The receiving bank
+       *   could not settle this transaction.
+       * - `rdfi_participant_in_check_truncation_program` - Code R30. A rare return
+       *   reason. The receiving bank does not accept Check Truncation ACH transfers.
+       * - `representative_payee_deceased_or_unable_to_continue_in_that_capacity` - Code
+       *   R14. A rare return reason. The payee is deceased.
+       * - `return_not_a_duplicate` - Code R75. A rare return reason. The originating
+       *   bank disputes that an earlier `duplicate_entry` return was actually a
+       *   duplicate.
+       * - `return_of_erroneous_or_reversing_debit` - Code R62. A rare return reason. The
+       *   originating financial institution made a mistake and this return corrects it.
+       * - `return_of_improper_credit_entry` - Code R36. A rare return reason. Return of
+       *   a malformed credit entry.
+       * - `return_of_improper_debit_entry` - Code R35. A rare return reason. Return of a
+       *   malformed debit entry.
+       * - `return_of_xck_entry` - Code R33. A rare return reason. Return of a destroyed
+       *   check ("XCK") entry.
+       * - `source_document_presented_for_payment` - Code R37. A rare return reason. The
+       *   source document related to this ACH, usually an ACH check conversion, was
+       *   presented to the bank.
+       * - `state_law_affecting_rck_acceptance` - Code R50. A rare return reason. State
+       *   law prevents the bank from accepting the Represented Check ("RCK") entry.
+       * - `stop_payment_on_item_related_to_rck_entry` - Code R52. A rare return reason.
+       *   A stop payment was issued on a Represented Check ("RCK") entry.
+       * - `stop_payment_on_source_document` - Code R38. A rare return reason. The source
+       *   attached to the ACH, usually an ACH check conversion, includes a stop payment.
+       * - `timely_original_return` - Code R73. A rare return reason. The bank receiving
+       *   an `untimely_return` believes it was on time.
+       * - `trace_number_error` - Code R27. A rare return reason. An ACH return's trace
+       *   number does not match an originated ACH.
+       * - `untimely_dishonored_return` - Code R72. A rare return reason. The dishonored
+       *   return was sent too late.
+       * - `untimely_return` - Code R68. A rare return reason. The return was sent too
+       *   late.
+       */
+      return_reason_code:
+        | 'insufficient_fund'
+        | 'no_account'
+        | 'account_closed'
+        | 'invalid_account_number_structure'
+        | 'account_frozen_entry_returned_per_ofac_instruction'
+        | 'credit_entry_refused_by_receiver'
+        | 'unauthorized_debit_to_consumer_account_using_corporate_sec_code'
+        | 'corporate_customer_advised_not_authorized'
+        | 'payment_stopped'
+        | 'non_transaction_account'
+        | 'uncollected_funds'
+        | 'routing_number_check_digit_error'
+        | 'customer_advised_unauthorized_improper_ineligible_or_incomplete'
+        | 'amount_field_error'
+        | 'authorization_revoked_by_customer'
+        | 'invalid_ach_routing_number'
+        | 'file_record_edit_criteria'
+        | 'enr_invalid_individual_name'
+        | 'returned_per_odfi_request'
+        | 'limited_participation_dfi'
+        | 'incorrectly_coded_outbound_international_payment'
+        | 'account_sold_to_another_dfi'
+        | 'addenda_error'
+        | 'beneficiary_or_account_holder_deceased'
+        | 'customer_advised_not_within_authorization_terms'
+        | 'corrected_return'
+        | 'duplicate_entry'
+        | 'duplicate_return'
+        | 'enr_duplicate_enrollment'
+        | 'enr_invalid_dfi_account_number'
+        | 'enr_invalid_individual_id_number'
+        | 'enr_invalid_representative_payee_indicator'
+        | 'enr_invalid_transaction_code'
+        | 'enr_return_of_enr_entry'
+        | 'enr_routing_number_check_digit_error'
+        | 'entry_not_processed_by_gateway'
+        | 'field_error'
+        | 'foreign_receiving_dfi_unable_to_settle'
+        | 'iat_entry_coding_error'
+        | 'improper_effective_entry_date'
+        | 'improper_source_document_source_document_presented'
+        | 'invalid_company_id'
+        | 'invalid_foreign_receiving_dfi_identification'
+        | 'invalid_individual_id_number'
+        | 'item_and_rck_entry_presented_for_payment'
+        | 'item_related_to_rck_entry_is_ineligible'
+        | 'mandatory_field_error'
+        | 'misrouted_dishonored_return'
+        | 'misrouted_return'
+        | 'no_errors_found'
+        | 'non_acceptance_of_r62_dishonored_return'
+        | 'non_participant_in_iat_program'
+        | 'permissible_return_entry'
+        | 'permissible_return_entry_not_accepted'
+        | 'rdfi_non_settlement'
+        | 'rdfi_participant_in_check_truncation_program'
+        | 'representative_payee_deceased_or_unable_to_continue_in_that_capacity'
+        | 'return_not_a_duplicate'
+        | 'return_of_erroneous_or_reversing_debit'
+        | 'return_of_improper_credit_entry'
+        | 'return_of_improper_debit_entry'
+        | 'return_of_xck_entry'
+        | 'source_document_presented_for_payment'
+        | 'state_law_affecting_rck_acceptance'
+        | 'stop_payment_on_item_related_to_rck_entry'
+        | 'stop_payment_on_source_document'
+        | 'timely_original_return'
+        | 'trace_number_error'
+        | 'untimely_dishonored_return'
+        | 'untimely_return';
+
+      /**
+       * A 15 digit number that was generated by the bank that initiated the return. The
+       * trace number of the return is different than that of the original transfer. ACH
+       * trace numbers are not unique, but along with the amount and date this number can
+       * be used to identify the ACH return at the bank that initiated it.
+       */
+      trace_number: string;
+
+      /**
+       * The identifier of the Transaction associated with this return.
+       */
+      transaction_id: string;
+
+      /**
+       * The identifier of the ACH Transfer associated with this return.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Blockchain Off-Ramp Transfer Settlement object. This field will be present in
+     * the JSON response if and only if `category` is equal to
+     * `blockchain_offramp_transfer_settlement`.
+     */
+    export interface BlockchainOfframpTransferSettlement {
+      /**
+       * The identifier of the Blockchain Address the funds were received at.
+       */
+      source_blockchain_address_id: string;
+
+      /**
+       * The identifier of the Blockchain Off-Ramp Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Blockchain On-Ramp Transfer Intention object. This field will be present in
+     * the JSON response if and only if `category` is equal to
+     * `blockchain_onramp_transfer_intention`.
+     */
+    export interface BlockchainOnrampTransferIntention {
+      /**
+       * The blockchain address the funds were sent to.
+       */
+      destination_blockchain_address: string;
+
+      /**
+       * The identifier of the Blockchain On-Ramp Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Legacy Card Dispute Acceptance object. This field will be present in the JSON
+     * response if and only if `category` is equal to `card_dispute_acceptance`.
+     * Contains the details of a successful Card Dispute.
+     */
+    export interface CardDisputeAcceptance {
+      /**
+       * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+       * the Card Dispute was accepted.
+       */
+      accepted_at: string;
+
+      /**
+       * The identifier of the Transaction that was created to return the disputed funds
+       * to your account.
+       */
+      transaction_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Card Dispute Financial object. This field will be present in the JSON response
+     * if and only if `category` is equal to `card_dispute_financial`. Financial event
+     * related to a Card Dispute.
+     */
+    export interface CardDisputeFinancial {
+      /**
+       * The amount of the financial event.
+       */
+      amount: number;
+
+      /**
+       * The network that the Card Dispute is associated with.
+       *
+       * - `visa` - Visa: details will be under the `visa` object.
+       * - `pulse` - Pulse: details will be under the `pulse` object.
+       */
+      network: 'visa' | 'pulse';
+
+      /**
+       * The identifier of the Transaction that was created to credit or debit the
+       * disputed funds to or from your account.
+       */
+      transaction_id: string;
+
+      /**
+       * Information for events related to card dispute for card payments processed over
+       * Visa's network. This field will be present in the JSON response if and only if
+       * `network` is equal to `visa`.
+       */
+      visa: CardDisputeFinancial.Visa | null;
+
+      [k: string]: unknown;
+    }
+
+    export namespace CardDisputeFinancial {
+      /**
+       * Information for events related to card dispute for card payments processed over
+       * Visa's network. This field will be present in the JSON response if and only if
+       * `network` is equal to `visa`.
+       */
+      export interface Visa {
+        /**
+         * The type of card dispute financial event.
+         *
+         * - `chargeback_submitted` - The user's chargeback was submitted.
+         * - `merchant_prearbitration_decline_submitted` - The user declined the merchant's
+         *   pre-arbitration submission.
+         * - `merchant_prearbitration_received` - The merchant's pre-arbitration submission
+         *   was received.
+         * - `represented` - The transaction was re-presented by the merchant.
+         * - `user_prearbitration_decline_received` - The user's pre-arbitration was
+         *   declined by the merchant.
+         * - `user_prearbitration_submitted` - The user's pre-arbitration was submitted.
+         * - `user_withdrawal_submitted` - The user withdrew from the dispute.
+         */
+        event_type:
+          | 'chargeback_submitted'
+          | 'merchant_prearbitration_decline_submitted'
+          | 'merchant_prearbitration_received'
+          | 'represented'
+          | 'user_prearbitration_decline_received'
+          | 'user_prearbitration_submitted'
+          | 'user_withdrawal_submitted';
+      }
+    }
+
+    /**
+     * A Legacy Card Dispute Loss object. This field will be present in the JSON
+     * response if and only if `category` is equal to `card_dispute_loss`. Contains the
+     * details of a lost Card Dispute.
+     */
+    export interface CardDisputeLoss {
+      /**
+       * Why the Card Dispute was lost.
+       */
+      explanation: string;
+
+      /**
+       * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+       * the Card Dispute was lost.
+       */
+      lost_at: string;
+
+      /**
+       * The identifier of the Transaction that was created to debit the disputed funds
+       * from your account.
+       */
+      transaction_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Card Push Transfer Acceptance object. This field will be present in the JSON
+     * response if and only if `category` is equal to `card_push_transfer_acceptance`.
+     * A Card Push Transfer Acceptance is created when an Outbound Card Push Transfer
+     * sent from Increase is accepted by the receiving bank.
+     */
+    export interface CardPushTransferAcceptance {
+      /**
+       * The transfer amount in USD cents.
+       */
+      settlement_amount: number;
+
+      /**
+       * The identifier of the Card Push Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Card Revenue Payment object. This field will be present in the JSON response
+     * if and only if `category` is equal to `card_revenue_payment`. Card Revenue
+     * Payments reflect earnings from fees on card transactions.
+     */
+    export interface CardRevenuePayment {
+      /**
+       * The amount in the minor unit of the transaction's currency. For dollars, for
+       * example, this is cents.
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+       * currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The end of the period for which this transaction paid interest.
+       */
+      period_end: string;
+
+      /**
+       * The start of the period for which this transaction paid interest.
+       */
+      period_start: string;
+
+      /**
+       * The account the card belonged to.
+       */
+      transacted_on_account_id: string | null;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Cashback Payment object. This field will be present in the JSON response if
+     * and only if `category` is equal to `cashback_payment`. A Cashback Payment
+     * represents the cashback paid to a cardholder for a given period. Cashback is
+     * usually paid monthly for the prior month's transactions.
+     */
+    export interface CashbackPayment {
+      /**
+       * The card on which the cashback was accrued.
+       */
+      accrued_on_card_id: string | null;
+
+      /**
+       * The amount in the minor unit of the transaction's currency. For dollars, for
+       * example, this is cents.
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+       * currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The end of the period for which this transaction paid cashback.
+       */
+      period_end: string;
+
+      /**
+       * The start of the period for which this transaction paid cashback.
+       */
+      period_start: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Check Deposit Acceptance object. This field will be present in the JSON
+     * response if and only if `category` is equal to `check_deposit_acceptance`. A
+     * Check Deposit Acceptance is created when a Check Deposit is processed and its
+     * details confirmed. Check Deposits may be returned by the receiving bank, which
+     * will appear as a Check Deposit Return.
+     */
+    export interface CheckDepositAcceptance {
+      /**
+       * The account number printed on the check. This is an account at the bank that
+       * issued the check.
+       */
+      account_number: string;
+
+      /**
+       * The amount to be deposited in the minor unit of the transaction's currency. For
+       * dollars, for example, this is cents.
+       */
+      amount: number;
+
+      /**
+       * An additional line of metadata printed on the check. This typically includes the
+       * check number for business checks.
+       */
+      auxiliary_on_us: string | null;
+
+      /**
+       * The ID of the Check Deposit that was accepted.
+       */
+      check_deposit_id: string;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+       * transaction's currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The routing number printed on the check. This is a routing number for the bank
+       * that issued the check.
+       */
+      routing_number: string;
+
+      /**
+       * The check serial number, if present, for consumer checks. For business checks,
+       * the serial number is usually in the `auxiliary_on_us` field.
+       */
+      serial_number: string | null;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Check Deposit Return object. This field will be present in the JSON response
+     * if and only if `category` is equal to `check_deposit_return`. A Check Deposit
+     * Return is created when a Check Deposit is returned by the bank holding the
+     * account it was drawn against. Check Deposits may be returned for a variety of
+     * reasons, including insufficient funds or a mismatched account number. Usually,
+     * checks are returned within the first 7 days after the deposit is made.
+     */
+    export interface CheckDepositReturn {
+      /**
+       * The returned amount in USD cents.
+       */
+      amount: number;
+
+      /**
+       * The identifier of the Check Deposit that was returned.
+       */
+      check_deposit_id: string;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the
+       * transaction's currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * Why this check was returned by the bank holding the account it was drawn
+       * against.
+       *
+       * - `ach_conversion_not_supported` - The check doesn't allow ACH conversion.
+       * - `closed_account` - The account is closed. (Check21 return code `D`)
+       * - `duplicate_submission` - The check has already been deposited. (Check21 return
+       *   code `Y`)
+       * - `insufficient_funds` - Insufficient funds (Check21 return code `A`)
+       * - `no_account` - No account was found matching the check details. (Check21
+       *   return code `E`)
+       * - `not_authorized` - The check was not authorized. (Check21 return code `Q`)
+       * - `stale_dated` - The check is too old. (Check21 return code `G`)
+       * - `stop_payment` - The payment has been stopped by the account holder. (Check21
+       *   return code `C`)
+       * - `unknown_reason` - The reason for the return is unknown.
+       * - `unmatched_details` - The image doesn't match the details submitted.
+       * - `unreadable_image` - The image could not be read. (Check21 return code `U`)
+       * - `endorsement_irregular` - The check endorsement was irregular. (Check21 return
+       *   code `J`)
+       * - `altered_or_fictitious_item` - The check present was either altered or fake.
+       *   (Check21 return code `N`)
+       * - `frozen_or_blocked_account` - The account this check is drawn on is frozen.
+       *   (Check21 return code `F`)
+       * - `post_dated` - The check is post dated. (Check21 return code `H`)
+       * - `endorsement_missing` - The endorsement was missing. (Check21 return code `I`)
+       * - `signature_missing` - The check signature was missing. (Check21 return code
+       *   `K`)
+       * - `stop_payment_suspect` - The bank suspects a stop payment will be placed.
+       *   (Check21 return code `T`)
+       * - `unusable_image` - The bank cannot read the image. (Check21 return code `U`)
+       * - `image_fails_security_check` - The check image fails the bank's security
+       *   check. (Check21 return code `V`)
+       * - `cannot_determine_amount` - The bank cannot determine the amount. (Check21
+       *   return code `W`)
+       * - `signature_irregular` - The signature is inconsistent with prior signatures.
+       *   (Check21 return code `L`)
+       * - `non_cash_item` - The check is a non-cash item and cannot be drawn against the
+       *   account. (Check21 return code `M`)
+       * - `unable_to_process` - The bank is unable to process this check. (Check21
+       *   return code `O`)
+       * - `item_exceeds_dollar_limit` - The check exceeds the bank or customer's limit.
+       *   (Check21 return code `P`)
+       * - `branch_or_account_sold` - The bank sold this account and no longer services
+       *   this customer. (Check21 return code `R`)
+       */
+      return_reason:
+        | 'ach_conversion_not_supported'
+        | 'closed_account'
+        | 'duplicate_submission'
+        | 'insufficient_funds'
+        | 'no_account'
+        | 'not_authorized'
+        | 'stale_dated'
+        | 'stop_payment'
+        | 'unknown_reason'
+        | 'unmatched_details'
+        | 'unreadable_image'
+        | 'endorsement_irregular'
+        | 'altered_or_fictitious_item'
+        | 'frozen_or_blocked_account'
+        | 'post_dated'
+        | 'endorsement_missing'
+        | 'signature_missing'
+        | 'stop_payment_suspect'
+        | 'unusable_image'
+        | 'image_fails_security_check'
+        | 'cannot_determine_amount'
+        | 'signature_irregular'
+        | 'non_cash_item'
+        | 'unable_to_process'
+        | 'item_exceeds_dollar_limit'
+        | 'branch_or_account_sold';
+
+      /**
+       * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+       * the check deposit was returned.
+       */
+      returned_at: string;
+
+      /**
+       * The identifier of the transaction that reversed the original check deposit
+       * transaction.
+       */
+      transaction_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Check Transfer Deposit object. This field will be present in the JSON response
+     * if and only if `category` is equal to `check_transfer_deposit`. An Inbound Check
+     * is a check drawn on an Increase account that has been deposited by an external
+     * bank account. These types of checks are not pre-registered.
+     */
+    export interface CheckTransferDeposit {
+      /**
+       * The identifier of the API File object containing an image of the back of the
+       * deposited check.
+       */
+      back_image_file_id: string | null;
+
+      /**
+       * The American Bankers' Association (ABA) Routing Transit Number (RTN) for the
+       * bank depositing this check. In some rare cases, this is not transmitted via
+       * Check21 and the value will be null.
+       */
+      bank_of_first_deposit_routing_number: string | null;
+
+      /**
+       * When the check was deposited.
+       */
+      deposited_at: string;
+
+      /**
+       * The identifier of the API File object containing an image of the front of the
+       * deposited check.
+       */
+      front_image_file_id: string | null;
+
+      /**
+       * The identifier of the Inbound Check Deposit object associated with this
+       * transaction.
+       */
+      inbound_check_deposit_id: string | null;
+
+      /**
+       * The identifier of the Transaction object created when the check was deposited.
+       */
+      transaction_id: string | null;
+
+      /**
+       * The identifier of the Check Transfer object that was deposited.
+       */
+      transfer_id: string | null;
+
+      /**
+       * A constant representing the object's type. For this resource it will always be
+       * `check_transfer_deposit`.
+       */
+      type: 'check_transfer_deposit';
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A FedNow Transfer Acknowledgement object. This field will be present in the JSON
+     * response if and only if `category` is equal to
+     * `fednow_transfer_acknowledgement`. A FedNow Transfer Acknowledgement is created
+     * when a FedNow Transfer sent from Increase is acknowledged by the receiving bank.
+     */
+    export interface FednowTransferAcknowledgement {
+      /**
+       * The identifier of the FedNow Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Fee Payment object. This field will be present in the JSON response if and
+     * only if `category` is equal to `fee_payment`. A Fee Payment represents a payment
+     * made to Increase.
+     */
+    export interface FeePayment {
+      /**
+       * The amount in the minor unit of the transaction's currency. For dollars, for
+       * example, this is cents.
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+       * currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The start of this payment's fee period, usually the first day of a month.
+       */
+      fee_period_start: string;
+
+      /**
+       * The Program for which this fee was incurred.
+       */
+      program_id: string | null;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An Inbound ACH Transfer Intention object. This field will be present in the JSON
+     * response if and only if `category` is equal to `inbound_ach_transfer`. An
+     * Inbound ACH Transfer Intention is created when an ACH transfer is initiated at
+     * another bank and received by Increase.
+     */
+    export interface InboundACHTransfer {
+      /**
+       * Additional information sent from the originator.
+       */
+      addenda: InboundACHTransfer.Addenda | null;
+
+      /**
+       * The transfer amount in USD cents.
+       */
+      amount: number;
+
+      /**
+       * The description of the date of the transfer, usually in the format `YYMMDD`.
+       */
+      originator_company_descriptive_date: string | null;
+
+      /**
+       * Data set by the originator.
+       */
+      originator_company_discretionary_data: string | null;
+
+      /**
+       * An informational description of the transfer.
+       */
+      originator_company_entry_description: string;
+
+      /**
+       * An identifier for the originating company. This is generally, but not always, a
+       * stable identifier across multiple transfers.
+       */
+      originator_company_id: string;
+
+      /**
+       * A name set by the originator to identify themselves.
+       */
+      originator_company_name: string;
+
+      /**
+       * The originator's identifier for the transfer recipient.
+       */
+      receiver_id_number: string | null;
+
+      /**
+       * The name of the transfer recipient. This value is informational and not verified
+       * by Increase.
+       */
+      receiver_name: string | null;
+
+      /**
+       * A 15 digit number recorded in the Nacha file and available to both the
+       * originating and receiving bank. Along with the amount, date, and originating
+       * routing number, this can be used to identify the ACH transfer at either bank.
+       * ACH trace numbers are not unique, but are
+       * [used to correlate returns](https://increase.com/documentation/ach-returns#ach-returns).
+       */
+      trace_number: string;
+
+      /**
+       * The Inbound ACH Transfer's identifier.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    export namespace InboundACHTransfer {
+      /**
+       * Additional information sent from the originator.
+       */
+      export interface Addenda {
+        /**
+         * The type of addendum.
+         *
+         * - `freeform` - Unstructured addendum.
+         */
+        category: 'freeform';
+
+        /**
+         * Unstructured `payment_related_information` passed through by the originator.
+         */
+        freeform: Addenda.Freeform | null;
+      }
+
+      export namespace Addenda {
+        /**
+         * Unstructured `payment_related_information` passed through by the originator.
+         */
+        export interface Freeform {
+          /**
+           * Each entry represents an addendum received from the originator.
+           */
+          entries: Array<Freeform.Entry>;
+        }
+
+        export namespace Freeform {
+          export interface Entry {
+            /**
+             * The payment related information passed in the addendum.
+             */
+            payment_related_information: string;
+          }
+        }
+      }
+    }
+
+    /**
+     * An Inbound ACH Transfer Return Intention object. This field will be present in
+     * the JSON response if and only if `category` is equal to
+     * `inbound_ach_transfer_return_intention`. An Inbound ACH Transfer Return
+     * Intention is created when an ACH transfer is initiated at another bank and
+     * returned by Increase.
+     */
+    export interface InboundACHTransferReturnIntention {
+      /**
+       * The ID of the Inbound ACH Transfer that is being returned.
+       */
+      inbound_ach_transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An Inbound Check Adjustment object. This field will be present in the JSON
+     * response if and only if `category` is equal to `inbound_check_adjustment`. An
+     * Inbound Check Adjustment is created when Increase receives an adjustment for a
+     * check or return deposited through Check21.
+     */
+    export interface InboundCheckAdjustment {
+      /**
+       * The ID of the transaction that was adjusted.
+       */
+      adjusted_transaction_id: string;
+
+      /**
+       * The amount of the check adjustment.
+       */
+      amount: number;
+
+      /**
+       * The reason for the adjustment.
+       *
+       * - `late_return` - The return was initiated too late and the receiving
+       *   institution has responded with a Late Return Claim.
+       * - `wrong_payee_credit` - The check was deposited to the wrong payee and the
+       *   depositing institution has reimbursed the funds with a Wrong Payee Credit.
+       * - `adjusted_amount` - The check was deposited with a different amount than what
+       *   was written on the check.
+       * - `non_conforming_item` - The recipient was not able to process the check. This
+       *   usually happens for e.g., low quality images.
+       * - `paid` - The check has already been deposited elsewhere and so this is a
+       *   duplicate.
+       */
+      reason: 'late_return' | 'wrong_payee_credit' | 'adjusted_amount' | 'non_conforming_item' | 'paid';
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An Inbound Check Deposit Return Intention object. This field will be present in
+     * the JSON response if and only if `category` is equal to
+     * `inbound_check_deposit_return_intention`. An Inbound Check Deposit Return
+     * Intention is created when Increase receives an Inbound Check and the User
+     * requests that it be returned.
+     */
+    export interface InboundCheckDepositReturnIntention {
+      /**
+       * The ID of the Inbound Check Deposit that is being returned.
+       */
+      inbound_check_deposit_id: string;
+
+      /**
+       * The identifier of the Check Transfer object that was deposited.
+       */
+      transfer_id: string | null;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An Inbound FedNow Transfer Confirmation object. This field will be present in
+     * the JSON response if and only if `category` is equal to
+     * `inbound_fednow_transfer_confirmation`. An Inbound FedNow Transfer Confirmation
+     * is created when a FedNow transfer is initiated at another bank and received by
+     * Increase.
+     */
+    export interface InboundFednowTransferConfirmation {
+      /**
+       * The identifier of the FedNow Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An Inbound Real-Time Payments Transfer Confirmation object. This field will be
+     * present in the JSON response if and only if `category` is equal to
+     * `inbound_real_time_payments_transfer_confirmation`. An Inbound Real-Time
+     * Payments Transfer Confirmation is created when a Real-Time Payments transfer is
+     * initiated at another bank and received by Increase.
+     */
+    export interface InboundRealTimePaymentsTransferConfirmation {
+      /**
+       * The amount in the minor unit of the transfer's currency. For dollars, for
+       * example, this is cents.
+       */
+      amount: number;
+
+      /**
+       * The name the sender of the transfer specified as the recipient of the transfer.
+       */
+      creditor_name: string;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code of the transfer's
+       * currency. This will always be "USD" for a Real-Time Payments transfer.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The account number of the account that sent the transfer.
+       */
+      debtor_account_number: string;
+
+      /**
+       * The name provided by the sender of the transfer.
+       */
+      debtor_name: string;
+
+      /**
+       * The routing number of the account that sent the transfer.
+       */
+      debtor_routing_number: string;
+
+      /**
+       * The Real-Time Payments network identification of the transfer.
+       */
+      transaction_identification: string;
+
+      /**
+       * The identifier of the Real-Time Payments Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      /**
+       * Additional information included with the transfer.
+       */
+      unstructured_remittance_information: string | null;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An Inbound Wire Reversal object. This field will be present in the JSON response
+     * if and only if `category` is equal to `inbound_wire_reversal`. An Inbound Wire
+     * Reversal represents a reversal of a wire transfer that was initiated via
+     * Increase. The other bank is sending the money back. This most often happens when
+     * the original destination account details were incorrect.
+     */
+    export interface InboundWireReversal {
+      /**
+       * The amount that was reversed in USD cents.
+       */
+      amount: number;
+
+      /**
+       * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
+       * the reversal was created.
+       */
+      created_at: string;
+
+      /**
+       * The debtor's routing number.
+       */
+      debtor_routing_number: string | null;
+
+      /**
+       * The description on the reversal message from Fedwire, set by the reversing bank.
+       */
+      description: string;
+
+      /**
+       * The Fedwire cycle date for the wire reversal. The "Fedwire day" begins at 9:00
+       * PM Eastern Time on the evening before the `cycle date`.
+       */
+      input_cycle_date: string;
+
+      /**
+       * The Fedwire transaction identifier.
+       */
+      input_message_accountability_data: string;
+
+      /**
+       * The Fedwire sequence number.
+       */
+      input_sequence_number: string;
+
+      /**
+       * The Fedwire input source identifier.
+       */
+      input_source: string;
+
+      /**
+       * The sending bank's identifier for the reversal.
+       */
+      instruction_identification: string | null;
+
+      /**
+       * Additional information about the reason for the reversal.
+       */
+      return_reason_additional_information: string | null;
+
+      /**
+       * A code provided by the sending bank giving a reason for the reversal. The common
+       * return reason codes are
+       * [documented here](/documentation/wire-reversals#reversal-reason-codes).
+       */
+      return_reason_code: string | null;
+
+      /**
+       * An Increase-generated description of the `return_reason_code`.
+       */
+      return_reason_code_description: string | null;
+
+      /**
+       * The ID for the Transaction associated with the transfer reversal.
+       */
+      transaction_id: string;
+
+      /**
+       * The ID for the Wire Transfer that is being reversed.
+       */
+      wire_transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An Inbound Wire Transfer Intention object. This field will be present in the
+     * JSON response if and only if `category` is equal to `inbound_wire_transfer`. An
+     * Inbound Wire Transfer Intention is created when a wire transfer is initiated at
+     * another bank and received by Increase.
+     */
+    export interface InboundWireTransfer {
+      /**
+       * The amount in USD cents.
+       */
+      amount: number;
+
+      /**
+       * A free-form address field set by the sender.
+       */
+      creditor_address_line1: string | null;
+
+      /**
+       * A free-form address field set by the sender.
+       */
+      creditor_address_line2: string | null;
+
+      /**
+       * A free-form address field set by the sender.
+       */
+      creditor_address_line3: string | null;
+
+      /**
+       * A name set by the sender.
+       */
+      creditor_name: string | null;
+
+      /**
+       * A free-form address field set by the sender.
+       */
+      debtor_address_line1: string | null;
+
+      /**
+       * A free-form address field set by the sender.
+       */
+      debtor_address_line2: string | null;
+
+      /**
+       * A free-form address field set by the sender.
+       */
+      debtor_address_line3: string | null;
+
+      /**
+       * A name set by the sender.
+       */
+      debtor_name: string | null;
+
+      /**
+       * An Increase-constructed description of the transfer.
+       */
+      description: string;
+
+      /**
+       * A free-form reference string set by the sender, to help identify the transfer.
+       */
+      end_to_end_identification: string | null;
+
+      /**
+       * A unique identifier available to the originating and receiving banks, commonly
+       * abbreviated as IMAD. It is created when the wire is submitted to the Fedwire
+       * service and is helpful when debugging wires with the originating bank.
+       */
+      input_message_accountability_data: string | null;
+
+      /**
+       * The American Banking Association (ABA) routing number of the bank that sent the
+       * wire.
+       */
+      instructing_agent_routing_number: string | null;
+
+      /**
+       * The sending bank's identifier for the wire transfer.
+       */
+      instruction_identification: string | null;
+
+      /**
+       * The ID of the Inbound Wire Transfer object that resulted in this Transaction.
+       */
+      transfer_id: string;
+
+      /**
+       * The Unique End-to-end Transaction Reference
+       * ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
+       * of the transfer.
+       */
+      unique_end_to_end_transaction_reference: string | null;
+
+      /**
+       * A free-form message set by the sender.
+       */
+      unstructured_remittance_information: string | null;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An Interest Payment object. This field will be present in the JSON response if
+     * and only if `category` is equal to `interest_payment`. An Interest Payment
+     * represents a payment of interest on an account. Interest is usually paid
+     * monthly.
+     */
+    export interface InterestPayment {
+      /**
+       * The account on which the interest was accrued.
+       */
+      accrued_on_account_id: string;
+
+      /**
+       * The amount in the minor unit of the transaction's currency. For dollars, for
+       * example, this is cents.
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+       * currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * The end of the period for which this transaction paid interest.
+       */
+      period_end: string;
+
+      /**
+       * The start of the period for which this transaction paid interest.
+       */
+      period_start: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * An Internal Source object. This field will be present in the JSON response if
+     * and only if `category` is equal to `internal_source`. A transaction between the
+     * user and Increase. See the `reason` attribute for more information.
+     */
+    export interface InternalSource {
+      /**
+       * The amount in the minor unit of the transaction's currency. For dollars, for
+       * example, this is cents.
+       */
+      amount: number;
+
+      /**
+       * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the transaction
+       * currency.
+       *
+       * - `USD` - US Dollar (USD)
+       */
+      currency: 'USD';
+
+      /**
+       * An Internal Source is a transaction between you and Increase. This describes the
+       * reason for the transaction.
+       *
+       * - `account_closure` - Account closure
+       * - `account_revenue_payment_distribution` - Account revenue payment distribution
+       * - `bank_drawn_check` - Bank-drawn check
+       * - `bank_drawn_check_credit` - Bank-drawn check credit
+       * - `bank_migration` - Bank migration
+       * - `check_adjustment` - Check adjustment
+       * - `collection_payment` - Collection payment
+       * - `collection_receivable` - Collection receivable
+       * - `dishonored_ach_return` - Dishonored ACH return
+       * - `empyreal_adjustment` - Empyreal adjustment
+       * - `error` - Error
+       * - `error_correction` - Error correction
+       * - `fees` - Fees
+       * - `general_ledger_transfer` - General ledger transfer
+       * - `interest` - Interest
+       * - `negative_balance_forgiveness` - Negative balance forgiveness
+       * - `sample_funds` - Sample funds
+       * - `sample_funds_return` - Sample funds return
+       */
+      reason:
+        | 'account_closure'
+        | 'account_revenue_payment_distribution'
+        | 'bank_drawn_check'
+        | 'bank_drawn_check_credit'
+        | 'bank_migration'
+        | 'check_adjustment'
+        | 'collection_payment'
+        | 'collection_receivable'
+        | 'dishonored_ach_return'
+        | 'empyreal_adjustment'
+        | 'error'
+        | 'error_correction'
+        | 'fees'
+        | 'general_ledger_transfer'
+        | 'interest'
+        | 'negative_balance_forgiveness'
+        | 'sample_funds'
+        | 'sample_funds_return';
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Real-Time Payments Transfer Acknowledgement object. This field will be present
+     * in the JSON response if and only if `category` is equal to
+     * `real_time_payments_transfer_acknowledgement`. A Real-Time Payments Transfer
+     * Acknowledgement is created when a Real-Time Payments Transfer sent from Increase
+     * is acknowledged by the receiving bank.
+     */
+    export interface RealTimePaymentsTransferAcknowledgement {
+      /**
+       * The destination account number.
+       */
+      account_number: string;
+
+      /**
+       * The transfer amount in USD cents.
+       */
+      amount: number;
+
+      /**
+       * The American Bankers' Association (ABA) Routing Transit Number (RTN).
+       */
+      routing_number: string;
+
+      /**
+       * The identifier of the Real-Time Payments Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      /**
+       * Unstructured information that will show on the recipient's bank statement.
+       */
+      unstructured_remittance_information: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Sample Funds object. This field will be present in the JSON response if and
+     * only if `category` is equal to `sample_funds`. Sample funds for testing
+     * purposes.
+     */
+    export interface SampleFunds {
+      /**
+       * Where the sample funds came from.
+       */
+      originator: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Swift Transfer Intention object. This field will be present in the JSON
+     * response if and only if `category` is equal to `swift_transfer_intention`. A
+     * Swift Transfer initiated via Increase.
+     */
+    export interface SwiftTransferIntention {
+      /**
+       * The identifier of the Swift Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Swift Transfer Return object. This field will be present in the JSON response
+     * if and only if `category` is equal to `swift_transfer_return`. A Swift Transfer
+     * Return is created when a Swift Transfer is returned by the receiving bank.
+     */
+    export interface SwiftTransferReturn {
+      /**
+       * The identifier of the Swift Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+
+    /**
+     * A Wire Transfer Intention object. This field will be present in the JSON
+     * response if and only if `category` is equal to `wire_transfer_intention`. A Wire
+     * Transfer initiated via Increase and sent to a different bank.
+     */
+    export interface WireTransferIntention {
+      /**
+       * The destination account number.
+       */
+      account_number: string;
+
+      /**
+       * The transfer amount in USD cents.
+       */
+      amount: number;
+
+      /**
+       * The message that will show on the recipient's bank statement.
+       */
+      message_to_recipient: string;
+
+      /**
+       * The American Bankers' Association (ABA) Routing Transit Number (RTN).
+       */
+      routing_number: string;
+
+      /**
+       * The identifier of the Wire Transfer that led to this Transaction.
+       */
+      transfer_id: string;
+
+      [k: string]: unknown;
+    }
+  }
+}
+
+/**
+ * The results of a Card Authorization simulation.
+ */
+export interface SimulationCreateCardAuthorizationResponse {
+  /**
+   * If the authorization attempt fails, this will contain the resulting
+   * [Declined Transaction](#declined-transactions) object. The Declined
+   * Transaction's `source` will be of `category: card_decline`.
+   */
+  declined_transaction: DeclinedTransactionsAPI.DeclinedTransaction | null;
+
+  /**
+   * If the authorization attempt succeeds, this will contain the resulting Pending
+   * Transaction object. The Pending Transaction's `source` will be of
+   * `category: card_authorization`.
+   */
+  pending_transaction: PendingTransactionsAPI.PendingTransaction | null;
+
+  /**
+   * A constant representing the object's type. For this resource it will always be
+   * `inbound_card_authorization_simulation_result`.
+   */
+  type: 'inbound_card_authorization_simulation_result';
+}
+
+/**
+ * The results of a Digital Wallet Token simulation.
+ */
+export interface SimulationCreateDigitalWalletTokenRequestResponse {
+  /**
+   * If the simulated tokenization attempt was declined, this field contains details
+   * as to why.
+   *
+   * - `card_not_active` - The card is not active.
+   * - `no_verification_method` - The card does not have a two-factor authentication
+   *   method.
+   * - `webhook_timed_out` - Your webhook timed out when evaluating the token
+   *   provisioning attempt.
+   * - `webhook_declined` - Your webhook declined the token provisioning attempt.
+   */
+  decline_reason:
+    | 'card_not_active'
+    | 'no_verification_method'
+    | 'webhook_timed_out'
+    | 'webhook_declined'
+    | null;
+
+  /**
+   * If the simulated tokenization attempt was accepted, this field contains the id
+   * of the Digital Wallet Token that was created.
+   */
+  digital_wallet_token_id: string | null;
+
+  /**
+   * A constant representing the object's type. For this resource it will always be
+   * `inbound_digital_wallet_token_request_simulation_result`.
+   */
+  type: 'inbound_digital_wallet_token_request_simulation_result';
+}
+
+export interface SimulationConfirmFuelAuthorizationParams {
+  /**
+   * The amount of the fuel_confirmation in minor units in the card authorization's
+   * currency.
+   */
+  amount: number;
+
+  /**
+   * The identifier of the Card Payment to create a fuel_confirmation on.
+   */
+  card_payment_id: string;
+}
+
+export interface SimulationCreateAccountStatementParams {
+  /**
+   * The identifier of the Account the statement is for.
+   */
+  account_id: string;
+}
+
+export interface SimulationCreateCardAuthorizationParams {
+  /**
+   * The authorization amount in cents.
+   */
+  amount: number;
+
+  /**
+   * The identifier of a Card Payment with a `card_authentication` if you want to
+   * simulate an authenticated authorization.
+   */
+  authenticated_card_payment_id?: string;
+
+  /**
+   * The identifier of the Card to be authorized.
+   */
+  card_id?: string;
+
+  /**
+   * Forces a card decline with a specific reason. No real time decision will be
+   * sent.
+   *
+   * - `account_closed` - The account has been closed.
+   * - `card_not_active` - The Card was not active.
+   * - `card_canceled` - The Card has been canceled.
+   * - `physical_card_not_active` - The Physical Card was not active.
+   * - `entity_not_active` - The account's entity was not active.
+   * - `group_locked` - The account was inactive.
+   * - `insufficient_funds` - The Card's Account did not have a sufficient available
+   *   balance.
+   * - `cvv2_mismatch` - The given CVV2 did not match the card's value.
+   * - `pin_mismatch` - The given PIN did not match the card's value.
+   * - `card_expiration_mismatch` - The given expiration date did not match the
+   *   card's value. Only applies when a CVV2 is present.
+   * - `transaction_not_allowed` - The attempted card transaction is not allowed per
+   *   Increase's terms.
+   * - `breaches_limit` - The transaction was blocked by a Limit.
+   * - `webhook_declined` - Your application declined the transaction via webhook.
+   * - `webhook_timed_out` - Your application webhook did not respond without the
+   *   required timeout.
+   * - `declined_by_stand_in_processing` - Declined by stand-in processing.
+   * - `invalid_physical_card` - The card read had an invalid CVV or dCVV.
+   * - `missing_original_authorization` - The original card authorization for this
+   *   incremental authorization does not exist.
+   * - `invalid_cryptogram` - The card's authorization request cryptogram was
+   *   invalid. The cryptogram can be from a physical card or a Digital Wallet Token
+   *   purchase.
+   * - `failed_3ds_authentication` - The transaction was declined because the 3DS
+   *   authentication failed.
+   * - `suspected_card_testing` - The transaction was suspected to be used by a card
+   *   tester to test for valid card numbers.
+   * - `suspected_fraud` - The transaction was suspected to be fraudulent. Please
+   *   reach out to support@increase.com for more information.
+   */
+  decline_reason?:
+    | 'account_closed'
+    | 'card_not_active'
+    | 'card_canceled'
+    | 'physical_card_not_active'
+    | 'entity_not_active'
+    | 'group_locked'
+    | 'insufficient_funds'
+    | 'cvv2_mismatch'
+    | 'pin_mismatch'
+    | 'card_expiration_mismatch'
+    | 'transaction_not_allowed'
+    | 'breaches_limit'
+    | 'webhook_declined'
+    | 'webhook_timed_out'
+    | 'declined_by_stand_in_processing'
+    | 'invalid_physical_card'
+    | 'missing_original_authorization'
+    | 'invalid_cryptogram'
+    | 'failed_3ds_authentication'
+    | 'suspected_card_testing'
+    | 'suspected_fraud';
+
+  /**
+   * The identifier of the Digital Wallet Token to be authorized.
+   */
+  digital_wallet_token_id?: string;
+
+  /**
+   * The identifier of the Event Subscription to use. If provided, will override the
+   * default real time event subscription. Because you can only create one real time
+   * decision event subscription, you can use this field to route events to any
+   * specified event subscription for testing purposes.
+   */
+  event_subscription_id?: string;
+
+  /**
+   * The merchant identifier (commonly abbreviated as MID) of the merchant the card
+   * is transacting with.
+   */
+  merchant_acceptor_id?: string;
+
+  /**
+   * The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+   * card is transacting with.
+   */
+  merchant_category_code?: string;
+
+  /**
+   * The city the merchant resides in.
+   */
+  merchant_city?: string;
+
+  /**
+   * The country the merchant resides in.
+   */
+  merchant_country?: string;
+
+  /**
+   * The merchant descriptor of the merchant the card is transacting with.
+   */
+  merchant_descriptor?: string;
+
+  /**
+   * The state the merchant resides in.
+   */
+  merchant_state?: string;
+
+  /**
+   * Fields specific to a given card network.
+   */
+  network_details?: SimulationCreateCardAuthorizationParams.NetworkDetails;
+
+  /**
+   * The risk score generated by the card network. For Visa this is the Visa Advanced
+   * Authorization risk score, from 0 to 99, where 99 is the riskiest.
+   */
+  network_risk_score?: number;
+
+  /**
+   * The identifier of the Physical Card to be authorized.
+   */
+  physical_card_id?: string;
+
+  /**
+   * Fields specific to a specific type of authorization, such as Automatic Fuel
+   * Dispensers, Refund Authorizations, or Cash Disbursements.
+   */
+  processing_category?: SimulationCreateCardAuthorizationParams.ProcessingCategory;
+
+  /**
+   * The terminal identifier (commonly abbreviated as TID) of the terminal the card
+   * is transacting with.
+   */
+  terminal_id?: string;
+}
+
+export namespace SimulationCreateCardAuthorizationParams {
+  /**
+   * Fields specific to a given card network.
+   */
+  export interface NetworkDetails {
+    /**
+     * Fields specific to the Visa network.
+     */
+    visa: NetworkDetails.Visa;
+  }
+
+  export namespace NetworkDetails {
+    /**
+     * Fields specific to the Visa network.
+     */
+    export interface Visa {
+      /**
+       * The reason code for the stand-in processing.
+       *
+       * - `issuer_error` - Increase failed to process the authorization in a timely
+       *   manner.
+       * - `invalid_physical_card` - The physical card read had an invalid CVV or dCVV.
+       * - `invalid_cryptogram` - The card's authorization request cryptogram was
+       *   invalid. The cryptogram can be from a physical card or a Digital Wallet Token
+       *   purchase.
+       * - `invalid_cardholder_authentication_verification_value` - The 3DS cardholder
+       *   authentication verification value was invalid.
+       * - `internal_visa_error` - An internal Visa error occurred. Visa uses this reason
+       *   code for certain expected occurrences as well, such as Application Transaction
+       *   Counter (ATC) replays.
+       * - `merchant_transaction_advisory_service_authentication_required` - The merchant
+       *   has enabled Visa's Transaction Advisory Service and requires further
+       *   authentication to perform the transaction. In practice this is often utilized
+       *   at fuel pumps to tell the cardholder to see the cashier.
+       * - `payment_fraud_disruption_acquirer_block` - The transaction was blocked by
+       *   Visa's Payment Fraud Disruption service due to fraudulent Acquirer behavior,
+       *   such as card testing.
+       * - `other` - An unspecific reason for stand-in processing.
+       */
+      stand_in_processing_reason?:
+        | 'issuer_error'
+        | 'invalid_physical_card'
+        | 'invalid_cryptogram'
+        | 'invalid_cardholder_authentication_verification_value'
+        | 'internal_visa_error'
+        | 'merchant_transaction_advisory_service_authentication_required'
+        | 'payment_fraud_disruption_acquirer_block'
+        | 'other';
+    }
+  }
+
+  /**
+   * Fields specific to a specific type of authorization, such as Automatic Fuel
+   * Dispensers, Refund Authorizations, or Cash Disbursements.
+   */
+  export interface ProcessingCategory {
+    /**
+     * The processing category describes the intent behind the authorization, such as
+     * whether it was used for bill payments or an automatic fuel dispenser.
+     *
+     * - `account_funding` - Account funding transactions are transactions used to
+     *   e.g., fund an account or transfer funds between accounts.
+     * - `automatic_fuel_dispenser` - Automatic fuel dispenser authorizations occur
+     *   when a card is used at a gas pump, prior to the actual transaction amount
+     *   being known. They are followed by an advice message that updates the amount of
+     *   the pending transaction.
+     * - `bill_payment` - A transaction used to pay a bill.
+     * - `original_credit` - Original credit transactions are used to send money to a
+     *   cardholder.
+     * - `purchase` - A regular purchase.
+     * - `quasi_cash` - Quasi-cash transactions represent purchases of items which may
+     *   be convertible to cash.
+     * - `refund` - A refund card authorization, sometimes referred to as a credit
+     *   voucher authorization, where funds are credited to the cardholder.
+     * - `cash_disbursement` - Cash disbursement transactions are used to withdraw cash
+     *   from an ATM or a point of sale.
+     * - `balance_inquiry` - A balance inquiry transaction is used to check the balance
+     *   of an account associated with a card.
+     */
+    category:
+      | 'account_funding'
+      | 'automatic_fuel_dispenser'
+      | 'bill_payment'
+      | 'original_credit'
+      | 'purchase'
+      | 'quasi_cash'
+      | 'refund'
+      | 'cash_disbursement'
+      | 'balance_inquiry';
+
+    /**
+     * Details related to refund authorizations.
+     */
+    refund?: ProcessingCategory.Refund;
+  }
+
+  export namespace ProcessingCategory {
+    /**
+     * Details related to refund authorizations.
+     */
+    export interface Refund {
+      /**
+       * The card payment to link this refund to.
+       */
+      original_card_payment_id?: string;
+    }
+  }
+}
+
+export interface SimulationCreateCardBalanceInquiryParams {
+  /**
+   * The balance amount in cents. The account balance will be used if not provided.
+   */
+  balance?: number;
+
+  /**
+   * The identifier of the Card to be authorized.
+   */
+  card_id?: string;
+
+  /**
+   * Forces a card decline with a specific reason. No real time decision will be
+   * sent.
+   *
+   * - `account_closed` - The account has been closed.
+   * - `card_not_active` - The Card was not active.
+   * - `card_canceled` - The Card has been canceled.
+   * - `physical_card_not_active` - The Physical Card was not active.
+   * - `entity_not_active` - The account's entity was not active.
+   * - `group_locked` - The account was inactive.
+   * - `insufficient_funds` - The Card's Account did not have a sufficient available
+   *   balance.
+   * - `cvv2_mismatch` - The given CVV2 did not match the card's value.
+   * - `pin_mismatch` - The given PIN did not match the card's value.
+   * - `card_expiration_mismatch` - The given expiration date did not match the
+   *   card's value. Only applies when a CVV2 is present.
+   * - `transaction_not_allowed` - The attempted card transaction is not allowed per
+   *   Increase's terms.
+   * - `breaches_limit` - The transaction was blocked by a Limit.
+   * - `webhook_declined` - Your application declined the transaction via webhook.
+   * - `webhook_timed_out` - Your application webhook did not respond without the
+   *   required timeout.
+   * - `declined_by_stand_in_processing` - Declined by stand-in processing.
+   * - `invalid_physical_card` - The card read had an invalid CVV or dCVV.
+   * - `missing_original_authorization` - The original card authorization for this
+   *   incremental authorization does not exist.
+   * - `invalid_cryptogram` - The card's authorization request cryptogram was
+   *   invalid. The cryptogram can be from a physical card or a Digital Wallet Token
+   *   purchase.
+   * - `failed_3ds_authentication` - The transaction was declined because the 3DS
+   *   authentication failed.
+   * - `suspected_card_testing` - The transaction was suspected to be used by a card
+   *   tester to test for valid card numbers.
+   * - `suspected_fraud` - The transaction was suspected to be fraudulent. Please
+   *   reach out to support@increase.com for more information.
+   */
+  decline_reason?:
+    | 'account_closed'
+    | 'card_not_active'
+    | 'card_canceled'
+    | 'physical_card_not_active'
+    | 'entity_not_active'
+    | 'group_locked'
+    | 'insufficient_funds'
+    | 'cvv2_mismatch'
+    | 'pin_mismatch'
+    | 'card_expiration_mismatch'
+    | 'transaction_not_allowed'
+    | 'breaches_limit'
+    | 'webhook_declined'
+    | 'webhook_timed_out'
+    | 'declined_by_stand_in_processing'
+    | 'invalid_physical_card'
+    | 'missing_original_authorization'
+    | 'invalid_cryptogram'
+    | 'failed_3ds_authentication'
+    | 'suspected_card_testing'
+    | 'suspected_fraud';
+
+  /**
+   * The identifier of the Digital Wallet Token to be authorized.
+   */
+  digital_wallet_token_id?: string;
+
+  /**
+   * The identifier of the Event Subscription to use. If provided, will override the
+   * default real time event subscription. Because you can only create one real time
+   * decision event subscription, you can use this field to route events to any
+   * specified event subscription for testing purposes.
+   */
+  event_subscription_id?: string;
+
+  /**
+   * The merchant identifier (commonly abbreviated as MID) of the merchant the card
+   * is transacting with.
+   */
+  merchant_acceptor_id?: string;
+
+  /**
+   * The Merchant Category Code (commonly abbreviated as MCC) of the merchant the
+   * card is transacting with.
+   */
+  merchant_category_code?: string;
+
+  /**
+   * The city the merchant resides in.
+   */
+  merchant_city?: string;
+
+  /**
+   * The country the merchant resides in.
+   */
+  merchant_country?: string;
+
+  /**
+   * The merchant descriptor of the merchant the card is transacting with.
+   */
+  merchant_descriptor?: string;
+
+  /**
+   * The state the merchant resides in.
+   */
+  merchant_state?: string;
+
+  /**
+   * Fields specific to a given card network.
+   */
+  network_details?: SimulationCreateCardBalanceInquiryParams.NetworkDetails;
+
+  /**
+   * The risk score generated by the card network. For Visa this is the Visa Advanced
+   * Authorization risk score, from 0 to 99, where 99 is the riskiest.
+   */
+  network_risk_score?: number;
+
+  /**
+   * The identifier of the Physical Card to be authorized.
+   */
+  physical_card_id?: string;
+
+  /**
+   * The terminal identifier (commonly abbreviated as TID) of the terminal the card
+   * is transacting with.
+   */
+  terminal_id?: string;
+}
+
+export namespace SimulationCreateCardBalanceInquiryParams {
+  /**
+   * Fields specific to a given card network.
+   */
+  export interface NetworkDetails {
+    /**
+     * Fields specific to the Visa network.
+     */
+    visa: NetworkDetails.Visa;
+  }
+
+  export namespace NetworkDetails {
+    /**
+     * Fields specific to the Visa network.
+     */
+    export interface Visa {
+      /**
+       * The reason code for the stand-in processing.
+       *
+       * - `issuer_error` - Increase failed to process the authorization in a timely
+       *   manner.
+       * - `invalid_physical_card` - The physical card read had an invalid CVV or dCVV.
+       * - `invalid_cryptogram` - The card's authorization request cryptogram was
+       *   invalid. The cryptogram can be from a physical card or a Digital Wallet Token
+       *   purchase.
+       * - `invalid_cardholder_authentication_verification_value` - The 3DS cardholder
+       *   authentication verification value was invalid.
+       * - `internal_visa_error` - An internal Visa error occurred. Visa uses this reason
+       *   code for certain expected occurrences as well, such as Application Transaction
+       *   Counter (ATC) replays.
+       * - `merchant_transaction_advisory_service_authentication_required` - The merchant
+       *   has enabled Visa's Transaction Advisory Service and requires further
+       *   authentication to perform the transaction. In practice this is often utilized
+       *   at fuel pumps to tell the cardholder to see the cashier.
+       * - `payment_fraud_disruption_acquirer_block` - The transaction was blocked by
+       *   Visa's Payment Fraud Disruption service due to fraudulent Acquirer behavior,
+       *   such as card testing.
+       * - `other` - An unspecific reason for stand-in processing.
+       */
+      stand_in_processing_reason?:
+        | 'issuer_error'
+        | 'invalid_physical_card'
+        | 'invalid_cryptogram'
+        | 'invalid_cardholder_authentication_verification_value'
+        | 'internal_visa_error'
+        | 'merchant_transaction_advisory_service_authentication_required'
+        | 'payment_fraud_disruption_acquirer_block'
+        | 'other';
+    }
+  }
+}
+
+export interface SimulationCreateCardTokenParams {
+  /**
+   * The capabilities of the outbound card token.
+   */
+  capabilities?: Array<SimulationCreateCardTokenParams.Capability>;
+
+  /**
+   * The expiration date of the card.
+   */
+  expiration?: string;
+
+  /**
+   * The last 4 digits of the card number.
+   */
+  last4?: string;
+
+  /**
+   * The outcome to simulate for card push transfers using this token.
+   */
+  outcome?: SimulationCreateCardTokenParams.Outcome;
+
+  /**
+   * The prefix of the card number, usually the first 8 digits.
+   */
+  prefix?: string;
+
+  /**
+   * The total length of the card number, including prefix and last4.
+   */
+  primary_account_number_length?: number;
+}
+
+export namespace SimulationCreateCardTokenParams {
+  export interface Capability {
+    /**
+     * The cross-border push transfers capability.
+     *
+     * - `supported` - The capability is supported.
+     * - `not_supported` - The capability is not supported.
+     */
+    cross_border_push_transfers: 'supported' | 'not_supported';
+
+    /**
+     * The domestic push transfers capability.
+     *
+     * - `supported` - The capability is supported.
+     * - `not_supported` - The capability is not supported.
+     */
+    domestic_push_transfers: 'supported' | 'not_supported';
+
+    /**
+     * The route of the capability.
+     *
+     * - `visa` - Visa and Interlink
+     * - `mastercard` - Mastercard and Maestro
+     */
+    route: 'visa' | 'mastercard';
+  }
+
+  /**
+   * The outcome to simulate for card push transfers using this token.
+   */
+  export interface Outcome {
+    /**
+     * Whether card push transfers or validations will be approved or declined.
+     *
+     * - `approve` - Any card push transfers or validations will be approved.
+     * - `decline` - Any card push transfers or validations will be declined.
+     */
+    result: 'approve' | 'decline';
+
+    /**
+     * If the result is declined, the details of the decline.
+     */
+    decline?: Outcome.Decline;
+  }
+
+  export namespace Outcome {
+    /**
+     * If the result is declined, the details of the decline.
+     */
+    export interface Decline {
+      /**
+       * The reason for the decline.
+       *
+       * - `do_not_honor` - The card issuer has declined the transaction without
+       *   providing a specific reason.
+       * - `activity_count_limit_exceeded` - The number of transactions for the card has
+       *   exceeded the limit set by the issuer.
+       * - `refer_to_card_issuer` - The card issuer requires the cardholder to contact
+       *   them for further information regarding the transaction.
+       * - `refer_to_card_issuer_special_condition` - The card issuer requires the
+       *   cardholder to contact them due to a special condition related to the
+       *   transaction.
+       * - `invalid_merchant` - The merchant is not valid for this transaction.
+       * - `pick_up_card` - The card should be retained by the terminal.
+       * - `error` - An error occurred during processing of the transaction.
+       * - `pick_up_card_special` - The card should be retained by the terminal due to a
+       *   special condition.
+       * - `invalid_transaction` - The transaction is invalid and cannot be processed.
+       * - `invalid_amount` - The amount of the transaction is invalid.
+       * - `invalid_account_number` - The account number provided is invalid.
+       * - `no_such_issuer` - The issuer of the card could not be found.
+       * - `re_enter_transaction` - The transaction should be re-entered for processing.
+       * - `no_credit_account` - There is no credit account associated with the card.
+       * - `pick_up_card_lost` - The card should be retained by the terminal because it
+       *   has been reported lost.
+       * - `pick_up_card_stolen` - The card should be retained by the terminal because it
+       *   has been reported stolen.
+       * - `closed_account` - The account associated with the card has been closed.
+       * - `insufficient_funds` - There are insufficient funds in the account to complete
+       *   the transaction.
+       * - `no_checking_account` - There is no checking account associated with the card.
+       * - `no_savings_account` - There is no savings account associated with the card.
+       * - `expired_card` - The card has expired and cannot be used for transactions.
+       * - `transaction_not_permitted_to_cardholder` - The transaction is not permitted
+       *   for this cardholder.
+       * - `transaction_not_allowed_at_terminal` - The transaction is not allowed at this
+       *   terminal.
+       * - `transaction_not_supported_or_blocked_by_issuer` - The transaction is not
+       *   supported or has been blocked by the issuer.
+       * - `suspected_fraud` - The transaction has been flagged as suspected fraud and
+       *   cannot be processed.
+       * - `activity_amount_limit_exceeded` - The amount of activity on the card has
+       *   exceeded the limit set by the issuer.
+       * - `restricted_card` - The card has restrictions that prevent it from being used
+       *   for this transaction.
+       * - `security_violation` - A security violation has occurred, preventing the
+       *   transaction from being processed.
+       * - `transaction_does_not_fulfill_anti_money_laundering_requirement` - The
+       *   transaction does not meet the anti-money laundering requirements set by the
+       *   issuer.
+       * - `blocked_by_cardholder` - The transaction was blocked by the cardholder.
+       * - `blocked_first_use` - The first use of the card has been blocked by the
+       *   issuer.
+       * - `credit_issuer_unavailable` - The credit issuer is currently unavailable to
+       *   process the transaction.
+       * - `negative_card_verification_value_results` - The card verification value (CVV)
+       *   results were negative, indicating a potential issue with the card.
+       * - `issuer_unavailable` - The issuer of the card is currently unavailable to
+       *   process the transaction.
+       * - `financial_institution_cannot_be_found` - The financial institution associated
+       *   with the card could not be found.
+       * - `transaction_cannot_be_completed` - The transaction cannot be completed due to
+       *   an unspecified reason.
+       * - `duplicate_transaction` - The transaction is a duplicate of a previous
+       *   transaction and cannot be processed again.
+       * - `system_malfunction` - A system malfunction occurred, preventing the
+       *   transaction from being processed.
+       * - `additional_customer_authentication_required` - Additional customer
+       *   authentication is required to complete the transaction.
+       * - `surcharge_amount_not_permitted` - The surcharge amount applied to the
+       *   transaction is not permitted by the issuer.
+       * - `decline_for_cvv2_failure` - The transaction was declined due to a failure in
+       *   verifying the CVV2 code.
+       * - `stop_payment_order` - A stop payment order has been placed on this
+       *   transaction.
+       * - `revocation_of_authorization_order` - An order has been placed to revoke
+       *   authorization for this transaction.
+       * - `revocation_of_all_authorizations_order` - An order has been placed to revoke
+       *   all authorizations for this cardholder.
+       * - `unable_to_locate_record` - The record associated with the transaction could
+       *   not be located.
+       * - `file_is_temporarily_unavailable` - The file needed for the transaction is
+       *   temporarily unavailable.
+       * - `incorrect_pin` - The PIN entered for the transaction is incorrect.
+       * - `allowable_number_of_pin_entry_tries_exceeded` - The allowable number of PIN
+       *   entry tries has been exceeded.
+       * - `unable_to_locate_previous_message` - The previous message associated with the
+       *   transaction could not be located.
+       * - `pin_error_found` - An error was found with the PIN associated with the
+       *   transaction.
+       * - `cannot_verify_pin` - The PIN associated with the transaction could not be
+       *   verified.
+       * - `verification_data_failed` - The verification data associated with the
+       *   transaction has failed.
+       * - `surcharge_amount_not_supported_by_debit_network_issuer` - The surcharge
+       *   amount is not supported by the debit network issuer.
+       * - `cash_service_not_available` - Cash service is not available for this
+       *   transaction.
+       * - `cashback_request_exceeds_issuer_limit` - The cashback request exceeds the
+       *   issuer limit.
+       * - `transaction_amount_exceeds_pre_authorized_approval_amount` - The transaction
+       *   amount exceeds the pre-authorized approval amount.
+       * - `transaction_does_not_qualify_for_visa_pin` - The transaction does not qualify
+       *   for Visa PIN processing.
+       * - `offline_declined` - The transaction was declined offline.
+       * - `unable_to_go_online` - The terminal was unable to go online to process the
+       *   transaction.
+       * - `valid_account_but_amount_not_supported` - The account is valid but the
+       *   transaction amount is not supported.
+       * - `invalid_use_of_merchant_category_code_correct_and_reattempt` - The merchant
+       *   category code was used incorrectly; correct it and reattempt the transaction.
+       * - `card_authentication_failed` - The card authentication process has failed.
+       */
+      reason?:
+        | 'do_not_honor'
+        | 'activity_count_limit_exceeded'
+        | 'refer_to_card_issuer'
+        | 'refer_to_card_issuer_special_condition'
+        | 'invalid_merchant'
+        | 'pick_up_card'
+        | 'error'
+        | 'pick_up_card_special'
+        | 'invalid_transaction'
+        | 'invalid_amount'
+        | 'invalid_account_number'
+        | 'no_such_issuer'
+        | 're_enter_transaction'
+        | 'no_credit_account'
+        | 'pick_up_card_lost'
+        | 'pick_up_card_stolen'
+        | 'closed_account'
+        | 'insufficient_funds'
+        | 'no_checking_account'
+        | 'no_savings_account'
+        | 'expired_card'
+        | 'transaction_not_permitted_to_cardholder'
+        | 'transaction_not_allowed_at_terminal'
+        | 'transaction_not_supported_or_blocked_by_issuer'
+        | 'suspected_fraud'
+        | 'activity_amount_limit_exceeded'
+        | 'restricted_card'
+        | 'security_violation'
+        | 'transaction_does_not_fulfill_anti_money_laundering_requirement'
+        | 'blocked_by_cardholder'
+        | 'blocked_first_use'
+        | 'credit_issuer_unavailable'
+        | 'negative_card_verification_value_results'
+        | 'issuer_unavailable'
+        | 'financial_institution_cannot_be_found'
+        | 'transaction_cannot_be_completed'
+        | 'duplicate_transaction'
+        | 'system_malfunction'
+        | 'additional_customer_authentication_required'
+        | 'surcharge_amount_not_permitted'
+        | 'decline_for_cvv2_failure'
+        | 'stop_payment_order'
+        | 'revocation_of_authorization_order'
+        | 'revocation_of_all_authorizations_order'
+        | 'unable_to_locate_record'
+        | 'file_is_temporarily_unavailable'
+        | 'incorrect_pin'
+        | 'allowable_number_of_pin_entry_tries_exceeded'
+        | 'unable_to_locate_previous_message'
+        | 'pin_error_found'
+        | 'cannot_verify_pin'
+        | 'verification_data_failed'
+        | 'surcharge_amount_not_supported_by_debit_network_issuer'
+        | 'cash_service_not_available'
+        | 'cashback_request_exceeds_issuer_limit'
+        | 'transaction_amount_exceeds_pre_authorized_approval_amount'
+        | 'transaction_does_not_qualify_for_visa_pin'
+        | 'offline_declined'
+        | 'unable_to_go_online'
+        | 'valid_account_but_amount_not_supported'
+        | 'invalid_use_of_merchant_category_code_correct_and_reattempt'
+        | 'card_authentication_failed';
+    }
+  }
+}
+
+export interface SimulationCreateDigitalWalletTokenRequestParams {
+  /**
+   * The identifier of the Card to be authorized.
+   */
+  card_id: string;
+}
+
+export interface SimulationCreateInboundACHTransferParams {
+  /**
+   * The identifier of the Account Number the inbound ACH Transfer is for.
+   */
+  account_number_id: string;
+
+  /**
+   * The transfer amount in cents. A positive amount originates a credit transfer
+   * pushing funds to the receiving account. A negative amount originates a debit
+   * transfer pulling funds from the receiving account.
+   */
+  amount: number;
+
+  /**
+   * Additional information to include in the transfer.
+   */
+  addenda?: SimulationCreateInboundACHTransferParams.Addenda;
+
+  /**
+   * The description of the date of the transfer.
+   */
+  company_descriptive_date?: string;
+
+  /**
+   * Data associated with the transfer set by the sender.
+   */
+  company_discretionary_data?: string;
+
+  /**
+   * The description of the transfer set by the sender.
+   */
+  company_entry_description?: string;
+
+  /**
+   * The sender's company ID.
+   */
+  company_id?: string;
+
+  /**
+   * The name of the sender.
+   */
+  company_name?: string;
+
+  /**
+   * The ID of the receiver of the transfer.
+   */
+  receiver_id_number?: string;
+
+  /**
+   * The name of the receiver of the transfer.
+   */
+  receiver_name?: string;
+
+  /**
+   * The time at which the transfer should be resolved. If not provided will resolve
+   * immediately.
+   */
+  resolve_at?: string;
+
+  /**
+   * The standard entry class code for the transfer.
+   *
+   * - `corporate_credit_or_debit` - Corporate Credit and Debit (CCD).
+   * - `corporate_trade_exchange` - Corporate Trade Exchange (CTX).
+   * - `prearranged_payments_and_deposit` - Prearranged Payments and Deposits (PPD).
+   * - `internet_initiated` - Internet Initiated (WEB).
+   * - `point_of_sale` - Point of Sale (POS).
+   * - `telephone_initiated` - Telephone Initiated (TEL).
+   * - `customer_initiated` - Customer Initiated (CIE).
+   * - `accounts_receivable` - Accounts Receivable (ARC).
+   * - `machine_transfer` - Machine Transfer (MTE).
+   * - `shared_network_transaction` - Shared Network Transaction (SHR).
+   * - `represented_check` - Represented Check (RCK).
+   * - `back_office_conversion` - Back Office Conversion (BOC).
+   * - `point_of_purchase` - Point of Purchase (POP).
+   * - `check_truncation` - Check Truncation (TRC).
+   * - `destroyed_check` - Destroyed Check (XCK).
+   * - `international_ach_transaction` - International ACH Transaction (IAT).
+   */
+  standard_entry_class_code?:
+    | 'corporate_credit_or_debit'
+    | 'corporate_trade_exchange'
+    | 'prearranged_payments_and_deposit'
+    | 'internet_initiated'
+    | 'point_of_sale'
+    | 'telephone_initiated'
+    | 'customer_initiated'
+    | 'accounts_receivable'
+    | 'machine_transfer'
+    | 'shared_network_transaction'
+    | 'represented_check'
+    | 'back_office_conversion'
+    | 'point_of_purchase'
+    | 'check_truncation'
+    | 'destroyed_check'
+    | 'international_ach_transaction';
+}
+
+export namespace SimulationCreateInboundACHTransferParams {
+  /**
+   * Additional information to include in the transfer.
+   */
+  export interface Addenda {
+    /**
+     * The type of addenda to simulate being sent with the transfer.
+     *
+     * - `freeform` - Unstructured `payment_related_information` passed through with
+     *   the transfer.
+     */
+    category: 'freeform';
+
+    /**
+     * Unstructured `payment_related_information` passed through with the transfer.
+     */
+    freeform?: Addenda.Freeform;
+  }
+
+  export namespace Addenda {
+    /**
+     * Unstructured `payment_related_information` passed through with the transfer.
+     */
+    export interface Freeform {
+      /**
+       * Each entry represents an addendum sent with the transfer.
+       */
+      entries: Array<Freeform.Entry>;
+    }
+
+    export namespace Freeform {
+      export interface Entry {
+        /**
+         * The payment related information passed in the addendum.
+         */
+        payment_related_information: string;
+      }
+    }
+  }
+}
+
+export interface SimulationCreateInboundFednowTransferParams {
+  /**
+   * The identifier of the Account Number the inbound FedNow Transfer is for.
+   */
+  account_number_id: string;
+
+  /**
+   * The transfer amount in USD cents. Must be positive.
+   */
+  amount: number;
+
+  /**
+   * The account number of the account that sent the transfer.
+   */
+  debtor_account_number?: string;
+
+  /**
+   * The name provided by the sender of the transfer.
+   */
+  debtor_name?: string;
+
+  /**
+   * The routing number of the account that sent the transfer.
+   */
+  debtor_routing_number?: string;
+
+  /**
+   * Additional information included with the transfer.
+   */
+  unstructured_remittance_information?: string;
+}
+
+export interface SimulationCreateInboundMailItemParams {
+  /**
+   * The amount of the check to be simulated, in cents.
+   */
+  amount: number;
+
+  /**
+   * The identifier of the Lockbox to simulate inbound mail to.
+   */
+  lockbox_id: string;
+
+  /**
+   * The file containing the PDF contents. If not present, a default check image file
+   * will be used.
+   */
+  contents_file_id?: string;
+}
+
+export interface SimulationCreateInboundRealTimePaymentsTransferParams {
+  /**
+   * The identifier of the Account Number the inbound Real-Time Payments Transfer is
+   * for.
+   */
+  account_number_id: string;
+
+  /**
+   * The transfer amount in USD cents. Must be positive.
+   */
+  amount: number;
+
+  /**
+   * The account number of the account that sent the transfer.
+   */
+  debtor_account_number?: string;
+
+  /**
+   * The name provided by the sender of the transfer.
+   */
+  debtor_name?: string;
+
+  /**
+   * The routing number of the account that sent the transfer.
+   */
+  debtor_routing_number?: string;
+
+  /**
+   * The identifier of a pending Request for Payment that this transfer will fulfill.
+   */
+  request_for_payment_id?: string;
+
+  /**
+   * Additional information included with the transfer.
+   */
+  unstructured_remittance_information?: string;
+
+  [k: string]: unknown;
+}
+
+export interface SimulationCreateInboundWireDrawdownRequestParams {
+  /**
+   * The amount being requested in cents.
+   */
+  amount: number;
+
+  /**
+   * The creditor's account number.
+   */
+  creditor_account_number: string;
+
+  /**
+   * The creditor's routing number.
+   */
+  creditor_routing_number: string;
+
+  /**
+   * The [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) code for the amount being
+   * requested. Will always be "USD".
+   */
+  currency: string;
+
+  /**
+   * The Account Number to which the recipient of this request is being requested to
+   * send funds from.
+   */
+  recipient_account_number_id: string;
+
+  /**
+   * A free-form address field set by the sender representing the first line of the
+   * creditor's address.
+   */
+  creditor_address_line1?: string;
+
+  /**
+   * A free-form address field set by the sender representing the second line of the
+   * creditor's address.
+   */
+  creditor_address_line2?: string;
+
+  /**
+   * A free-form address field set by the sender representing the third line of the
+   * creditor's address.
+   */
+  creditor_address_line3?: string;
+
+  /**
+   * A free-form name field set by the sender representing the creditor's name.
+   */
+  creditor_name?: string;
+
+  /**
+   * The debtor's account number.
+   */
+  debtor_account_number?: string;
+
+  /**
+   * A free-form address field set by the sender representing the first line of the
+   * debtor's address.
+   */
+  debtor_address_line1?: string;
+
+  /**
+   * A free-form address field set by the sender representing the second line of the
+   * debtor's address.
+   */
+  debtor_address_line2?: string;
+
+  /**
+   * A free-form address field set by the sender.
+   */
+  debtor_address_line3?: string;
+
+  /**
+   * A free-form name field set by the sender representing the debtor's name.
+   */
+  debtor_name?: string;
+
+  /**
+   * The debtor's routing number.
+   */
+  debtor_routing_number?: string;
+
+  /**
+   * A free-form reference string set by the sender, to help identify the transfer.
+   */
+  end_to_end_identification?: string;
+
+  /**
+   * The sending bank's identifier for the wire transfer.
+   */
+  instruction_identification?: string;
+
+  /**
+   * The Unique End-to-end Transaction Reference
+   * ([UETR](https://www.swift.com/payments/what-unique-end-end-transaction-reference-uetr))
+   * of the transfer.
+   */
+  unique_end_to_end_transaction_reference?: string;
+
+  /**
+   * A free-form message set by the sender.
+   */
+  unstructured_remittance_information?: string;
+}
+
+export interface SimulationCreateInboundWireTransferParams {
+  /**
+   * The identifier of the Account Number the inbound Wire Transfer is for.
+   */
+  account_number_id: string;
+
+  /**
+   * The transfer amount in cents. Must be positive.
+   */
+  amount: number;
+
+  /**
+   * The sending bank will set creditor_address_line1 in production. You can simulate
+   * any value here.
+   */
+  creditor_address_line1?: string;
+
+  /**
+   * The sending bank will set creditor_address_line2 in production. You can simulate
+   * any value here.
+   */
+  creditor_address_line2?: string;
+
+  /**
+   * The sending bank will set creditor_address_line3 in production. You can simulate
+   * any value here.
+   */
+  creditor_address_line3?: string;
+
+  /**
+   * The sending bank will set creditor_name in production. You can simulate any
+   * value here.
+   */
+  creditor_name?: string;
+
+  /**
+   * The sending bank will set debtor_address_line1 in production. You can simulate
+   * any value here.
+   */
+  debtor_address_line1?: string;
+
+  /**
+   * The sending bank will set debtor_address_line2 in production. You can simulate
+   * any value here.
+   */
+  debtor_address_line2?: string;
+
+  /**
+   * The sending bank will set debtor_address_line3 in production. You can simulate
+   * any value here.
+   */
+  debtor_address_line3?: string;
+
+  /**
+   * The sending bank will set debtor_name in production. You can simulate any value
+   * here.
+   */
+  debtor_name?: string;
+
+  /**
+   * The sending bank will set end_to_end_identification in production. You can
+   * simulate any value here.
+   */
+  end_to_end_identification?: string;
+
+  /**
+   * The sending bank will set instructing_agent_routing_number in production. You
+   * can simulate any value here.
+   */
+  instructing_agent_routing_number?: string;
+
+  /**
+   * The sending bank will set instruction_identification in production. You can
+   * simulate any value here.
+   */
+  instruction_identification?: string;
+
+  /**
+   * The sending bank will set unique_end_to_end_transaction_reference in production.
+   * You can simulate any value here.
+   */
+  unique_end_to_end_transaction_reference?: string;
+
+  /**
+   * The sending bank will set unstructured_remittance_information in production. You
+   * can simulate any value here.
+   */
+  unstructured_remittance_information?: string;
+
+  /**
+   * The identifier of a Wire Drawdown Request the inbound Wire Transfer is
+   * fulfilling.
+   */
+  wire_drawdown_request_id?: string;
+}
+
+export interface SimulationCreateInterestPaymentParams {
+  /**
+   * The identifier of the Account the Interest Payment should be paid to is for.
+   */
+  account_id: string;
+
+  /**
+   * The interest amount in cents. Must be positive.
+   */
+  amount: number;
+
+  /**
+   * The identifier of the Account the Interest accrued on. Defaults to `account_id`.
+   */
+  accrued_on_account_id?: string;
+
+  /**
+   * The end of the interest period. If not provided, defaults to the current time.
+   */
+  period_end?: string;
+
+  /**
+   * The start of the interest period. If not provided, defaults to the current time.
+   */
+  period_start?: string;
+}
+
+export interface SimulationCreateProgramParams {
+  /**
+   * The name of the program being added.
+   */
+  name: string;
+
+  /**
+   * The bank for the program's accounts, defaults to First Internet Bank.
+   *
+   * - `core_bank` - Core Bank
+   * - `first_internet_bank` - First Internet Bank of Indiana
+   * - `grasshopper_bank` - Grasshopper Bank
+   * - `twin_city_bank` - Twin City Bank
+   */
+  bank?: 'core_bank' | 'first_internet_bank' | 'grasshopper_bank' | 'twin_city_bank';
+
+  /**
+   * The maximum extendable credit of the program being added.
+   */
+  lending_maximum_extendable_credit?: number;
+
+  /**
+   * The identifier of the Account the Program should be added to is for.
+   */
+  reserve_account_id?: string;
+}
+
+export interface SimulationExpireCardAuthorizationParams {
+  /**
+   * The identifier of the Card Payment to expire.
+   */
+  card_payment_id: string;
+}
+
+export interface SimulationGenerateTaxFormExportParams {
+  /**
+   * The type of Export to create.
+   *
+   * - `form_1099_int` - A PDF of an Internal Revenue Service Form 1099-INT.
+   */
+  category: 'form_1099_int';
+
+  /**
+   * Options for the created export. Required if `category` is equal to
+   * `form_1099_int`.
+   */
+  form_1099_int?: SimulationGenerateTaxFormExportParams.Form1099Int;
+}
+
+export namespace SimulationGenerateTaxFormExportParams {
+  /**
+   * Options for the created export. Required if `category` is equal to
+   * `form_1099_int`.
+   */
+  export interface Form1099Int {
+    /**
+     * The identifier of the Account the tax document is for.
+     */
+    account_id: string;
+  }
+}
+
+export interface SimulationIncrementCardAuthorizationParams {
+  /**
+   * The amount of the increment in minor units in the card authorization's currency.
+   */
+  amount: number;
+
+  /**
+   * The identifier of the Card Payment to create an increment on.
+   */
+  card_payment_id: string;
+
+  /**
+   * The identifier of the Event Subscription to use. If provided, will override the
+   * default real time event subscription. Because you can only create one real time
+   * decision event subscription, you can use this field to route events to any
+   * specified event subscription for testing purposes.
+   */
+  event_subscription_id?: string;
+}
+
+export interface SimulationRefundCardTransactionParams {
+  /**
+   * The refund amount in cents. Pulled off the `pending_transaction` or the
+   * `transaction` if not provided.
+   */
+  amount?: number;
+
+  /**
+   * The identifier of the Pending Transaction for the refund authorization. If this
+   * is provided, `transaction` must not be provided as a refund with a refund
+   * authorized can not be linked to a regular transaction.
+   */
+  pending_transaction_id?: string;
+
+  /**
+   * The identifier for the Transaction to refund. The Transaction's source must have
+   * a category of card_settlement.
+   */
+  transaction_id?: string;
+}
+
+export interface SimulationReverseCardAuthorizationParams {
+  /**
+   * The identifier of the Card Payment to create a reversal on.
+   */
+  card_payment_id: string;
+
+  /**
+   * The amount of the reversal in minor units in the card authorization's currency.
+   * This defaults to the authorization amount.
+   */
+  amount?: number;
+}
+
+export interface SimulationSettleCardAuthorizationParams {
+  /**
+   * The identifier of the Card to create a settlement on.
+   */
+  card_id: string;
+
+  /**
+   * The identifier of the Pending Transaction for the Card Authorization you wish to
+   * settle.
+   */
+  pending_transaction_id: string;
+
+  /**
+   * The amount to be settled. This defaults to the amount of the Pending Transaction
+   * being settled.
+   */
+  amount?: number;
+}
+
+Simulations.AccountTransfers = AccountTransfers;
+Simulations.ACHTransfers = ACHTransfers;
+Simulations.CardAuthentications = CardAuthentications;
+Simulations.CardDisputes = CardDisputes;
+Simulations.CheckDeposits = CheckDeposits;
+Simulations.CheckTransfers = CheckTransfers;
+Simulations.InboundCheckDeposits = InboundCheckDeposits;
+Simulations.PendingTransactions = PendingTransactions;
+Simulations.PhysicalCards = PhysicalCards;
+Simulations.RealTimePaymentsTransfers = RealTimePaymentsTransfers;
+Simulations.WireDrawdownRequests = WireDrawdownRequests;
+Simulations.WireTransfers = WireTransfers;
+
+export declare namespace Simulations {
+  export {
+    type CardFinancial as CardFinancial,
+    type CardRefund as CardRefund,
+    type CardSettlement as CardSettlement,
+    type Transaction as Transaction,
+    type SimulationCreateCardAuthorizationResponse as SimulationCreateCardAuthorizationResponse,
+    type SimulationCreateDigitalWalletTokenRequestResponse as SimulationCreateDigitalWalletTokenRequestResponse,
+    type SimulationConfirmFuelAuthorizationParams as SimulationConfirmFuelAuthorizationParams,
+    type SimulationCreateAccountStatementParams as SimulationCreateAccountStatementParams,
+    type SimulationCreateCardAuthorizationParams as SimulationCreateCardAuthorizationParams,
+    type SimulationCreateCardBalanceInquiryParams as SimulationCreateCardBalanceInquiryParams,
+    type SimulationCreateCardTokenParams as SimulationCreateCardTokenParams,
+    type SimulationCreateDigitalWalletTokenRequestParams as SimulationCreateDigitalWalletTokenRequestParams,
+    type SimulationCreateInboundACHTransferParams as SimulationCreateInboundACHTransferParams,
+    type SimulationCreateInboundFednowTransferParams as SimulationCreateInboundFednowTransferParams,
+    type SimulationCreateInboundMailItemParams as SimulationCreateInboundMailItemParams,
+    type SimulationCreateInboundRealTimePaymentsTransferParams as SimulationCreateInboundRealTimePaymentsTransferParams,
+    type SimulationCreateInboundWireDrawdownRequestParams as SimulationCreateInboundWireDrawdownRequestParams,
+    type SimulationCreateInboundWireTransferParams as SimulationCreateInboundWireTransferParams,
+    type SimulationCreateInterestPaymentParams as SimulationCreateInterestPaymentParams,
+    type SimulationCreateProgramParams as SimulationCreateProgramParams,
+    type SimulationExpireCardAuthorizationParams as SimulationExpireCardAuthorizationParams,
+    type SimulationGenerateTaxFormExportParams as SimulationGenerateTaxFormExportParams,
+    type SimulationIncrementCardAuthorizationParams as SimulationIncrementCardAuthorizationParams,
+    type SimulationRefundCardTransactionParams as SimulationRefundCardTransactionParams,
+    type SimulationReverseCardAuthorizationParams as SimulationReverseCardAuthorizationParams,
+    type SimulationSettleCardAuthorizationParams as SimulationSettleCardAuthorizationParams,
+  };
+
+  export { AccountTransfers as AccountTransfers };
+
+  export {
+    ACHTransfers as ACHTransfers,
+    type ACHTransferCreateNotificationOfChangeParams as ACHTransferCreateNotificationOfChangeParams,
+    type ACHTransferReturnParams as ACHTransferReturnParams,
+    type ACHTransferSettleParams as ACHTransferSettleParams,
+  };
+
+  export {
+    CardAuthentications as CardAuthentications,
+    type CardAuthenticationCreateParams as CardAuthenticationCreateParams,
+    type CardAuthenticationCreateChallengeAttemptParams as CardAuthenticationCreateChallengeAttemptParams,
+  };
+
+  export {
+    CardDisputes as CardDisputes,
+    type CardDisputeAdvanceStateParams as CardDisputeAdvanceStateParams,
+  };
+
+  export {
+    CheckDeposits as CheckDeposits,
+    type CheckDepositAdjustParams as CheckDepositAdjustParams,
+    type CheckDepositSubmitParams as CheckDepositSubmitParams,
+  };
+
+  export { CheckTransfers as CheckTransfers };
+
+  export {
+    InboundCheckDeposits as InboundCheckDeposits,
+    type InboundCheckDepositCreateParams as InboundCheckDepositCreateParams,
+    type InboundCheckDepositAdjustParams as InboundCheckDepositAdjustParams,
+  };
+
+  export { PendingTransactions as PendingTransactions };
+
+  export {
+    PhysicalCards as PhysicalCards,
+    type PhysicalCardAdvanceShipmentParams as PhysicalCardAdvanceShipmentParams,
+    type PhysicalCardCreateTrackingUpdateParams as PhysicalCardCreateTrackingUpdateParams,
+  };
+
+  export {
+    RealTimePaymentsTransfers as RealTimePaymentsTransfers,
+    type RealTimePaymentsTransferCompleteParams as RealTimePaymentsTransferCompleteParams,
+  };
+
+  export { WireDrawdownRequests as WireDrawdownRequests, type WireDrawdownRequest as WireDrawdownRequest };
+
+  export { WireTransfers as WireTransfers, type WireTransfer as WireTransfer };
+}
