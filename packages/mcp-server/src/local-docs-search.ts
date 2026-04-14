@@ -3276,7 +3276,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       typescript: {
         method: 'client.files.create',
         example:
-          "import YolkenIncreaseTest from 'yolken-increase-test';\n\nconst client = new YolkenIncreaseTest({\n  apiKey: process.env['YOLKEN_INCREASE_TEST_API_KEY'], // This is the default and can be omitted\n});\n\nconst file = await client.files.create({\n  file: fs.createReadStream('path/to/file'),\n  purpose: 'check_image_front',\n});\n\nconsole.log(file.id);",
+          "import fs from 'fs';\nimport YolkenIncreaseTest from 'yolken-increase-test';\n\nconst client = new YolkenIncreaseTest({\n  apiKey: process.env['YOLKEN_INCREASE_TEST_API_KEY'], // This is the default and can be omitted\n});\n\nconst file = await client.files.create({\n  file: fs.createReadStream('path/to/file'),\n  purpose: 'check_image_front',\n});\n\nconsole.log(file.id);",
       },
     },
   },
