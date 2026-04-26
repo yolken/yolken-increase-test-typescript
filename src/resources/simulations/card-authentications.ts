@@ -20,10 +20,7 @@ export class CardAuthentications extends APIResource {
    *   });
    * ```
    */
-  create(
-    body: CardAuthenticationCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<CardPaymentsAPI.CardPayment> {
+  create(body: CardAuthenticationCreateParams, options?: RequestOptions): APIPromise<CardPaymentsAPI.CardPayment> {
     return this._client.post('/simulations/card_authentications', { body, ...options });
   }
 
@@ -62,15 +59,8 @@ export class CardAuthentications extends APIResource {
    *   );
    * ```
    */
-  createChallengeAttempt(
-    cardPaymentID: string,
-    body: CardAuthenticationCreateChallengeAttemptParams,
-    options?: RequestOptions,
-  ): APIPromise<CardPaymentsAPI.CardPayment> {
-    return this._client.post(path`/simulations/card_authentications/${cardPaymentID}/challenge_attempts`, {
-      body,
-      ...options,
-    });
+  createChallengeAttempt(cardPaymentID: string, body: CardAuthenticationCreateChallengeAttemptParams, options?: RequestOptions): APIPromise<CardPaymentsAPI.CardPayment> {
+    return this._client.post(path`/simulations/card_authentications/${cardPaymentID}/challenge_attempts`, { body, ...options });
   }
 }
 
@@ -137,6 +127,6 @@ export interface CardAuthenticationCreateChallengeAttemptParams {
 export declare namespace CardAuthentications {
   export {
     type CardAuthenticationCreateParams as CardAuthenticationCreateParams,
-    type CardAuthenticationCreateChallengeAttemptParams as CardAuthenticationCreateChallengeAttemptParams,
+    type CardAuthenticationCreateChallengeAttemptParams as CardAuthenticationCreateChallengeAttemptParams
   };
 }

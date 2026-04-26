@@ -30,10 +30,7 @@ export class AccountStatements extends APIResource {
    *   await client.accountStatements.list();
    * ```
    */
-  list(
-    query: AccountStatementListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AccountStatementListResponse> {
+  list(query: AccountStatementListParams | null | undefined = {}, options?: RequestOptions): APIPromise<AccountStatementListResponse> {
     return this._client.get('/account_statements', { query, ...options });
   }
 }
@@ -136,7 +133,7 @@ export interface AccountStatementListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface AccountStatementListParams {
@@ -191,6 +188,6 @@ export declare namespace AccountStatements {
   export {
     type AccountStatement as AccountStatement,
     type AccountStatementListResponse as AccountStatementListResponse,
-    type AccountStatementListParams as AccountStatementListParams,
+    type AccountStatementListParams as AccountStatementListParams
   };
 }

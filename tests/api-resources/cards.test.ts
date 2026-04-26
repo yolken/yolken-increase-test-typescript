@@ -2,10 +2,7 @@
 
 import YolkenIncreaseTest from 'yolken-increase-test';
 
-const client = new YolkenIncreaseTest({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new YolkenIncreaseTest({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource cards', () => {
   // Mock server tests are disabled
@@ -23,22 +20,22 @@ describe('resource cards', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.cards.create({
-      account_id: 'account_in71c4amph0vgo2qllky',
-      billing_address: {
-        city: 'x',
-        line1: 'x',
-        postal_code: 'x',
-        state: 'x',
-        line2: 'x',
-      },
-      description: 'Card for Ian Crease',
-      digital_wallet: {
-        digital_card_profile_id: 'digital_card_profile_id',
-        email: 'dev@stainless.com',
-        phone: 'x',
-      },
-      entity_id: 'entity_id',
-    });
+    account_id: 'account_in71c4amph0vgo2qllky',
+    billing_address: {
+    city: 'x',
+    line1: 'x',
+    postal_code: 'x',
+    state: 'x',
+    line2: 'x',
+  },
+    description: 'Card for Ian Crease',
+    digital_wallet: {
+    digital_card_profile_id: 'digital_card_profile_id',
+    email: 'dev@stainless.com',
+    phone: 'x',
+  },
+    entity_id: 'entity_id',
+  });
   });
 
   // Mock server tests are disabled
@@ -80,24 +77,21 @@ describe('resource cards', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.cards.list(
-        {
-          account_id: 'account_id',
-          created_at: {
-            after: '2019-12-27T18:11:19.117Z',
-            before: '2019-12-27T18:11:19.117Z',
-            on_or_after: '2019-12-27T18:11:19.117Z',
-            on_or_before: '2019-12-27T18:11:19.117Z',
-          },
-          cursor: 'cursor',
-          idempotency_key: 'x',
-          limit: 1,
-          status: { in: ['active'] },
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(YolkenIncreaseTest.NotFoundError);
+    await expect(client.cards.list({
+    account_id: 'account_id',
+    created_at: {
+    after: '2019-12-27T18:11:19.117Z',
+    before: '2019-12-27T18:11:19.117Z',
+    on_or_after: '2019-12-27T18:11:19.117Z',
+    on_or_before: '2019-12-27T18:11:19.117Z',
+  },
+    cursor: 'cursor',
+    idempotency_key: 'x',
+    limit: 1,
+    status: { in: ['active'] },
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(YolkenIncreaseTest.NotFoundError);
   });
 
   // Mock server tests are disabled

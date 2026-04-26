@@ -18,18 +18,9 @@ import * as ProgramsAPI from '../programs';
 import * as AccountTransfersAPI from './account-transfers';
 import { AccountTransfers } from './account-transfers';
 import * as ACHTransfersAPI from './ach-transfers';
-import {
-  ACHTransferCreateNotificationOfChangeParams,
-  ACHTransferReturnParams,
-  ACHTransferSettleParams,
-  ACHTransfers,
-} from './ach-transfers';
+import { ACHTransferCreateNotificationOfChangeParams, ACHTransferReturnParams, ACHTransferSettleParams, ACHTransfers } from './ach-transfers';
 import * as CardAuthenticationsAPI from './card-authentications';
-import {
-  CardAuthenticationCreateChallengeAttemptParams,
-  CardAuthenticationCreateParams,
-  CardAuthentications,
-} from './card-authentications';
+import { CardAuthenticationCreateChallengeAttemptParams, CardAuthenticationCreateParams, CardAuthentications } from './card-authentications';
 import * as CardDisputesAPI from './card-disputes';
 import { CardDisputeAdvanceStateParams, CardDisputes } from './card-disputes';
 import * as CheckDepositsAPI from './check-deposits';
@@ -37,24 +28,13 @@ import { CheckDepositAdjustParams, CheckDepositSubmitParams, CheckDeposits } fro
 import * as CheckTransfersAPI from './check-transfers';
 import { CheckTransfers } from './check-transfers';
 import * as InboundCheckDepositsAPI from './inbound-check-deposits';
-import {
-  InboundCheckDepositAdjustParams,
-  InboundCheckDepositCreateParams,
-  InboundCheckDeposits,
-} from './inbound-check-deposits';
+import { InboundCheckDepositAdjustParams, InboundCheckDepositCreateParams, InboundCheckDeposits } from './inbound-check-deposits';
 import * as SimulationsPendingTransactionsAPI from './pending-transactions';
 import { PendingTransactions } from './pending-transactions';
 import * as PhysicalCardsAPI from './physical-cards';
-import {
-  PhysicalCardAdvanceShipmentParams,
-  PhysicalCardCreateTrackingUpdateParams,
-  PhysicalCards,
-} from './physical-cards';
+import { PhysicalCardAdvanceShipmentParams, PhysicalCardCreateTrackingUpdateParams, PhysicalCards } from './physical-cards';
 import * as RealTimePaymentsTransfersAPI from './real-time-payments-transfers';
-import {
-  RealTimePaymentsTransferCompleteParams,
-  RealTimePaymentsTransfers,
-} from './real-time-payments-transfers';
+import { RealTimePaymentsTransferCompleteParams, RealTimePaymentsTransfers } from './real-time-payments-transfers';
 import * as WireDrawdownRequestsAPI from './wire-drawdown-requests';
 import { WireDrawdownRequest, WireDrawdownRequests } from './wire-drawdown-requests';
 import * as WireTransfersAPI from './wire-transfers';
@@ -63,24 +43,17 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
 export class Simulations extends APIResource {
-  accountTransfers: AccountTransfersAPI.AccountTransfers = new AccountTransfersAPI.AccountTransfers(
-    this._client,
-  );
+  accountTransfers: AccountTransfersAPI.AccountTransfers = new AccountTransfersAPI.AccountTransfers(this._client);
   achTransfers: ACHTransfersAPI.ACHTransfers = new ACHTransfersAPI.ACHTransfers(this._client);
-  cardAuthentications: CardAuthenticationsAPI.CardAuthentications =
-    new CardAuthenticationsAPI.CardAuthentications(this._client);
+  cardAuthentications: CardAuthenticationsAPI.CardAuthentications = new CardAuthenticationsAPI.CardAuthentications(this._client);
   cardDisputes: CardDisputesAPI.CardDisputes = new CardDisputesAPI.CardDisputes(this._client);
   checkDeposits: CheckDepositsAPI.CheckDeposits = new CheckDepositsAPI.CheckDeposits(this._client);
   checkTransfers: CheckTransfersAPI.CheckTransfers = new CheckTransfersAPI.CheckTransfers(this._client);
-  inboundCheckDeposits: InboundCheckDepositsAPI.InboundCheckDeposits =
-    new InboundCheckDepositsAPI.InboundCheckDeposits(this._client);
-  pendingTransactions: SimulationsPendingTransactionsAPI.PendingTransactions =
-    new SimulationsPendingTransactionsAPI.PendingTransactions(this._client);
+  inboundCheckDeposits: InboundCheckDepositsAPI.InboundCheckDeposits = new InboundCheckDepositsAPI.InboundCheckDeposits(this._client);
+  pendingTransactions: SimulationsPendingTransactionsAPI.PendingTransactions = new SimulationsPendingTransactionsAPI.PendingTransactions(this._client);
   physicalCards: PhysicalCardsAPI.PhysicalCards = new PhysicalCardsAPI.PhysicalCards(this._client);
-  realTimePaymentsTransfers: RealTimePaymentsTransfersAPI.RealTimePaymentsTransfers =
-    new RealTimePaymentsTransfersAPI.RealTimePaymentsTransfers(this._client);
-  wireDrawdownRequests: WireDrawdownRequestsAPI.WireDrawdownRequests =
-    new WireDrawdownRequestsAPI.WireDrawdownRequests(this._client);
+  realTimePaymentsTransfers: RealTimePaymentsTransfersAPI.RealTimePaymentsTransfers = new RealTimePaymentsTransfersAPI.RealTimePaymentsTransfers(this._client);
+  wireDrawdownRequests: WireDrawdownRequestsAPI.WireDrawdownRequests = new WireDrawdownRequestsAPI.WireDrawdownRequests(this._client);
   wireTransfers: WireTransfersAPI.WireTransfers = new WireTransfersAPI.WireTransfers(this._client);
 
   /**
@@ -97,10 +70,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  confirmFuelAuthorization(
-    body: SimulationConfirmFuelAuthorizationParams,
-    options?: RequestOptions,
-  ): APIPromise<CardPaymentsAPI.CardPayment> {
+  confirmFuelAuthorization(body: SimulationConfirmFuelAuthorizationParams, options?: RequestOptions): APIPromise<CardPaymentsAPI.CardPayment> {
     return this._client.post('/simulations/card_fuel_confirmations', { body, ...options });
   }
 
@@ -116,10 +86,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  createAccountStatement(
-    body: SimulationCreateAccountStatementParams,
-    options?: RequestOptions,
-  ): APIPromise<AccountStatementsAPI.AccountStatement> {
+  createAccountStatement(body: SimulationCreateAccountStatementParams, options?: RequestOptions): APIPromise<AccountStatementsAPI.AccountStatement> {
     return this._client.post('/simulations/account_statements', { body, ...options });
   }
 
@@ -140,10 +107,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  createCardAuthorization(
-    body: SimulationCreateCardAuthorizationParams,
-    options?: RequestOptions,
-  ): APIPromise<SimulationCreateCardAuthorizationResponse> {
+  createCardAuthorization(body: SimulationCreateCardAuthorizationParams, options?: RequestOptions): APIPromise<SimulationCreateCardAuthorizationResponse> {
     return this._client.post('/simulations/card_authorizations', { body, ...options });
   }
 
@@ -156,10 +120,7 @@ export class Simulations extends APIResource {
    *   await client.simulations.createCardBalanceInquiry();
    * ```
    */
-  createCardBalanceInquiry(
-    body: SimulationCreateCardBalanceInquiryParams,
-    options?: RequestOptions,
-  ): APIPromise<CardPaymentsAPI.CardPayment> {
+  createCardBalanceInquiry(body: SimulationCreateCardBalanceInquiryParams, options?: RequestOptions): APIPromise<CardPaymentsAPI.CardPayment> {
     return this._client.post('/simulations/card_balance_inquiries', { body, ...options });
   }
 
@@ -172,10 +133,7 @@ export class Simulations extends APIResource {
    *   await client.simulations.createCardToken();
    * ```
    */
-  createCardToken(
-    body: SimulationCreateCardTokenParams,
-    options?: RequestOptions,
-  ): APIPromise<CardTokensAPI.CardToken> {
+  createCardToken(body: SimulationCreateCardTokenParams, options?: RequestOptions): APIPromise<CardTokensAPI.CardToken> {
     return this._client.post('/simulations/card_tokens', { body, ...options });
   }
 
@@ -191,10 +149,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  createDigitalWalletTokenRequest(
-    body: SimulationCreateDigitalWalletTokenRequestParams,
-    options?: RequestOptions,
-  ): APIPromise<SimulationCreateDigitalWalletTokenRequestResponse> {
+  createDigitalWalletTokenRequest(body: SimulationCreateDigitalWalletTokenRequestParams, options?: RequestOptions): APIPromise<SimulationCreateDigitalWalletTokenRequestResponse> {
     return this._client.post('/simulations/digital_wallet_token_requests', { body, ...options });
   }
 
@@ -220,10 +175,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  createInboundACHTransfer(
-    body: SimulationCreateInboundACHTransferParams,
-    options?: RequestOptions,
-  ): APIPromise<InboundACHTransfersAPI.InboundACHTransfer> {
+  createInboundACHTransfer(body: SimulationCreateInboundACHTransferParams, options?: RequestOptions): APIPromise<InboundACHTransfersAPI.InboundACHTransfer> {
     return this._client.post('/simulations/inbound_ach_transfers', { body, ...options });
   }
 
@@ -241,10 +193,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  createInboundFednowTransfer(
-    body: SimulationCreateInboundFednowTransferParams,
-    options?: RequestOptions,
-  ): APIPromise<InboundFednowTransfersAPI.InboundFednowTransfer> {
+  createInboundFednowTransfer(body: SimulationCreateInboundFednowTransferParams, options?: RequestOptions): APIPromise<InboundFednowTransfersAPI.InboundFednowTransfer> {
     return this._client.post('/simulations/inbound_fednow_transfers', { body, ...options });
   }
 
@@ -261,10 +210,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  createInboundMailItem(
-    body: SimulationCreateInboundMailItemParams,
-    options?: RequestOptions,
-  ): APIPromise<InboundMailItemsAPI.InboundMailItem> {
+  createInboundMailItem(body: SimulationCreateInboundMailItemParams, options?: RequestOptions): APIPromise<InboundMailItemsAPI.InboundMailItem> {
     return this._client.post('/simulations/inbound_mail_items', { body, ...options });
   }
 
@@ -285,10 +231,7 @@ export class Simulations extends APIResource {
    *   );
    * ```
    */
-  createInboundRealTimePaymentsTransfer(
-    body: SimulationCreateInboundRealTimePaymentsTransferParams,
-    options?: RequestOptions,
-  ): APIPromise<InboundRealTimePaymentsTransfersAPI.InboundRealTimePaymentTransfer> {
+  createInboundRealTimePaymentsTransfer(body: SimulationCreateInboundRealTimePaymentsTransferParams, options?: RequestOptions): APIPromise<InboundRealTimePaymentsTransfersAPI.InboundRealTimePaymentTransfer> {
     return this._client.post('/simulations/inbound_real_time_payments_transfers', { body, ...options });
   }
 
@@ -311,10 +254,7 @@ export class Simulations extends APIResource {
    *   );
    * ```
    */
-  createInboundWireDrawdownRequest(
-    body: SimulationCreateInboundWireDrawdownRequestParams,
-    options?: RequestOptions,
-  ): APIPromise<InboundWireDrawdownRequestsAPI.InboundWireDrawdownRequest> {
+  createInboundWireDrawdownRequest(body: SimulationCreateInboundWireDrawdownRequestParams, options?: RequestOptions): APIPromise<InboundWireDrawdownRequestsAPI.InboundWireDrawdownRequest> {
     return this._client.post('/simulations/inbound_wire_drawdown_requests', { body, ...options });
   }
 
@@ -331,10 +271,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  createInboundWireTransfer(
-    body: SimulationCreateInboundWireTransferParams,
-    options?: RequestOptions,
-  ): APIPromise<InboundWireTransfersAPI.InboundWireTransfer> {
+  createInboundWireTransfer(body: SimulationCreateInboundWireTransferParams, options?: RequestOptions): APIPromise<InboundWireTransfersAPI.InboundWireTransfer> {
     return this._client.post('/simulations/inbound_wire_transfers', { body, ...options });
   }
 
@@ -351,10 +288,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  createInterestPayment(
-    body: SimulationCreateInterestPaymentParams,
-    options?: RequestOptions,
-  ): APIPromise<Transaction> {
+  createInterestPayment(body: SimulationCreateInterestPaymentParams, options?: RequestOptions): APIPromise<Transaction> {
     return this._client.post('/simulations/interest_payments', { body, ...options });
   }
 
@@ -371,10 +305,7 @@ export class Simulations extends APIResource {
    * });
    * ```
    */
-  createProgram(
-    body: SimulationCreateProgramParams,
-    options?: RequestOptions,
-  ): APIPromise<ProgramsAPI.Program> {
+  createProgram(body: SimulationCreateProgramParams, options?: RequestOptions): APIPromise<ProgramsAPI.Program> {
     return this._client.post('/simulations/programs', { body, ...options });
   }
 
@@ -389,10 +320,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  expireCardAuthorization(
-    body: SimulationExpireCardAuthorizationParams,
-    options?: RequestOptions,
-  ): APIPromise<CardPaymentsAPI.CardPayment> {
+  expireCardAuthorization(body: SimulationExpireCardAuthorizationParams, options?: RequestOptions): APIPromise<CardPaymentsAPI.CardPayment> {
     return this._client.post('/simulations/card_authorization_expirations', { body, ...options });
   }
 
@@ -410,10 +338,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  generateTaxFormExport(
-    body: SimulationGenerateTaxFormExportParams,
-    options?: RequestOptions,
-  ): APIPromise<ExportsAPI.Export> {
+  generateTaxFormExport(body: SimulationGenerateTaxFormExportParams, options?: RequestOptions): APIPromise<ExportsAPI.Export> {
     return this._client.post('/simulations/exports', { body, ...options });
   }
 
@@ -430,10 +355,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  incrementCardAuthorization(
-    body: SimulationIncrementCardAuthorizationParams,
-    options?: RequestOptions,
-  ): APIPromise<CardPaymentsAPI.CardPayment> {
+  incrementCardAuthorization(body: SimulationIncrementCardAuthorizationParams, options?: RequestOptions): APIPromise<CardPaymentsAPI.CardPayment> {
     return this._client.post('/simulations/card_increments', { body, ...options });
   }
 
@@ -447,10 +369,7 @@ export class Simulations extends APIResource {
    *   await client.simulations.refundCardTransaction();
    * ```
    */
-  refundCardTransaction(
-    body: SimulationRefundCardTransactionParams,
-    options?: RequestOptions,
-  ): APIPromise<Transaction> {
+  refundCardTransaction(body: SimulationRefundCardTransactionParams, options?: RequestOptions): APIPromise<Transaction> {
     return this._client.post('/simulations/card_refunds', { body, ...options });
   }
 
@@ -468,10 +387,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  reverseCardAuthorization(
-    body: SimulationReverseCardAuthorizationParams,
-    options?: RequestOptions,
-  ): APIPromise<CardPaymentsAPI.CardPayment> {
+  reverseCardAuthorization(body: SimulationReverseCardAuthorizationParams, options?: RequestOptions): APIPromise<CardPaymentsAPI.CardPayment> {
     return this._client.post('/simulations/card_reversals', { body, ...options });
   }
 
@@ -492,10 +408,7 @@ export class Simulations extends APIResource {
    *   });
    * ```
    */
-  settleCardAuthorization(
-    body: SimulationSettleCardAuthorizationParams,
-    options?: RequestOptions,
-  ): APIPromise<Transaction> {
+  settleCardAuthorization(body: SimulationSettleCardAuthorizationParams, options?: RequestOptions): APIPromise<Transaction> {
     return this._client.post('/simulations/card_settlements', { body, ...options });
   }
 }
@@ -660,17 +573,7 @@ export interface CardFinancial {
    *   of an account associated with a card.
    * - `unknown` - The processing category is unknown.
    */
-  processing_category:
-    | 'account_funding'
-    | 'automatic_fuel_dispenser'
-    | 'bill_payment'
-    | 'original_credit'
-    | 'purchase'
-    | 'quasi_cash'
-    | 'refund'
-    | 'cash_disbursement'
-    | 'balance_inquiry'
-    | 'unknown';
+  processing_category: 'account_funding' | 'automatic_fuel_dispenser' | 'bill_payment' | 'original_credit' | 'purchase' | 'quasi_cash' | 'refund' | 'cash_disbursement' | 'balance_inquiry' | 'unknown';
 
   /**
    * The identifier of the Real-Time Decision sent to approve or decline this
@@ -705,7 +608,7 @@ export interface CardFinancial {
    */
   verification: CardFinancial.Verification;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace CardFinancial {
@@ -1011,16 +914,7 @@ export namespace CardFinancial {
        * - `non_secure_transaction` - Non-secure transaction: Use to identify an
        *   electronic commerce transaction that has no data protection.
        */
-      electronic_commerce_indicator:
-        | 'mail_phone_order'
-        | 'recurring'
-        | 'installment'
-        | 'unknown_mail_phone_order'
-        | 'secure_electronic_commerce'
-        | 'non_authenticated_security_transaction_at_3ds_capable_merchant'
-        | 'non_authenticated_security_transaction'
-        | 'non_secure_transaction'
-        | null;
+      electronic_commerce_indicator: 'mail_phone_order' | 'recurring' | 'installment' | 'unknown_mail_phone_order' | 'secure_electronic_commerce' | 'non_authenticated_security_transaction_at_3ds_capable_merchant' | 'non_authenticated_security_transaction' | 'non_secure_transaction' | null;
 
       /**
        * The method used to enter the cardholder's primary account number and card
@@ -1040,18 +934,7 @@ export namespace CardFinancial {
        * - `integrated_circuit_card_no_cvv` - Contact chip card, without card
        *   verification value
        */
-      point_of_service_entry_mode:
-        | 'unknown'
-        | 'manual'
-        | 'magnetic_stripe_no_cvv'
-        | 'optical_code'
-        | 'integrated_circuit_card'
-        | 'contactless'
-        | 'credential_on_file'
-        | 'magnetic_stripe'
-        | 'contactless_magnetic_stripe'
-        | 'integrated_circuit_card_no_cvv'
-        | null;
+      point_of_service_entry_mode: 'unknown' | 'manual' | 'magnetic_stripe_no_cvv' | 'optical_code' | 'integrated_circuit_card' | 'contactless' | 'credential_on_file' | 'magnetic_stripe' | 'contactless_magnetic_stripe' | 'integrated_circuit_card_no_cvv' | null;
 
       /**
        * Only present when `actioner: network`. Describes why a card authorization was
@@ -1077,16 +960,7 @@ export namespace CardFinancial {
        *   such as card testing.
        * - `other` - An unspecific reason for stand-in processing.
        */
-      stand_in_processing_reason:
-        | 'issuer_error'
-        | 'invalid_physical_card'
-        | 'invalid_cryptogram'
-        | 'invalid_cardholder_authentication_verification_value'
-        | 'internal_visa_error'
-        | 'merchant_transaction_advisory_service_authentication_required'
-        | 'payment_fraud_disruption_acquirer_block'
-        | 'other'
-        | null;
+      stand_in_processing_reason: 'issuer_error' | 'invalid_physical_card' | 'invalid_cryptogram' | 'invalid_cardholder_authentication_verification_value' | 'internal_visa_error' | 'merchant_transaction_advisory_service_authentication_required' | 'payment_fraud_disruption_acquirer_block' | 'other' | null;
 
       /**
        * The capability of the terminal being used to read the card. Shows whether a
@@ -1110,16 +984,7 @@ export namespace CardFinancial {
        *   capability.
        * - `no_capability` - The terminal has no card reading capability.
        */
-      terminal_entry_capability:
-        | 'unknown'
-        | 'terminal_not_used'
-        | 'magnetic_stripe'
-        | 'barcode'
-        | 'optical_character_recognition'
-        | 'chip_or_contactless'
-        | 'contactless_only'
-        | 'no_capability'
-        | null;
+      terminal_entry_capability: 'unknown' | 'terminal_not_used' | 'magnetic_stripe' | 'barcode' | 'optical_character_recognition' | 'chip_or_contactless' | 'contactless_only' | 'no_capability' | null;
     }
   }
 
@@ -1263,36 +1128,7 @@ export namespace CardFinancial {
      * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
      *   for processing transactions on its network.
      */
-    fee_type:
-      | 'visa_international_service_assessment_single_currency'
-      | 'visa_international_service_assessment_cross_currency'
-      | 'visa_authorization_domestic_point_of_sale'
-      | 'visa_authorization_international_point_of_sale'
-      | 'visa_authorization_canada_point_of_sale'
-      | 'visa_authorization_reversal_point_of_sale'
-      | 'visa_authorization_reversal_international_point_of_sale'
-      | 'visa_authorization_address_verification_service'
-      | 'visa_advanced_authorization'
-      | 'visa_message_transmission'
-      | 'visa_account_verification_domestic'
-      | 'visa_account_verification_international'
-      | 'visa_account_verification_canada'
-      | 'visa_corporate_acceptance_fee'
-      | 'visa_consumer_debit_acceptance_fee'
-      | 'visa_business_debit_acceptance_fee'
-      | 'visa_purchasing_acceptance_fee'
-      | 'visa_purchase_domestic'
-      | 'visa_purchase_international'
-      | 'visa_credit_purchase_token'
-      | 'visa_debit_purchase_token'
-      | 'visa_clearing_transmission'
-      | 'visa_direct_authorization'
-      | 'visa_direct_transaction_domestic'
-      | 'visa_service_commercial_credit'
-      | 'visa_advertising_service_commercial_credit'
-      | 'visa_community_growth_acceleration_program'
-      | 'visa_processing_guarantee_commercial_credit'
-      | 'pulse_switch_fee';
+    fee_type: 'visa_international_service_assessment_single_currency' | 'visa_international_service_assessment_cross_currency' | 'visa_authorization_domestic_point_of_sale' | 'visa_authorization_international_point_of_sale' | 'visa_authorization_canada_point_of_sale' | 'visa_authorization_reversal_point_of_sale' | 'visa_authorization_reversal_international_point_of_sale' | 'visa_authorization_address_verification_service' | 'visa_advanced_authorization' | 'visa_message_transmission' | 'visa_account_verification_domestic' | 'visa_account_verification_international' | 'visa_account_verification_canada' | 'visa_corporate_acceptance_fee' | 'visa_consumer_debit_acceptance_fee' | 'visa_business_debit_acceptance_fee' | 'visa_purchasing_acceptance_fee' | 'visa_purchase_domestic' | 'visa_purchase_international' | 'visa_credit_purchase_token' | 'visa_debit_purchase_token' | 'visa_clearing_transmission' | 'visa_direct_authorization' | 'visa_direct_transaction_domestic' | 'visa_service_commercial_credit' | 'visa_advertising_service_commercial_credit' | 'visa_community_growth_acceleration_program' | 'visa_processing_guarantee_commercial_credit' | 'pulse_switch_fee';
 
     /**
      * The fixed component of the fee, if applicable, given in major units of the fee
@@ -1386,13 +1222,7 @@ export namespace CardFinancial {
        * - `postal_code_match_address_not_checked` - Postal code matches, but the street
        *   address was not verified. (deprecated)
        */
-      result:
-        | 'not_checked'
-        | 'postal_code_match_address_no_match'
-        | 'postal_code_no_match_address_match'
-        | 'match'
-        | 'no_match'
-        | 'postal_code_match_address_not_checked';
+      result: 'not_checked' | 'postal_code_match_address_no_match' | 'postal_code_no_match_address_match' | 'match' | 'no_match' | 'postal_code_match_address_not_checked';
     }
 
     /**
@@ -1532,7 +1362,7 @@ export interface CardRefund {
    */
   type: 'card_refund';
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace CardRefund {
@@ -1666,13 +1496,7 @@ export namespace CardRefund {
      * - `hotel_folio_number` - Hotel folio number
      * - `invoice_number` - Invoice number
      */
-    purchase_identifier_format:
-      | 'free_text'
-      | 'order_number'
-      | 'rental_agreement_number'
-      | 'hotel_folio_number'
-      | 'invoice_number'
-      | null;
+    purchase_identifier_format: 'free_text' | 'order_number' | 'rental_agreement_number' | 'hotel_folio_number' | 'invoice_number' | null;
 
     /**
      * Fields specific to travel.
@@ -1722,14 +1546,7 @@ export namespace CardRefund {
        * - `one_way_service_fee` - One way service fee
        * - `parking_violation` - Parking violation
        */
-      extra_charges:
-        | 'no_extra_charge'
-        | 'gas'
-        | 'extra_mileage'
-        | 'late_return'
-        | 'one_way_service_fee'
-        | 'parking_violation'
-        | null;
+      extra_charges: 'no_extra_charge' | 'gas' | 'extra_mileage' | 'late_return' | 'one_way_service_fee' | 'parking_violation' | null;
 
       /**
        * Fuel charges for the vehicle.
@@ -1822,15 +1639,7 @@ export namespace CardRefund {
        * - `other` - Other
        * - `laundry` - Laundry
        */
-      extra_charges:
-        | 'no_extra_charge'
-        | 'restaurant'
-        | 'gift_shop'
-        | 'mini_bar'
-        | 'telephone'
-        | 'other'
-        | 'laundry'
-        | null;
+      extra_charges: 'no_extra_charge' | 'restaurant' | 'gift_shop' | 'mini_bar' | 'telephone' | 'other' | 'laundry' | null;
 
       /**
        * Folio cash advances for the room.
@@ -1928,14 +1737,7 @@ export namespace CardRefund {
        * - `other` - Other
        * - `partial_refund_of_airline_ticket` - Partial refund of airline ticket
        */
-      credit_reason_indicator:
-        | 'no_credit'
-        | 'passenger_transport_ancillary_purchase_cancellation'
-        | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation'
-        | 'airline_ticket_cancellation'
-        | 'other'
-        | 'partial_refund_of_airline_ticket'
-        | null;
+      credit_reason_indicator: 'no_credit' | 'passenger_transport_ancillary_purchase_cancellation' | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation' | 'airline_ticket_cancellation' | 'other' | 'partial_refund_of_airline_ticket' | null;
 
       /**
        * Date of departure.
@@ -2012,12 +1814,7 @@ export namespace CardRefund {
          *   Airline ticket and passenger transport ancillary purchase cancellation
          * - `other` - Other
          */
-        credit_reason_indicator:
-          | 'no_credit'
-          | 'passenger_transport_ancillary_purchase_cancellation'
-          | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation'
-          | 'other'
-          | null;
+        credit_reason_indicator: 'no_credit' | 'passenger_transport_ancillary_purchase_cancellation' | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation' | 'other' | null;
 
         /**
          * Name of the passenger or description of the ancillary purchase.
@@ -2065,32 +1862,7 @@ export namespace CardRefund {
            * - `upgrades` - Upgrades
            * - `wifi` - Wi-fi
            */
-          category:
-            | 'none'
-            | 'bundled_service'
-            | 'baggage_fee'
-            | 'change_fee'
-            | 'cargo'
-            | 'carbon_offset'
-            | 'frequent_flyer'
-            | 'gift_card'
-            | 'ground_transport'
-            | 'in_flight_entertainment'
-            | 'lounge'
-            | 'medical'
-            | 'meal_beverage'
-            | 'other'
-            | 'passenger_assist_fee'
-            | 'pets'
-            | 'seat_fees'
-            | 'standby'
-            | 'service_fee'
-            | 'store'
-            | 'travel_service'
-            | 'unaccompanied_travel'
-            | 'upgrades'
-            | 'wifi'
-            | null;
+          category: 'none' | 'bundled_service' | 'baggage_fee' | 'change_fee' | 'cargo' | 'carbon_offset' | 'frequent_flyer' | 'gift_card' | 'ground_transport' | 'in_flight_entertainment' | 'lounge' | 'medical' | 'meal_beverage' | 'other' | 'passenger_assist_fee' | 'pets' | 'seat_fees' | 'standby' | 'service_fee' | 'store' | 'travel_service' | 'unaccompanied_travel' | 'upgrades' | 'wifi' | null;
 
           /**
            * Sub-category of the ancillary service, free-form.
@@ -2247,36 +2019,7 @@ export namespace CardRefund {
      * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
      *   for processing transactions on its network.
      */
-    fee_type:
-      | 'visa_international_service_assessment_single_currency'
-      | 'visa_international_service_assessment_cross_currency'
-      | 'visa_authorization_domestic_point_of_sale'
-      | 'visa_authorization_international_point_of_sale'
-      | 'visa_authorization_canada_point_of_sale'
-      | 'visa_authorization_reversal_point_of_sale'
-      | 'visa_authorization_reversal_international_point_of_sale'
-      | 'visa_authorization_address_verification_service'
-      | 'visa_advanced_authorization'
-      | 'visa_message_transmission'
-      | 'visa_account_verification_domestic'
-      | 'visa_account_verification_international'
-      | 'visa_account_verification_canada'
-      | 'visa_corporate_acceptance_fee'
-      | 'visa_consumer_debit_acceptance_fee'
-      | 'visa_business_debit_acceptance_fee'
-      | 'visa_purchasing_acceptance_fee'
-      | 'visa_purchase_domestic'
-      | 'visa_purchase_international'
-      | 'visa_credit_purchase_token'
-      | 'visa_debit_purchase_token'
-      | 'visa_clearing_transmission'
-      | 'visa_direct_authorization'
-      | 'visa_direct_transaction_domestic'
-      | 'visa_service_commercial_credit'
-      | 'visa_advertising_service_commercial_credit'
-      | 'visa_community_growth_acceleration_program'
-      | 'visa_processing_guarantee_commercial_credit'
-      | 'pulse_switch_fee';
+    fee_type: 'visa_international_service_assessment_single_currency' | 'visa_international_service_assessment_cross_currency' | 'visa_authorization_domestic_point_of_sale' | 'visa_authorization_international_point_of_sale' | 'visa_authorization_canada_point_of_sale' | 'visa_authorization_reversal_point_of_sale' | 'visa_authorization_reversal_international_point_of_sale' | 'visa_authorization_address_verification_service' | 'visa_advanced_authorization' | 'visa_message_transmission' | 'visa_account_verification_domestic' | 'visa_account_verification_international' | 'visa_account_verification_canada' | 'visa_corporate_acceptance_fee' | 'visa_consumer_debit_acceptance_fee' | 'visa_business_debit_acceptance_fee' | 'visa_purchasing_acceptance_fee' | 'visa_purchase_domestic' | 'visa_purchase_international' | 'visa_credit_purchase_token' | 'visa_debit_purchase_token' | 'visa_clearing_transmission' | 'visa_direct_authorization' | 'visa_direct_transaction_domestic' | 'visa_service_commercial_credit' | 'visa_advertising_service_commercial_credit' | 'visa_community_growth_acceleration_program' | 'visa_processing_guarantee_commercial_credit' | 'pulse_switch_fee';
 
     /**
      * The fixed component of the fee, if applicable, given in major units of the fee
@@ -2433,7 +2176,7 @@ export interface CardSettlement {
    */
   type: 'card_settlement';
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace CardSettlement {
@@ -2567,13 +2310,7 @@ export namespace CardSettlement {
      * - `hotel_folio_number` - Hotel folio number
      * - `invoice_number` - Invoice number
      */
-    purchase_identifier_format:
-      | 'free_text'
-      | 'order_number'
-      | 'rental_agreement_number'
-      | 'hotel_folio_number'
-      | 'invoice_number'
-      | null;
+    purchase_identifier_format: 'free_text' | 'order_number' | 'rental_agreement_number' | 'hotel_folio_number' | 'invoice_number' | null;
 
     /**
      * Fields specific to travel.
@@ -2623,14 +2360,7 @@ export namespace CardSettlement {
        * - `one_way_service_fee` - One way service fee
        * - `parking_violation` - Parking violation
        */
-      extra_charges:
-        | 'no_extra_charge'
-        | 'gas'
-        | 'extra_mileage'
-        | 'late_return'
-        | 'one_way_service_fee'
-        | 'parking_violation'
-        | null;
+      extra_charges: 'no_extra_charge' | 'gas' | 'extra_mileage' | 'late_return' | 'one_way_service_fee' | 'parking_violation' | null;
 
       /**
        * Fuel charges for the vehicle.
@@ -2723,15 +2453,7 @@ export namespace CardSettlement {
        * - `other` - Other
        * - `laundry` - Laundry
        */
-      extra_charges:
-        | 'no_extra_charge'
-        | 'restaurant'
-        | 'gift_shop'
-        | 'mini_bar'
-        | 'telephone'
-        | 'other'
-        | 'laundry'
-        | null;
+      extra_charges: 'no_extra_charge' | 'restaurant' | 'gift_shop' | 'mini_bar' | 'telephone' | 'other' | 'laundry' | null;
 
       /**
        * Folio cash advances for the room.
@@ -2829,14 +2551,7 @@ export namespace CardSettlement {
        * - `other` - Other
        * - `partial_refund_of_airline_ticket` - Partial refund of airline ticket
        */
-      credit_reason_indicator:
-        | 'no_credit'
-        | 'passenger_transport_ancillary_purchase_cancellation'
-        | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation'
-        | 'airline_ticket_cancellation'
-        | 'other'
-        | 'partial_refund_of_airline_ticket'
-        | null;
+      credit_reason_indicator: 'no_credit' | 'passenger_transport_ancillary_purchase_cancellation' | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation' | 'airline_ticket_cancellation' | 'other' | 'partial_refund_of_airline_ticket' | null;
 
       /**
        * Date of departure.
@@ -2913,12 +2628,7 @@ export namespace CardSettlement {
          *   Airline ticket and passenger transport ancillary purchase cancellation
          * - `other` - Other
          */
-        credit_reason_indicator:
-          | 'no_credit'
-          | 'passenger_transport_ancillary_purchase_cancellation'
-          | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation'
-          | 'other'
-          | null;
+        credit_reason_indicator: 'no_credit' | 'passenger_transport_ancillary_purchase_cancellation' | 'airline_ticket_and_passenger_transport_ancillary_purchase_cancellation' | 'other' | null;
 
         /**
          * Name of the passenger or description of the ancillary purchase.
@@ -2966,32 +2676,7 @@ export namespace CardSettlement {
            * - `upgrades` - Upgrades
            * - `wifi` - Wi-fi
            */
-          category:
-            | 'none'
-            | 'bundled_service'
-            | 'baggage_fee'
-            | 'change_fee'
-            | 'cargo'
-            | 'carbon_offset'
-            | 'frequent_flyer'
-            | 'gift_card'
-            | 'ground_transport'
-            | 'in_flight_entertainment'
-            | 'lounge'
-            | 'medical'
-            | 'meal_beverage'
-            | 'other'
-            | 'passenger_assist_fee'
-            | 'pets'
-            | 'seat_fees'
-            | 'standby'
-            | 'service_fee'
-            | 'store'
-            | 'travel_service'
-            | 'unaccompanied_travel'
-            | 'upgrades'
-            | 'wifi'
-            | null;
+          category: 'none' | 'bundled_service' | 'baggage_fee' | 'change_fee' | 'cargo' | 'carbon_offset' | 'frequent_flyer' | 'gift_card' | 'ground_transport' | 'in_flight_entertainment' | 'lounge' | 'medical' | 'meal_beverage' | 'other' | 'passenger_assist_fee' | 'pets' | 'seat_fees' | 'standby' | 'service_fee' | 'store' | 'travel_service' | 'unaccompanied_travel' | 'upgrades' | 'wifi' | null;
 
           /**
            * Sub-category of the ancillary service, free-form.
@@ -3148,36 +2833,7 @@ export namespace CardSettlement {
      * - `pulse_switch_fee` - Pulse Switch Fee is a fee charged by the Pulse network
      *   for processing transactions on its network.
      */
-    fee_type:
-      | 'visa_international_service_assessment_single_currency'
-      | 'visa_international_service_assessment_cross_currency'
-      | 'visa_authorization_domestic_point_of_sale'
-      | 'visa_authorization_international_point_of_sale'
-      | 'visa_authorization_canada_point_of_sale'
-      | 'visa_authorization_reversal_point_of_sale'
-      | 'visa_authorization_reversal_international_point_of_sale'
-      | 'visa_authorization_address_verification_service'
-      | 'visa_advanced_authorization'
-      | 'visa_message_transmission'
-      | 'visa_account_verification_domestic'
-      | 'visa_account_verification_international'
-      | 'visa_account_verification_canada'
-      | 'visa_corporate_acceptance_fee'
-      | 'visa_consumer_debit_acceptance_fee'
-      | 'visa_business_debit_acceptance_fee'
-      | 'visa_purchasing_acceptance_fee'
-      | 'visa_purchase_domestic'
-      | 'visa_purchase_international'
-      | 'visa_credit_purchase_token'
-      | 'visa_debit_purchase_token'
-      | 'visa_clearing_transmission'
-      | 'visa_direct_authorization'
-      | 'visa_direct_transaction_domestic'
-      | 'visa_service_commercial_credit'
-      | 'visa_advertising_service_commercial_credit'
-      | 'visa_community_growth_acceleration_program'
-      | 'visa_processing_guarantee_commercial_credit'
-      | 'pulse_switch_fee';
+    fee_type: 'visa_international_service_assessment_single_currency' | 'visa_international_service_assessment_cross_currency' | 'visa_authorization_domestic_point_of_sale' | 'visa_authorization_international_point_of_sale' | 'visa_authorization_canada_point_of_sale' | 'visa_authorization_reversal_point_of_sale' | 'visa_authorization_reversal_international_point_of_sale' | 'visa_authorization_address_verification_service' | 'visa_advanced_authorization' | 'visa_message_transmission' | 'visa_account_verification_domestic' | 'visa_account_verification_international' | 'visa_account_verification_canada' | 'visa_corporate_acceptance_fee' | 'visa_consumer_debit_acceptance_fee' | 'visa_business_debit_acceptance_fee' | 'visa_purchasing_acceptance_fee' | 'visa_purchase_domestic' | 'visa_purchase_international' | 'visa_credit_purchase_token' | 'visa_debit_purchase_token' | 'visa_clearing_transmission' | 'visa_direct_authorization' | 'visa_direct_transaction_domestic' | 'visa_service_commercial_credit' | 'visa_advertising_service_commercial_credit' | 'visa_community_growth_acceleration_program' | 'visa_processing_guarantee_commercial_credit' | 'pulse_switch_fee';
 
     /**
      * The fixed component of the fee, if applicable, given in major units of the fee
@@ -3284,7 +2940,7 @@ export interface Transaction {
    */
   type: 'transaction';
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace Transaction {
@@ -3379,45 +3035,7 @@ export namespace Transaction {
      *   object.
      * - `other` - The Transaction was made for an undocumented or deprecated reason.
      */
-    category:
-      | 'account_transfer_intention'
-      | 'ach_transfer_intention'
-      | 'ach_transfer_rejection'
-      | 'ach_transfer_return'
-      | 'cashback_payment'
-      | 'card_dispute_acceptance'
-      | 'card_dispute_financial'
-      | 'card_dispute_loss'
-      | 'card_refund'
-      | 'card_settlement'
-      | 'card_financial'
-      | 'card_revenue_payment'
-      | 'check_deposit_acceptance'
-      | 'check_deposit_return'
-      | 'fednow_transfer_acknowledgement'
-      | 'check_transfer_deposit'
-      | 'fee_payment'
-      | 'inbound_ach_transfer'
-      | 'inbound_ach_transfer_return_intention'
-      | 'inbound_check_deposit_return_intention'
-      | 'inbound_check_adjustment'
-      | 'inbound_fednow_transfer_confirmation'
-      | 'inbound_real_time_payments_transfer_confirmation'
-      | 'inbound_wire_reversal'
-      | 'inbound_wire_transfer'
-      | 'inbound_wire_transfer_reversal'
-      | 'interest_payment'
-      | 'internal_source'
-      | 'real_time_payments_transfer_acknowledgement'
-      | 'sample_funds'
-      | 'wire_transfer_intention'
-      | 'swift_transfer_intention'
-      | 'swift_transfer_return'
-      | 'card_push_transfer_acceptance'
-      | 'account_revenue_payment'
-      | 'blockchain_onramp_transfer_intention'
-      | 'blockchain_offramp_transfer_settlement'
-      | 'other';
+    category: 'account_transfer_intention' | 'ach_transfer_intention' | 'ach_transfer_rejection' | 'ach_transfer_return' | 'cashback_payment' | 'card_dispute_acceptance' | 'card_dispute_financial' | 'card_dispute_loss' | 'card_refund' | 'card_settlement' | 'card_financial' | 'card_revenue_payment' | 'check_deposit_acceptance' | 'check_deposit_return' | 'fednow_transfer_acknowledgement' | 'check_transfer_deposit' | 'fee_payment' | 'inbound_ach_transfer' | 'inbound_ach_transfer_return_intention' | 'inbound_check_deposit_return_intention' | 'inbound_check_adjustment' | 'inbound_fednow_transfer_confirmation' | 'inbound_real_time_payments_transfer_confirmation' | 'inbound_wire_reversal' | 'inbound_wire_transfer' | 'inbound_wire_transfer_reversal' | 'interest_payment' | 'internal_source' | 'real_time_payments_transfer_acknowledgement' | 'sample_funds' | 'wire_transfer_intention' | 'swift_transfer_intention' | 'swift_transfer_return' | 'card_push_transfer_acceptance' | 'account_revenue_payment' | 'blockchain_onramp_transfer_intention' | 'blockchain_offramp_transfer_settlement' | 'other';
 
     /**
      * An Account Revenue Payment object. This field will be present in the JSON
@@ -3722,7 +3340,7 @@ export namespace Transaction {
      */
     wire_transfer_intention?: Source.WireTransferIntention | null;
 
-    [k: string]: unknown;
+  [k: string]: unknown
   }
 
   export namespace Source {
@@ -3748,7 +3366,7 @@ export namespace Transaction {
        */
       period_start: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -3792,7 +3410,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -3829,7 +3447,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -3844,7 +3462,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4022,77 +3640,7 @@ export namespace Transaction {
        * - `untimely_return` - Code R68. A rare return reason. The return was sent too
        *   late.
        */
-      return_reason_code:
-        | 'insufficient_fund'
-        | 'no_account'
-        | 'account_closed'
-        | 'invalid_account_number_structure'
-        | 'account_frozen_entry_returned_per_ofac_instruction'
-        | 'credit_entry_refused_by_receiver'
-        | 'unauthorized_debit_to_consumer_account_using_corporate_sec_code'
-        | 'corporate_customer_advised_not_authorized'
-        | 'payment_stopped'
-        | 'non_transaction_account'
-        | 'uncollected_funds'
-        | 'routing_number_check_digit_error'
-        | 'customer_advised_unauthorized_improper_ineligible_or_incomplete'
-        | 'amount_field_error'
-        | 'authorization_revoked_by_customer'
-        | 'invalid_ach_routing_number'
-        | 'file_record_edit_criteria'
-        | 'enr_invalid_individual_name'
-        | 'returned_per_odfi_request'
-        | 'limited_participation_dfi'
-        | 'incorrectly_coded_outbound_international_payment'
-        | 'account_sold_to_another_dfi'
-        | 'addenda_error'
-        | 'beneficiary_or_account_holder_deceased'
-        | 'customer_advised_not_within_authorization_terms'
-        | 'corrected_return'
-        | 'duplicate_entry'
-        | 'duplicate_return'
-        | 'enr_duplicate_enrollment'
-        | 'enr_invalid_dfi_account_number'
-        | 'enr_invalid_individual_id_number'
-        | 'enr_invalid_representative_payee_indicator'
-        | 'enr_invalid_transaction_code'
-        | 'enr_return_of_enr_entry'
-        | 'enr_routing_number_check_digit_error'
-        | 'entry_not_processed_by_gateway'
-        | 'field_error'
-        | 'foreign_receiving_dfi_unable_to_settle'
-        | 'iat_entry_coding_error'
-        | 'improper_effective_entry_date'
-        | 'improper_source_document_source_document_presented'
-        | 'invalid_company_id'
-        | 'invalid_foreign_receiving_dfi_identification'
-        | 'invalid_individual_id_number'
-        | 'item_and_rck_entry_presented_for_payment'
-        | 'item_related_to_rck_entry_is_ineligible'
-        | 'mandatory_field_error'
-        | 'misrouted_dishonored_return'
-        | 'misrouted_return'
-        | 'no_errors_found'
-        | 'non_acceptance_of_r62_dishonored_return'
-        | 'non_participant_in_iat_program'
-        | 'permissible_return_entry'
-        | 'permissible_return_entry_not_accepted'
-        | 'rdfi_non_settlement'
-        | 'rdfi_participant_in_check_truncation_program'
-        | 'representative_payee_deceased_or_unable_to_continue_in_that_capacity'
-        | 'return_not_a_duplicate'
-        | 'return_of_erroneous_or_reversing_debit'
-        | 'return_of_improper_credit_entry'
-        | 'return_of_improper_debit_entry'
-        | 'return_of_xck_entry'
-        | 'source_document_presented_for_payment'
-        | 'state_law_affecting_rck_acceptance'
-        | 'stop_payment_on_item_related_to_rck_entry'
-        | 'stop_payment_on_source_document'
-        | 'timely_original_return'
-        | 'trace_number_error'
-        | 'untimely_dishonored_return'
-        | 'untimely_return';
+      return_reason_code: 'insufficient_fund' | 'no_account' | 'account_closed' | 'invalid_account_number_structure' | 'account_frozen_entry_returned_per_ofac_instruction' | 'credit_entry_refused_by_receiver' | 'unauthorized_debit_to_consumer_account_using_corporate_sec_code' | 'corporate_customer_advised_not_authorized' | 'payment_stopped' | 'non_transaction_account' | 'uncollected_funds' | 'routing_number_check_digit_error' | 'customer_advised_unauthorized_improper_ineligible_or_incomplete' | 'amount_field_error' | 'authorization_revoked_by_customer' | 'invalid_ach_routing_number' | 'file_record_edit_criteria' | 'enr_invalid_individual_name' | 'returned_per_odfi_request' | 'limited_participation_dfi' | 'incorrectly_coded_outbound_international_payment' | 'account_sold_to_another_dfi' | 'addenda_error' | 'beneficiary_or_account_holder_deceased' | 'customer_advised_not_within_authorization_terms' | 'corrected_return' | 'duplicate_entry' | 'duplicate_return' | 'enr_duplicate_enrollment' | 'enr_invalid_dfi_account_number' | 'enr_invalid_individual_id_number' | 'enr_invalid_representative_payee_indicator' | 'enr_invalid_transaction_code' | 'enr_return_of_enr_entry' | 'enr_routing_number_check_digit_error' | 'entry_not_processed_by_gateway' | 'field_error' | 'foreign_receiving_dfi_unable_to_settle' | 'iat_entry_coding_error' | 'improper_effective_entry_date' | 'improper_source_document_source_document_presented' | 'invalid_company_id' | 'invalid_foreign_receiving_dfi_identification' | 'invalid_individual_id_number' | 'item_and_rck_entry_presented_for_payment' | 'item_related_to_rck_entry_is_ineligible' | 'mandatory_field_error' | 'misrouted_dishonored_return' | 'misrouted_return' | 'no_errors_found' | 'non_acceptance_of_r62_dishonored_return' | 'non_participant_in_iat_program' | 'permissible_return_entry' | 'permissible_return_entry_not_accepted' | 'rdfi_non_settlement' | 'rdfi_participant_in_check_truncation_program' | 'representative_payee_deceased_or_unable_to_continue_in_that_capacity' | 'return_not_a_duplicate' | 'return_of_erroneous_or_reversing_debit' | 'return_of_improper_credit_entry' | 'return_of_improper_debit_entry' | 'return_of_xck_entry' | 'source_document_presented_for_payment' | 'state_law_affecting_rck_acceptance' | 'stop_payment_on_item_related_to_rck_entry' | 'stop_payment_on_source_document' | 'timely_original_return' | 'trace_number_error' | 'untimely_dishonored_return' | 'untimely_return';
 
       /**
        * A 15 digit number that was generated by the bank that initiated the return. The
@@ -4112,7 +3660,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4131,7 +3679,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4150,7 +3698,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4171,7 +3719,7 @@ export namespace Transaction {
        */
       transaction_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4206,7 +3754,7 @@ export namespace Transaction {
        */
       visa: CardDisputeFinancial.Visa | null;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     export namespace CardDisputeFinancial {
@@ -4230,14 +3778,7 @@ export namespace Transaction {
          * - `user_prearbitration_submitted` - The user's pre-arbitration was submitted.
          * - `user_withdrawal_submitted` - The user withdrew from the dispute.
          */
-        event_type:
-          | 'chargeback_submitted'
-          | 'merchant_prearbitration_decline_submitted'
-          | 'merchant_prearbitration_received'
-          | 'represented'
-          | 'user_prearbitration_decline_received'
-          | 'user_prearbitration_submitted'
-          | 'user_withdrawal_submitted';
+        event_type: 'chargeback_submitted' | 'merchant_prearbitration_decline_submitted' | 'merchant_prearbitration_received' | 'represented' | 'user_prearbitration_decline_received' | 'user_prearbitration_submitted' | 'user_withdrawal_submitted';
       }
     }
 
@@ -4264,7 +3805,7 @@ export namespace Transaction {
        */
       transaction_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4284,7 +3825,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4322,7 +3863,7 @@ export namespace Transaction {
        */
       transacted_on_account_id: string | null;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4361,7 +3902,7 @@ export namespace Transaction {
        */
       period_start: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4415,7 +3956,7 @@ export namespace Transaction {
        */
       serial_number: string | null;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4491,33 +4032,7 @@ export namespace Transaction {
        * - `branch_or_account_sold` - The bank sold this account and no longer services
        *   this customer. (Check21 return code `R`)
        */
-      return_reason:
-        | 'ach_conversion_not_supported'
-        | 'closed_account'
-        | 'duplicate_submission'
-        | 'insufficient_funds'
-        | 'no_account'
-        | 'not_authorized'
-        | 'stale_dated'
-        | 'stop_payment'
-        | 'unknown_reason'
-        | 'unmatched_details'
-        | 'unreadable_image'
-        | 'endorsement_irregular'
-        | 'altered_or_fictitious_item'
-        | 'frozen_or_blocked_account'
-        | 'post_dated'
-        | 'endorsement_missing'
-        | 'signature_missing'
-        | 'stop_payment_suspect'
-        | 'unusable_image'
-        | 'image_fails_security_check'
-        | 'cannot_determine_amount'
-        | 'signature_irregular'
-        | 'non_cash_item'
-        | 'unable_to_process'
-        | 'item_exceeds_dollar_limit'
-        | 'branch_or_account_sold';
+      return_reason: 'ach_conversion_not_supported' | 'closed_account' | 'duplicate_submission' | 'insufficient_funds' | 'no_account' | 'not_authorized' | 'stale_dated' | 'stop_payment' | 'unknown_reason' | 'unmatched_details' | 'unreadable_image' | 'endorsement_irregular' | 'altered_or_fictitious_item' | 'frozen_or_blocked_account' | 'post_dated' | 'endorsement_missing' | 'signature_missing' | 'stop_payment_suspect' | 'unusable_image' | 'image_fails_security_check' | 'cannot_determine_amount' | 'signature_irregular' | 'non_cash_item' | 'unable_to_process' | 'item_exceeds_dollar_limit' | 'branch_or_account_sold';
 
       /**
        * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -4531,7 +4046,7 @@ export namespace Transaction {
        */
       transaction_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4587,7 +4102,7 @@ export namespace Transaction {
        */
       type: 'check_transfer_deposit';
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4602,7 +4117,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4635,7 +4150,7 @@ export namespace Transaction {
        */
       program_id: string | null;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4706,7 +4221,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     export namespace InboundACHTransfer {
@@ -4762,7 +4277,7 @@ export namespace Transaction {
        */
       inbound_ach_transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4798,7 +4313,7 @@ export namespace Transaction {
        */
       reason: 'late_return' | 'wrong_payee_credit' | 'adjusted_amount' | 'non_conforming_item' | 'paid';
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4819,7 +4334,7 @@ export namespace Transaction {
        */
       transfer_id: string | null;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4835,7 +4350,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4895,7 +4410,7 @@ export namespace Transaction {
        */
       unstructured_remittance_information: string | null;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -4980,7 +4495,7 @@ export namespace Transaction {
        */
       wire_transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -5080,7 +4595,7 @@ export namespace Transaction {
        */
       unstructured_remittance_information: string | null;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -5119,7 +4634,7 @@ export namespace Transaction {
        */
       period_start: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -5165,27 +4680,9 @@ export namespace Transaction {
        * - `sample_funds` - Sample funds
        * - `sample_funds_return` - Sample funds return
        */
-      reason:
-        | 'account_closure'
-        | 'account_revenue_payment_distribution'
-        | 'bank_drawn_check'
-        | 'bank_drawn_check_credit'
-        | 'bank_migration'
-        | 'check_adjustment'
-        | 'collection_payment'
-        | 'collection_receivable'
-        | 'dishonored_ach_return'
-        | 'empyreal_adjustment'
-        | 'error'
-        | 'error_correction'
-        | 'fees'
-        | 'general_ledger_transfer'
-        | 'interest'
-        | 'negative_balance_forgiveness'
-        | 'sample_funds'
-        | 'sample_funds_return';
+      reason: 'account_closure' | 'account_revenue_payment_distribution' | 'bank_drawn_check' | 'bank_drawn_check_credit' | 'bank_migration' | 'check_adjustment' | 'collection_payment' | 'collection_receivable' | 'dishonored_ach_return' | 'empyreal_adjustment' | 'error' | 'error_correction' | 'fees' | 'general_ledger_transfer' | 'interest' | 'negative_balance_forgiveness' | 'sample_funds' | 'sample_funds_return';
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -5221,7 +4718,7 @@ export namespace Transaction {
        */
       unstructured_remittance_information: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -5235,7 +4732,7 @@ export namespace Transaction {
        */
       originator: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -5249,7 +4746,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -5263,7 +4760,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     /**
@@ -5297,7 +4794,7 @@ export namespace Transaction {
        */
       transfer_id: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
   }
 }
@@ -5342,12 +4839,7 @@ export interface SimulationCreateDigitalWalletTokenRequestResponse {
    *   provisioning attempt.
    * - `webhook_declined` - Your webhook declined the token provisioning attempt.
    */
-  decline_reason:
-    | 'card_not_active'
-    | 'no_verification_method'
-    | 'webhook_timed_out'
-    | 'webhook_declined'
-    | null;
+  decline_reason: 'card_not_active' | 'no_verification_method' | 'webhook_timed_out' | 'webhook_declined' | null;
 
   /**
    * If the simulated tokenization attempt was accepted, this field contains the id
@@ -5435,28 +4927,7 @@ export interface SimulationCreateCardAuthorizationParams {
    * - `suspected_fraud` - The transaction was suspected to be fraudulent. Please
    *   reach out to support@increase.com for more information.
    */
-  decline_reason?:
-    | 'account_closed'
-    | 'card_not_active'
-    | 'card_canceled'
-    | 'physical_card_not_active'
-    | 'entity_not_active'
-    | 'group_locked'
-    | 'insufficient_funds'
-    | 'cvv2_mismatch'
-    | 'pin_mismatch'
-    | 'card_expiration_mismatch'
-    | 'transaction_not_allowed'
-    | 'breaches_limit'
-    | 'webhook_declined'
-    | 'webhook_timed_out'
-    | 'declined_by_stand_in_processing'
-    | 'invalid_physical_card'
-    | 'missing_original_authorization'
-    | 'invalid_cryptogram'
-    | 'failed_3ds_authentication'
-    | 'suspected_card_testing'
-    | 'suspected_fraud';
+  decline_reason?: 'account_closed' | 'card_not_active' | 'card_canceled' | 'physical_card_not_active' | 'entity_not_active' | 'group_locked' | 'insufficient_funds' | 'cvv2_mismatch' | 'pin_mismatch' | 'card_expiration_mismatch' | 'transaction_not_allowed' | 'breaches_limit' | 'webhook_declined' | 'webhook_timed_out' | 'declined_by_stand_in_processing' | 'invalid_physical_card' | 'missing_original_authorization' | 'invalid_cryptogram' | 'failed_3ds_authentication' | 'suspected_card_testing' | 'suspected_fraud';
 
   /**
    * The identifier of the Digital Wallet Token to be authorized.
@@ -5571,15 +5042,7 @@ export namespace SimulationCreateCardAuthorizationParams {
        *   such as card testing.
        * - `other` - An unspecific reason for stand-in processing.
        */
-      stand_in_processing_reason?:
-        | 'issuer_error'
-        | 'invalid_physical_card'
-        | 'invalid_cryptogram'
-        | 'invalid_cardholder_authentication_verification_value'
-        | 'internal_visa_error'
-        | 'merchant_transaction_advisory_service_authentication_required'
-        | 'payment_fraud_disruption_acquirer_block'
-        | 'other';
+      stand_in_processing_reason?: 'issuer_error' | 'invalid_physical_card' | 'invalid_cryptogram' | 'invalid_cardholder_authentication_verification_value' | 'internal_visa_error' | 'merchant_transaction_advisory_service_authentication_required' | 'payment_fraud_disruption_acquirer_block' | 'other';
     }
   }
 
@@ -5611,16 +5074,7 @@ export namespace SimulationCreateCardAuthorizationParams {
      * - `balance_inquiry` - A balance inquiry transaction is used to check the balance
      *   of an account associated with a card.
      */
-    category:
-      | 'account_funding'
-      | 'automatic_fuel_dispenser'
-      | 'bill_payment'
-      | 'original_credit'
-      | 'purchase'
-      | 'quasi_cash'
-      | 'refund'
-      | 'cash_disbursement'
-      | 'balance_inquiry';
+    category: 'account_funding' | 'automatic_fuel_dispenser' | 'bill_payment' | 'original_credit' | 'purchase' | 'quasi_cash' | 'refund' | 'cash_disbursement' | 'balance_inquiry';
 
     /**
      * Details related to refund authorizations.
@@ -5688,28 +5142,7 @@ export interface SimulationCreateCardBalanceInquiryParams {
    * - `suspected_fraud` - The transaction was suspected to be fraudulent. Please
    *   reach out to support@increase.com for more information.
    */
-  decline_reason?:
-    | 'account_closed'
-    | 'card_not_active'
-    | 'card_canceled'
-    | 'physical_card_not_active'
-    | 'entity_not_active'
-    | 'group_locked'
-    | 'insufficient_funds'
-    | 'cvv2_mismatch'
-    | 'pin_mismatch'
-    | 'card_expiration_mismatch'
-    | 'transaction_not_allowed'
-    | 'breaches_limit'
-    | 'webhook_declined'
-    | 'webhook_timed_out'
-    | 'declined_by_stand_in_processing'
-    | 'invalid_physical_card'
-    | 'missing_original_authorization'
-    | 'invalid_cryptogram'
-    | 'failed_3ds_authentication'
-    | 'suspected_card_testing'
-    | 'suspected_fraud';
+  decline_reason?: 'account_closed' | 'card_not_active' | 'card_canceled' | 'physical_card_not_active' | 'entity_not_active' | 'group_locked' | 'insufficient_funds' | 'cvv2_mismatch' | 'pin_mismatch' | 'card_expiration_mismatch' | 'transaction_not_allowed' | 'breaches_limit' | 'webhook_declined' | 'webhook_timed_out' | 'declined_by_stand_in_processing' | 'invalid_physical_card' | 'missing_original_authorization' | 'invalid_cryptogram' | 'failed_3ds_authentication' | 'suspected_card_testing' | 'suspected_fraud';
 
   /**
    * The identifier of the Digital Wallet Token to be authorized.
@@ -5818,15 +5251,7 @@ export namespace SimulationCreateCardBalanceInquiryParams {
        *   such as card testing.
        * - `other` - An unspecific reason for stand-in processing.
        */
-      stand_in_processing_reason?:
-        | 'issuer_error'
-        | 'invalid_physical_card'
-        | 'invalid_cryptogram'
-        | 'invalid_cardholder_authentication_verification_value'
-        | 'internal_visa_error'
-        | 'merchant_transaction_advisory_service_authentication_required'
-        | 'payment_fraud_disruption_acquirer_block'
-        | 'other';
+      stand_in_processing_reason?: 'issuer_error' | 'invalid_physical_card' | 'invalid_cryptogram' | 'invalid_cardholder_authentication_verification_value' | 'internal_visa_error' | 'merchant_transaction_advisory_service_authentication_required' | 'payment_fraud_disruption_acquirer_block' | 'other';
     }
   }
 }
@@ -6026,69 +5451,7 @@ export namespace SimulationCreateCardTokenParams {
        *   category code was used incorrectly; correct it and reattempt the transaction.
        * - `card_authentication_failed` - The card authentication process has failed.
        */
-      reason?:
-        | 'do_not_honor'
-        | 'activity_count_limit_exceeded'
-        | 'refer_to_card_issuer'
-        | 'refer_to_card_issuer_special_condition'
-        | 'invalid_merchant'
-        | 'pick_up_card'
-        | 'error'
-        | 'pick_up_card_special'
-        | 'invalid_transaction'
-        | 'invalid_amount'
-        | 'invalid_account_number'
-        | 'no_such_issuer'
-        | 're_enter_transaction'
-        | 'no_credit_account'
-        | 'pick_up_card_lost'
-        | 'pick_up_card_stolen'
-        | 'closed_account'
-        | 'insufficient_funds'
-        | 'no_checking_account'
-        | 'no_savings_account'
-        | 'expired_card'
-        | 'transaction_not_permitted_to_cardholder'
-        | 'transaction_not_allowed_at_terminal'
-        | 'transaction_not_supported_or_blocked_by_issuer'
-        | 'suspected_fraud'
-        | 'activity_amount_limit_exceeded'
-        | 'restricted_card'
-        | 'security_violation'
-        | 'transaction_does_not_fulfill_anti_money_laundering_requirement'
-        | 'blocked_by_cardholder'
-        | 'blocked_first_use'
-        | 'credit_issuer_unavailable'
-        | 'negative_card_verification_value_results'
-        | 'issuer_unavailable'
-        | 'financial_institution_cannot_be_found'
-        | 'transaction_cannot_be_completed'
-        | 'duplicate_transaction'
-        | 'system_malfunction'
-        | 'additional_customer_authentication_required'
-        | 'surcharge_amount_not_permitted'
-        | 'decline_for_cvv2_failure'
-        | 'stop_payment_order'
-        | 'revocation_of_authorization_order'
-        | 'revocation_of_all_authorizations_order'
-        | 'unable_to_locate_record'
-        | 'file_is_temporarily_unavailable'
-        | 'incorrect_pin'
-        | 'allowable_number_of_pin_entry_tries_exceeded'
-        | 'unable_to_locate_previous_message'
-        | 'pin_error_found'
-        | 'cannot_verify_pin'
-        | 'verification_data_failed'
-        | 'surcharge_amount_not_supported_by_debit_network_issuer'
-        | 'cash_service_not_available'
-        | 'cashback_request_exceeds_issuer_limit'
-        | 'transaction_amount_exceeds_pre_authorized_approval_amount'
-        | 'transaction_does_not_qualify_for_visa_pin'
-        | 'offline_declined'
-        | 'unable_to_go_online'
-        | 'valid_account_but_amount_not_supported'
-        | 'invalid_use_of_merchant_category_code_correct_and_reattempt'
-        | 'card_authentication_failed';
+      reason?: 'do_not_honor' | 'activity_count_limit_exceeded' | 'refer_to_card_issuer' | 'refer_to_card_issuer_special_condition' | 'invalid_merchant' | 'pick_up_card' | 'error' | 'pick_up_card_special' | 'invalid_transaction' | 'invalid_amount' | 'invalid_account_number' | 'no_such_issuer' | 're_enter_transaction' | 'no_credit_account' | 'pick_up_card_lost' | 'pick_up_card_stolen' | 'closed_account' | 'insufficient_funds' | 'no_checking_account' | 'no_savings_account' | 'expired_card' | 'transaction_not_permitted_to_cardholder' | 'transaction_not_allowed_at_terminal' | 'transaction_not_supported_or_blocked_by_issuer' | 'suspected_fraud' | 'activity_amount_limit_exceeded' | 'restricted_card' | 'security_violation' | 'transaction_does_not_fulfill_anti_money_laundering_requirement' | 'blocked_by_cardholder' | 'blocked_first_use' | 'credit_issuer_unavailable' | 'negative_card_verification_value_results' | 'issuer_unavailable' | 'financial_institution_cannot_be_found' | 'transaction_cannot_be_completed' | 'duplicate_transaction' | 'system_malfunction' | 'additional_customer_authentication_required' | 'surcharge_amount_not_permitted' | 'decline_for_cvv2_failure' | 'stop_payment_order' | 'revocation_of_authorization_order' | 'revocation_of_all_authorizations_order' | 'unable_to_locate_record' | 'file_is_temporarily_unavailable' | 'incorrect_pin' | 'allowable_number_of_pin_entry_tries_exceeded' | 'unable_to_locate_previous_message' | 'pin_error_found' | 'cannot_verify_pin' | 'verification_data_failed' | 'surcharge_amount_not_supported_by_debit_network_issuer' | 'cash_service_not_available' | 'cashback_request_exceeds_issuer_limit' | 'transaction_amount_exceeds_pre_authorized_approval_amount' | 'transaction_does_not_qualify_for_visa_pin' | 'offline_declined' | 'unable_to_go_online' | 'valid_account_but_amount_not_supported' | 'invalid_use_of_merchant_category_code_correct_and_reattempt' | 'card_authentication_failed';
     }
   }
 }
@@ -6179,23 +5542,7 @@ export interface SimulationCreateInboundACHTransferParams {
    * - `destroyed_check` - Destroyed Check (XCK).
    * - `international_ach_transaction` - International ACH Transaction (IAT).
    */
-  standard_entry_class_code?:
-    | 'corporate_credit_or_debit'
-    | 'corporate_trade_exchange'
-    | 'prearranged_payments_and_deposit'
-    | 'internet_initiated'
-    | 'point_of_sale'
-    | 'telephone_initiated'
-    | 'customer_initiated'
-    | 'accounts_receivable'
-    | 'machine_transfer'
-    | 'shared_network_transaction'
-    | 'represented_check'
-    | 'back_office_conversion'
-    | 'point_of_purchase'
-    | 'check_truncation'
-    | 'destroyed_check'
-    | 'international_ach_transaction';
+  standard_entry_class_code?: 'corporate_credit_or_debit' | 'corporate_trade_exchange' | 'prearranged_payments_and_deposit' | 'internet_initiated' | 'point_of_sale' | 'telephone_initiated' | 'customer_initiated' | 'accounts_receivable' | 'machine_transfer' | 'shared_network_transaction' | 'represented_check' | 'back_office_conversion' | 'point_of_purchase' | 'check_truncation' | 'destroyed_check' | 'international_ach_transaction';
 }
 
 export namespace SimulationCreateInboundACHTransferParams {
@@ -6326,7 +5673,7 @@ export interface SimulationCreateInboundRealTimePaymentsTransferParams {
    */
   unstructured_remittance_information?: string;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface SimulationCreateInboundWireDrawdownRequestParams {
@@ -6733,57 +6080,69 @@ export declare namespace Simulations {
     type SimulationIncrementCardAuthorizationParams as SimulationIncrementCardAuthorizationParams,
     type SimulationRefundCardTransactionParams as SimulationRefundCardTransactionParams,
     type SimulationReverseCardAuthorizationParams as SimulationReverseCardAuthorizationParams,
-    type SimulationSettleCardAuthorizationParams as SimulationSettleCardAuthorizationParams,
+    type SimulationSettleCardAuthorizationParams as SimulationSettleCardAuthorizationParams
   };
 
-  export { AccountTransfers as AccountTransfers };
+  export {
+    AccountTransfers as AccountTransfers
+  };
 
   export {
     ACHTransfers as ACHTransfers,
     type ACHTransferCreateNotificationOfChangeParams as ACHTransferCreateNotificationOfChangeParams,
     type ACHTransferReturnParams as ACHTransferReturnParams,
-    type ACHTransferSettleParams as ACHTransferSettleParams,
+    type ACHTransferSettleParams as ACHTransferSettleParams
   };
 
   export {
     CardAuthentications as CardAuthentications,
     type CardAuthenticationCreateParams as CardAuthenticationCreateParams,
-    type CardAuthenticationCreateChallengeAttemptParams as CardAuthenticationCreateChallengeAttemptParams,
+    type CardAuthenticationCreateChallengeAttemptParams as CardAuthenticationCreateChallengeAttemptParams
   };
 
   export {
     CardDisputes as CardDisputes,
-    type CardDisputeAdvanceStateParams as CardDisputeAdvanceStateParams,
+    type CardDisputeAdvanceStateParams as CardDisputeAdvanceStateParams
   };
 
   export {
     CheckDeposits as CheckDeposits,
     type CheckDepositAdjustParams as CheckDepositAdjustParams,
-    type CheckDepositSubmitParams as CheckDepositSubmitParams,
+    type CheckDepositSubmitParams as CheckDepositSubmitParams
   };
 
-  export { CheckTransfers as CheckTransfers };
+  export {
+    CheckTransfers as CheckTransfers
+  };
 
   export {
     InboundCheckDeposits as InboundCheckDeposits,
     type InboundCheckDepositCreateParams as InboundCheckDepositCreateParams,
-    type InboundCheckDepositAdjustParams as InboundCheckDepositAdjustParams,
+    type InboundCheckDepositAdjustParams as InboundCheckDepositAdjustParams
   };
 
-  export { PendingTransactions as PendingTransactions };
+  export {
+    PendingTransactions as PendingTransactions
+  };
 
   export {
     PhysicalCards as PhysicalCards,
     type PhysicalCardAdvanceShipmentParams as PhysicalCardAdvanceShipmentParams,
-    type PhysicalCardCreateTrackingUpdateParams as PhysicalCardCreateTrackingUpdateParams,
+    type PhysicalCardCreateTrackingUpdateParams as PhysicalCardCreateTrackingUpdateParams
   };
 
   export {
     RealTimePaymentsTransfers as RealTimePaymentsTransfers,
-    type RealTimePaymentsTransferCompleteParams as RealTimePaymentsTransferCompleteParams,
+    type RealTimePaymentsTransferCompleteParams as RealTimePaymentsTransferCompleteParams
   };
 
-  export { WireDrawdownRequests as WireDrawdownRequests, type WireDrawdownRequest as WireDrawdownRequest };
+  export {
+    WireDrawdownRequests as WireDrawdownRequests,
+    type WireDrawdownRequest as WireDrawdownRequest
+  };
 
-  export { WireTransfers as WireTransfers, type WireTransfer as WireTransfer };
+  export {
+    WireTransfers as WireTransfers,
+    type WireTransfer as WireTransfer
+  };
 }

@@ -2,19 +2,16 @@
 
 import YolkenIncreaseTest from 'yolken-increase-test';
 
-const client = new YolkenIncreaseTest({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new YolkenIncreaseTest({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource achTransfers', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.achTransfers.create({
-      account_id: 'account_in71c4amph0vgo2qllky',
-      amount: 100,
-      statement_descriptor: 'New ACH transfer',
-    });
+    account_id: 'account_in71c4amph0vgo2qllky',
+    amount: 100,
+    statement_descriptor: 'New ACH transfer',
+  });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -27,30 +24,30 @@ describe('resource achTransfers', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.achTransfers.create({
-      account_id: 'account_in71c4amph0vgo2qllky',
-      amount: 100,
-      statement_descriptor: 'New ACH transfer',
-      account_number: '987654321',
-      addenda: {
-        category: 'freeform',
-        freeform: { entries: [{ payment_related_information: 'x' }] },
-        payment_order_remittance_advice: { invoices: [{ invoice_number: 'x', paid_amount: 0 }] },
-      },
-      company_descriptive_date: 'x',
-      company_discretionary_data: 'x',
-      company_entry_description: 'x',
-      company_name: 'x',
-      destination_account_holder: 'business',
-      external_account_id: 'external_account_id',
-      funding: 'checking',
-      individual_id: 'x',
-      individual_name: 'x',
-      preferred_effective_date: { date: '2019-12-27', settlement_schedule: 'same_day' },
-      require_approval: true,
-      routing_number: '101050001',
-      standard_entry_class_code: 'corporate_credit_or_debit',
-      transaction_timing: 'synchronous',
-    });
+    account_id: 'account_in71c4amph0vgo2qllky',
+    amount: 100,
+    statement_descriptor: 'New ACH transfer',
+    account_number: '987654321',
+    addenda: {
+    category: 'freeform',
+    freeform: { entries: [{ payment_related_information: 'x' }] },
+    payment_order_remittance_advice: { invoices: [{ invoice_number: 'x', paid_amount: 0 }] },
+  },
+    company_descriptive_date: 'x',
+    company_discretionary_data: 'x',
+    company_entry_description: 'x',
+    company_name: 'x',
+    destination_account_holder: 'business',
+    external_account_id: 'external_account_id',
+    funding: 'checking',
+    individual_id: 'x',
+    individual_name: 'x',
+    preferred_effective_date: { date: '2019-12-27', settlement_schedule: 'same_day' },
+    require_approval: true,
+    routing_number: '101050001',
+    standard_entry_class_code: 'corporate_credit_or_debit',
+    transaction_timing: 'synchronous',
+  });
   });
 
   // Mock server tests are disabled
@@ -80,25 +77,22 @@ describe('resource achTransfers', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.achTransfers.list(
-        {
-          account_id: 'account_id',
-          created_at: {
-            after: '2019-12-27T18:11:19.117Z',
-            before: '2019-12-27T18:11:19.117Z',
-            on_or_after: '2019-12-27T18:11:19.117Z',
-            on_or_before: '2019-12-27T18:11:19.117Z',
-          },
-          cursor: 'cursor',
-          external_account_id: 'external_account_id',
-          idempotency_key: 'x',
-          limit: 1,
-          status: { in: ['pending_approval'] },
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(YolkenIncreaseTest.NotFoundError);
+    await expect(client.achTransfers.list({
+    account_id: 'account_id',
+    created_at: {
+    after: '2019-12-27T18:11:19.117Z',
+    before: '2019-12-27T18:11:19.117Z',
+    on_or_after: '2019-12-27T18:11:19.117Z',
+    on_or_before: '2019-12-27T18:11:19.117Z',
+  },
+    cursor: 'cursor',
+    external_account_id: 'external_account_id',
+    idempotency_key: 'x',
+    limit: 1,
+    status: { in: ['pending_approval'] },
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(YolkenIncreaseTest.NotFoundError);
   });
 
   // Mock server tests are disabled

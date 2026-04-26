@@ -33,10 +33,7 @@ export class WireDrawdownRequests extends APIResource {
    *   });
    * ```
    */
-  create(
-    body: WireDrawdownRequestCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<SimulationsWireDrawdownRequestsAPI.WireDrawdownRequest> {
+  create(body: WireDrawdownRequestCreateParams, options?: RequestOptions): APIPromise<SimulationsWireDrawdownRequestsAPI.WireDrawdownRequest> {
     return this._client.post('/wire_drawdown_requests', { body, ...options });
   }
 
@@ -51,10 +48,7 @@ export class WireDrawdownRequests extends APIResource {
    *   );
    * ```
    */
-  retrieve(
-    wireDrawdownRequestID: string,
-    options?: RequestOptions,
-  ): APIPromise<SimulationsWireDrawdownRequestsAPI.WireDrawdownRequest> {
+  retrieve(wireDrawdownRequestID: string, options?: RequestOptions): APIPromise<SimulationsWireDrawdownRequestsAPI.WireDrawdownRequest> {
     return this._client.get(path`/wire_drawdown_requests/${wireDrawdownRequestID}`, options);
   }
 
@@ -67,10 +61,7 @@ export class WireDrawdownRequests extends APIResource {
    *   await client.wireDrawdownRequests.list();
    * ```
    */
-  list(
-    query: WireDrawdownRequestListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<WireDrawdownRequestListResponse> {
+  list(query: WireDrawdownRequestListParams | null | undefined = {}, options?: RequestOptions): APIPromise<WireDrawdownRequestListResponse> {
     return this._client.get('/wire_drawdown_requests', { query, ...options });
   }
 }
@@ -89,7 +80,7 @@ export interface WireDrawdownRequestListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface WireDrawdownRequestCreateParams {
@@ -161,7 +152,7 @@ export interface WireDrawdownRequestCreateParams {
    */
   end_to_end_identification?: string;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace WireDrawdownRequestCreateParams {
@@ -278,6 +269,6 @@ export declare namespace WireDrawdownRequests {
   export {
     type WireDrawdownRequestListResponse as WireDrawdownRequestListResponse,
     type WireDrawdownRequestCreateParams as WireDrawdownRequestCreateParams,
-    type WireDrawdownRequestListParams as WireDrawdownRequestListParams,
+    type WireDrawdownRequestListParams as WireDrawdownRequestListParams
   };
 }

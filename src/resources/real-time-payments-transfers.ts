@@ -49,10 +49,7 @@ export class RealTimePaymentsTransfers extends APIResource {
    *   await client.realTimePaymentsTransfers.list();
    * ```
    */
-  list(
-    query: RealTimePaymentsTransferListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<RealTimePaymentsTransferListResponse> {
+  list(query: RealTimePaymentsTransferListParams | null | undefined = {}, options?: RequestOptions): APIPromise<RealTimePaymentsTransferListResponse> {
     return this._client.get('/real_time_payments_transfers', { query, ...options });
   }
 
@@ -68,10 +65,7 @@ export class RealTimePaymentsTransfers extends APIResource {
    * ```
    */
   approve(realTimePaymentsTransferID: string, options?: RequestOptions): APIPromise<Transfer> {
-    return this._client.post(
-      path`/real_time_payments_transfers/${realTimePaymentsTransferID}/approve`,
-      options,
-    );
+    return this._client.post(path`/real_time_payments_transfers/${realTimePaymentsTransferID}/approve`, options);
   }
 
   /**
@@ -86,10 +80,7 @@ export class RealTimePaymentsTransfers extends APIResource {
    * ```
    */
   cancel(realTimePaymentsTransferID: string, options?: RequestOptions): APIPromise<Transfer> {
-    return this._client.post(
-      path`/real_time_payments_transfers/${realTimePaymentsTransferID}/cancel`,
-      options,
-    );
+    return this._client.post(path`/real_time_payments_transfers/${realTimePaymentsTransferID}/cancel`, options);
   }
 }
 
@@ -219,15 +210,7 @@ export interface Transfer {
    *   Real-Time Payments.
    * - `complete` - The transfer has been sent successfully and is complete.
    */
-  status:
-    | 'pending_approval'
-    | 'canceled'
-    | 'pending_reviewing'
-    | 'requires_attention'
-    | 'rejected'
-    | 'pending_submission'
-    | 'submitted'
-    | 'complete';
+  status: 'pending_approval' | 'canceled' | 'pending_reviewing' | 'requires_attention' | 'rejected' | 'pending_submission' | 'submitted' | 'complete';
 
   /**
    * After the transfer is submitted to Real-Time Payments, this will contain
@@ -263,7 +246,7 @@ export interface Transfer {
    */
   unstructured_remittance_information: string;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace Transfer {
@@ -441,28 +424,7 @@ export namespace Transfer {
      *   issue. We have been notified.
      * - `other` - Some other error or issue has occurred.
      */
-    reject_reason_code:
-      | 'account_closed'
-      | 'account_blocked'
-      | 'invalid_creditor_account_type'
-      | 'invalid_creditor_account_number'
-      | 'invalid_creditor_financial_institution_identifier'
-      | 'end_customer_deceased'
-      | 'narrative'
-      | 'transaction_forbidden'
-      | 'transaction_type_not_supported'
-      | 'unexpected_amount'
-      | 'amount_exceeds_bank_limits'
-      | 'invalid_creditor_address'
-      | 'unknown_end_customer'
-      | 'invalid_debtor_address'
-      | 'timeout'
-      | 'unsupported_message_for_recipient'
-      | 'recipient_connection_not_available'
-      | 'real_time_payments_suspended'
-      | 'instructed_agent_signed_off'
-      | 'processing_error'
-      | 'other';
+    reject_reason_code: 'account_closed' | 'account_blocked' | 'invalid_creditor_account_type' | 'invalid_creditor_account_number' | 'invalid_creditor_financial_institution_identifier' | 'end_customer_deceased' | 'narrative' | 'transaction_forbidden' | 'transaction_type_not_supported' | 'unexpected_amount' | 'amount_exceeds_bank_limits' | 'invalid_creditor_address' | 'unknown_end_customer' | 'invalid_debtor_address' | 'timeout' | 'unsupported_message_for_recipient' | 'recipient_connection_not_available' | 'real_time_payments_suspended' | 'instructed_agent_signed_off' | 'processing_error' | 'other';
 
     /**
      * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -503,7 +465,7 @@ export interface RealTimePaymentsTransferListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface RealTimePaymentsTransferCreateParams {
@@ -568,7 +530,7 @@ export interface RealTimePaymentsTransferCreateParams {
    */
   ultimate_debtor_name?: string;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface RealTimePaymentsTransferListParams {
@@ -639,16 +601,7 @@ export namespace RealTimePaymentsTransferListParams {
      * Return results whose value is in the provided list. For GET requests, this
      * should be encoded as a comma-delimited string, such as `?in=one,two,three`.
      */
-    in?: Array<
-      | 'pending_approval'
-      | 'canceled'
-      | 'pending_reviewing'
-      | 'requires_attention'
-      | 'rejected'
-      | 'pending_submission'
-      | 'submitted'
-      | 'complete'
-    >;
+    in?: Array<'pending_approval' | 'canceled' | 'pending_reviewing' | 'requires_attention' | 'rejected' | 'pending_submission' | 'submitted' | 'complete'>;
   }
 }
 
@@ -657,6 +610,6 @@ export declare namespace RealTimePaymentsTransfers {
     type Transfer as Transfer,
     type RealTimePaymentsTransferListResponse as RealTimePaymentsTransferListResponse,
     type RealTimePaymentsTransferCreateParams as RealTimePaymentsTransferCreateParams,
-    type RealTimePaymentsTransferListParams as RealTimePaymentsTransferListParams,
+    type RealTimePaymentsTransferListParams as RealTimePaymentsTransferListParams
   };
 }

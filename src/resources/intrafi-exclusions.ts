@@ -46,10 +46,7 @@ export class IntrafiExclusions extends APIResource {
    *   await client.intrafiExclusions.list();
    * ```
    */
-  list(
-    query: IntrafiExclusionListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<IntrafiExclusionListResponse> {
+  list(query: IntrafiExclusionListParams | null | undefined = {}, options?: RequestOptions): APIPromise<IntrafiExclusionListResponse> {
     return this._client.get('/intrafi_exclusions', { query, ...options });
   }
 
@@ -152,7 +149,7 @@ export interface IntrafiExclusionListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface IntrafiExclusionCreateParams {
@@ -169,7 +166,7 @@ export interface IntrafiExclusionCreateParams {
    */
   fdic_certificate_number: string;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface IntrafiExclusionListParams {
@@ -203,6 +200,6 @@ export declare namespace IntrafiExclusions {
     type IntrafiExclusion as IntrafiExclusion,
     type IntrafiExclusionListResponse as IntrafiExclusionListResponse,
     type IntrafiExclusionCreateParams as IntrafiExclusionCreateParams,
-    type IntrafiExclusionListParams as IntrafiExclusionListParams,
+    type IntrafiExclusionListParams as IntrafiExclusionListParams
   };
 }

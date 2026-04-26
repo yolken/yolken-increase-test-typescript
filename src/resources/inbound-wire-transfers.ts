@@ -30,10 +30,7 @@ export class InboundWireTransfers extends APIResource {
    *   await client.inboundWireTransfers.list();
    * ```
    */
-  list(
-    query: InboundWireTransferListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<InboundWireTransferListResponse> {
+  list(query: InboundWireTransferListParams | null | undefined = {}, options?: RequestOptions): APIPromise<InboundWireTransferListResponse> {
     return this._client.get('/inbound_wire_transfers', { query, ...options });
   }
 
@@ -49,15 +46,8 @@ export class InboundWireTransfers extends APIResource {
    *   );
    * ```
    */
-  reverse(
-    inboundWireTransferID: string,
-    body: InboundWireTransferReverseParams,
-    options?: RequestOptions,
-  ): APIPromise<InboundWireTransfer> {
-    return this._client.post(path`/inbound_wire_transfers/${inboundWireTransferID}/reverse`, {
-      body,
-      ...options,
-    });
+  reverse(inboundWireTransferID: string, body: InboundWireTransferReverseParams, options?: RequestOptions): APIPromise<InboundWireTransfer> {
+    return this._client.post(path`/inbound_wire_transfers/${inboundWireTransferID}/reverse`, { body, ...options });
   }
 }
 
@@ -204,7 +194,7 @@ export interface InboundWireTransfer {
    */
   wire_drawdown_request_id: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace InboundWireTransfer {
@@ -260,7 +250,7 @@ export interface InboundWireTransferListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface InboundWireTransferListParams {
@@ -350,6 +340,6 @@ export declare namespace InboundWireTransfers {
     type InboundWireTransfer as InboundWireTransfer,
     type InboundWireTransferListResponse as InboundWireTransferListResponse,
     type InboundWireTransferListParams as InboundWireTransferListParams,
-    type InboundWireTransferReverseParams as InboundWireTransferReverseParams,
+    type InboundWireTransferReverseParams as InboundWireTransferReverseParams
   };
 }

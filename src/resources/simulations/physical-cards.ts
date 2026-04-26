@@ -21,15 +21,8 @@ export class PhysicalCards extends APIResource {
    *   );
    * ```
    */
-  advanceShipment(
-    physicalCardID: string,
-    body: PhysicalCardAdvanceShipmentParams,
-    options?: RequestOptions,
-  ): APIPromise<PhysicalCardsAPI.PhysicalCard> {
-    return this._client.post(path`/simulations/physical_cards/${physicalCardID}/advance_shipment`, {
-      body,
-      ...options,
-    });
+  advanceShipment(physicalCardID: string, body: PhysicalCardAdvanceShipmentParams, options?: RequestOptions): APIPromise<PhysicalCardsAPI.PhysicalCard> {
+    return this._client.post(path`/simulations/physical_cards/${physicalCardID}/advance_shipment`, { body, ...options });
   }
 
   /**
@@ -45,15 +38,8 @@ export class PhysicalCards extends APIResource {
    *   );
    * ```
    */
-  createTrackingUpdate(
-    physicalCardID: string,
-    body: PhysicalCardCreateTrackingUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<PhysicalCardsAPI.PhysicalCard> {
-    return this._client.post(path`/simulations/physical_cards/${physicalCardID}/tracking_updates`, {
-      body,
-      ...options,
-    });
+  createTrackingUpdate(physicalCardID: string, body: PhysicalCardCreateTrackingUpdateParams, options?: RequestOptions): APIPromise<PhysicalCardsAPI.PhysicalCard> {
+    return this._client.post(path`/simulations/physical_cards/${physicalCardID}/tracking_updates`, { body, ...options });
   }
 }
 
@@ -75,15 +61,7 @@ export interface PhysicalCardAdvanceShipmentParams {
    * - `requires_attention` - The physical card shipment requires attention from
    *   Increase before progressing.
    */
-  shipment_status:
-    | 'pending'
-    | 'canceled'
-    | 'submitted'
-    | 'acknowledged'
-    | 'rejected'
-    | 'shipped'
-    | 'returned'
-    | 'requires_attention';
+  shipment_status: 'pending' | 'canceled' | 'submitted' | 'acknowledged' | 'rejected' | 'shipped' | 'returned' | 'requires_attention';
 }
 
 export interface PhysicalCardCreateTrackingUpdateParams {
@@ -126,6 +104,6 @@ export interface PhysicalCardCreateTrackingUpdateParams {
 export declare namespace PhysicalCards {
   export {
     type PhysicalCardAdvanceShipmentParams as PhysicalCardAdvanceShipmentParams,
-    type PhysicalCardCreateTrackingUpdateParams as PhysicalCardCreateTrackingUpdateParams,
+    type PhysicalCardCreateTrackingUpdateParams as PhysicalCardCreateTrackingUpdateParams
   };
 }

@@ -84,12 +84,12 @@ export interface OAuthCreateTokenParams {
    */
   production_token?: string;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export declare namespace OAuth {
   export {
     type OAuthCreateTokenResponse as OAuthCreateTokenResponse,
-    type OAuthCreateTokenParams as OAuthCreateTokenParams,
+    type OAuthCreateTokenParams as OAuthCreateTokenParams
   };
 }

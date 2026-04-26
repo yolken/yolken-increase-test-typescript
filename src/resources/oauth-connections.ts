@@ -30,10 +30,7 @@ export class OAuthConnections extends APIResource {
    *   await client.oauthConnections.list();
    * ```
    */
-  list(
-    query: OAuthConnectionListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<OAuthConnectionListResponse> {
+  list(query: OAuthConnectionListParams | null | undefined = {}, options?: RequestOptions): APIPromise<OAuthConnectionListResponse> {
     return this._client.get('/oauth_connections', { query, ...options });
   }
 }
@@ -100,7 +97,7 @@ export interface OAuthConnectionListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface OAuthConnectionListParams {
@@ -139,6 +136,6 @@ export declare namespace OAuthConnections {
   export {
     type OAuthConnection as OAuthConnection,
     type OAuthConnectionListResponse as OAuthConnectionListResponse,
-    type OAuthConnectionListParams as OAuthConnectionListParams,
+    type OAuthConnectionListParams as OAuthConnectionListParams
   };
 }

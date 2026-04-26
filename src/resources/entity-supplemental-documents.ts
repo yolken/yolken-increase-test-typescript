@@ -17,10 +17,7 @@ export class EntitySupplementalDocuments extends APIResource {
    *   });
    * ```
    */
-  create(
-    body: EntitySupplementalDocumentCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<EntitySupplementalDocument> {
+  create(body: EntitySupplementalDocumentCreateParams, options?: RequestOptions): APIPromise<EntitySupplementalDocument> {
     return this._client.post('/entity_supplemental_documents', { body, ...options });
   }
 
@@ -35,10 +32,7 @@ export class EntitySupplementalDocuments extends APIResource {
    *   });
    * ```
    */
-  list(
-    query: EntitySupplementalDocumentListParams,
-    options?: RequestOptions,
-  ): APIPromise<EntitySupplementalDocumentListResponse> {
+  list(query: EntitySupplementalDocumentListParams, options?: RequestOptions): APIPromise<EntitySupplementalDocumentListResponse> {
     return this._client.get('/entity_supplemental_documents', { query, ...options });
   }
 }
@@ -92,7 +86,7 @@ export interface EntitySupplementalDocumentListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface EntitySupplementalDocumentCreateParams {
@@ -106,7 +100,7 @@ export interface EntitySupplementalDocumentCreateParams {
    */
   file_id: string;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface EntitySupplementalDocumentListParams {
@@ -140,6 +134,6 @@ export declare namespace EntitySupplementalDocuments {
     type EntitySupplementalDocument as EntitySupplementalDocument,
     type EntitySupplementalDocumentListResponse as EntitySupplementalDocumentListResponse,
     type EntitySupplementalDocumentCreateParams as EntitySupplementalDocumentCreateParams,
-    type EntitySupplementalDocumentListParams as EntitySupplementalDocumentListParams,
+    type EntitySupplementalDocumentListParams as EntitySupplementalDocumentListParams
   };
 }

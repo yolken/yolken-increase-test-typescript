@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { ClientOptions } from 'yolken-increase-test';
+import { ClientOptions } from 'yolken-increase-test'
 
 export type WorkerInput = {
   project_name: string;
