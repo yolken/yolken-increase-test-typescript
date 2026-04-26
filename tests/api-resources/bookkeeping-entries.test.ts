@@ -2,10 +2,7 @@
 
 import YolkenIncreaseTest from 'yolken-increase-test';
 
-const client = new YolkenIncreaseTest({
-  apiKey: 'My API Key',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
-});
+const client = new YolkenIncreaseTest({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
 
 describe('resource bookkeepingEntries', () => {
   // Mock server tests are disabled
@@ -35,15 +32,12 @@ describe('resource bookkeepingEntries', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.bookkeepingEntries.list(
-        {
-          account_id: 'account_id',
-          cursor: 'cursor',
-          limit: 1,
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(YolkenIncreaseTest.NotFoundError);
+    await expect(client.bookkeepingEntries.list({
+    account_id: 'account_id',
+    cursor: 'cursor',
+    limit: 1,
+  }, { path: '/_stainless_unknown_path' }))
+      .rejects
+      .toThrow(YolkenIncreaseTest.NotFoundError);
   });
 });

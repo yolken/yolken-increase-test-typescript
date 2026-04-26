@@ -30,10 +30,7 @@ export class OAuthApplications extends APIResource {
    *   await client.oauthApplications.list();
    * ```
    */
-  list(
-    query: OAuthApplicationListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<OAuthApplicationListResponse> {
+  list(query: OAuthApplicationListParams | null | undefined = {}, options?: RequestOptions): APIPromise<OAuthApplicationListResponse> {
     return this._client.get('/oauth_applications', { query, ...options });
   }
 }
@@ -102,7 +99,7 @@ export interface OAuthApplicationListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface OAuthApplicationListParams {
@@ -162,6 +159,6 @@ export declare namespace OAuthApplications {
   export {
     type OAuthApplication as OAuthApplication,
     type OAuthApplicationListResponse as OAuthApplicationListResponse,
-    type OAuthApplicationListParams as OAuthApplicationListParams,
+    type OAuthApplicationListParams as OAuthApplicationListParams
   };
 }

@@ -18,10 +18,7 @@ export class WireDrawdownRequests extends APIResource {
    * ```
    */
   refuse(wireDrawdownRequestID: string, options?: RequestOptions): APIPromise<WireDrawdownRequest> {
-    return this._client.post(
-      path`/simulations/wire_drawdown_requests/${wireDrawdownRequestID}/refuse`,
-      options,
-    );
+    return this._client.post(path`/simulations/wire_drawdown_requests/${wireDrawdownRequestID}/refuse`, options);
   }
 
   /**
@@ -36,10 +33,7 @@ export class WireDrawdownRequests extends APIResource {
    * ```
    */
   submit(wireDrawdownRequestID: string, options?: RequestOptions): APIPromise<WireDrawdownRequest> {
-    return this._client.post(
-      path`/simulations/wire_drawdown_requests/${wireDrawdownRequestID}/submit`,
-      options,
-    );
+    return this._client.post(path`/simulations/wire_drawdown_requests/${wireDrawdownRequestID}/submit`, options);
   }
 }
 
@@ -157,7 +151,7 @@ export interface WireDrawdownRequest {
    */
   unstructured_remittance_information: string;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace WireDrawdownRequest {
@@ -249,5 +243,7 @@ export namespace WireDrawdownRequest {
 }
 
 export declare namespace WireDrawdownRequests {
-  export { type WireDrawdownRequest as WireDrawdownRequest };
+  export {
+    type WireDrawdownRequest as WireDrawdownRequest
+  };
 }

@@ -28,10 +28,7 @@ export class CardTokens extends APIResource {
    * const cardTokens = await client.cardTokens.list();
    * ```
    */
-  list(
-    query: CardTokenListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<CardTokenListResponse> {
+  list(query: CardTokenListParams | null | undefined = {}, options?: RequestOptions): APIPromise<CardTokenListResponse> {
     return this._client.get('/card_tokens', { query, ...options });
   }
 
@@ -48,10 +45,7 @@ export class CardTokens extends APIResource {
    *   );
    * ```
    */
-  retrieveCapabilities(
-    cardTokenID: string,
-    options?: RequestOptions,
-  ): APIPromise<CardTokenRetrieveCapabilitiesResponse> {
+  retrieveCapabilities(cardTokenID: string, options?: RequestOptions): APIPromise<CardTokenRetrieveCapabilitiesResponse> {
     return this._client.get(path`/card_tokens/${cardTokenID}/capabilities`, options);
   }
 }
@@ -114,7 +108,7 @@ export interface CardTokenListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 /**
@@ -216,6 +210,6 @@ export declare namespace CardTokens {
     type CardToken as CardToken,
     type CardTokenListResponse as CardTokenListResponse,
     type CardTokenRetrieveCapabilitiesResponse as CardTokenRetrieveCapabilitiesResponse,
-    type CardTokenListParams as CardTokenListParams,
+    type CardTokenListParams as CardTokenListParams
   };
 }

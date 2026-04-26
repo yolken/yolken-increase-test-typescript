@@ -26,10 +26,7 @@ export class InboundCheckDeposits extends APIResource {
    *   });
    * ```
    */
-  create(
-    body: InboundCheckDepositCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<InboundCheckDepositsAPI.InboundCheckDeposit> {
+  create(body: InboundCheckDepositCreateParams, options?: RequestOptions): APIPromise<InboundCheckDepositsAPI.InboundCheckDeposit> {
     return this._client.post('/simulations/inbound_check_deposits', { body, ...options });
   }
 
@@ -45,15 +42,8 @@ export class InboundCheckDeposits extends APIResource {
    *   );
    * ```
    */
-  adjust(
-    inboundCheckDepositID: string,
-    body: InboundCheckDepositAdjustParams,
-    options?: RequestOptions,
-  ): APIPromise<InboundCheckDepositsAPI.InboundCheckDeposit> {
-    return this._client.post(path`/simulations/inbound_check_deposits/${inboundCheckDepositID}/adjustment`, {
-      body,
-      ...options,
-    });
+  adjust(inboundCheckDepositID: string, body: InboundCheckDepositAdjustParams, options?: RequestOptions): APIPromise<InboundCheckDepositsAPI.InboundCheckDeposit> {
+    return this._client.post(path`/simulations/inbound_check_deposits/${inboundCheckDepositID}/adjustment`, { body, ...options });
   }
 }
 
@@ -114,6 +104,6 @@ export interface InboundCheckDepositAdjustParams {
 export declare namespace InboundCheckDeposits {
   export {
     type InboundCheckDepositCreateParams as InboundCheckDepositCreateParams,
-    type InboundCheckDepositAdjustParams as InboundCheckDepositAdjustParams,
+    type InboundCheckDepositAdjustParams as InboundCheckDepositAdjustParams
   };
 }

@@ -30,10 +30,7 @@ export class InboundMailItems extends APIResource {
    *   await client.inboundMailItems.list();
    * ```
    */
-  list(
-    query: InboundMailItemListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<InboundMailItemListResponse> {
+  list(query: InboundMailItemListParams | null | undefined = {}, options?: RequestOptions): APIPromise<InboundMailItemListResponse> {
     return this._client.get('/inbound_mail_items', { query, ...options });
   }
 
@@ -51,11 +48,7 @@ export class InboundMailItems extends APIResource {
    *   );
    * ```
    */
-  action(
-    inboundMailItemID: string,
-    body: InboundMailItemActionParams,
-    options?: RequestOptions,
-  ): APIPromise<InboundMailItem> {
+  action(inboundMailItemID: string, body: InboundMailItemActionParams, options?: RequestOptions): APIPromise<InboundMailItem> {
     return this._client.post(path`/inbound_mail_items/${inboundMailItemID}/action`, { body, ...options });
   }
 }
@@ -120,7 +113,7 @@ export interface InboundMailItem {
    */
   type: 'inbound_mail_item';
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace InboundMailItem {
@@ -173,7 +166,7 @@ export interface InboundMailItemListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface InboundMailItemListParams {
@@ -247,7 +240,7 @@ export namespace InboundMailItemActionParams {
      */
     account_id?: string;
 
-    [k: string]: unknown;
+  [k: string]: unknown
   }
 }
 
@@ -256,6 +249,6 @@ export declare namespace InboundMailItems {
     type InboundMailItem as InboundMailItem,
     type InboundMailItemListResponse as InboundMailItemListResponse,
     type InboundMailItemListParams as InboundMailItemListParams,
-    type InboundMailItemActionParams as InboundMailItemActionParams,
+    type InboundMailItemActionParams as InboundMailItemActionParams
   };
 }

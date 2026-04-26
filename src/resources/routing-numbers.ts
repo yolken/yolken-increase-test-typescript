@@ -37,7 +37,7 @@ export interface RoutingNumberListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace RoutingNumberListResponse {
@@ -116,6 +116,6 @@ export interface RoutingNumberListParams {
 export declare namespace RoutingNumbers {
   export {
     type RoutingNumberListResponse as RoutingNumberListResponse,
-    type RoutingNumberListParams as RoutingNumberListParams,
+    type RoutingNumberListParams as RoutingNumberListParams
   };
 }

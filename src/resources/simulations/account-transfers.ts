@@ -21,10 +21,7 @@ export class AccountTransfers extends APIResource {
    *   );
    * ```
    */
-  completeTransfer(
-    accountTransferID: string,
-    options?: RequestOptions,
-  ): APIPromise<AccountTransfersAPI.AccountTransfer> {
+  completeTransfer(accountTransferID: string, options?: RequestOptions): APIPromise<AccountTransfersAPI.AccountTransfer> {
     return this._client.post(path`/simulations/account_transfers/${accountTransferID}/complete`, options);
   }
 }

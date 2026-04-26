@@ -20,10 +20,7 @@ export class WireTransfers extends APIResource {
    * });
    * ```
    */
-  create(
-    body: WireTransferCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<SimulationsWireTransfersAPI.WireTransfer> {
+  create(body: WireTransferCreateParams, options?: RequestOptions): APIPromise<SimulationsWireTransfersAPI.WireTransfer> {
     return this._client.post('/wire_transfers', { body, ...options });
   }
 
@@ -37,10 +34,7 @@ export class WireTransfers extends APIResource {
    * );
    * ```
    */
-  retrieve(
-    wireTransferID: string,
-    options?: RequestOptions,
-  ): APIPromise<SimulationsWireTransfersAPI.WireTransfer> {
+  retrieve(wireTransferID: string, options?: RequestOptions): APIPromise<SimulationsWireTransfersAPI.WireTransfer> {
     return this._client.get(path`/wire_transfers/${wireTransferID}`, options);
   }
 
@@ -52,10 +46,7 @@ export class WireTransfers extends APIResource {
    * const wireTransfers = await client.wireTransfers.list();
    * ```
    */
-  list(
-    query: WireTransferListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<WireTransferListResponse> {
+  list(query: WireTransferListParams | null | undefined = {}, options?: RequestOptions): APIPromise<WireTransferListResponse> {
     return this._client.get('/wire_transfers', { query, ...options });
   }
 
@@ -69,10 +60,7 @@ export class WireTransfers extends APIResource {
    * );
    * ```
    */
-  approve(
-    wireTransferID: string,
-    options?: RequestOptions,
-  ): APIPromise<SimulationsWireTransfersAPI.WireTransfer> {
+  approve(wireTransferID: string, options?: RequestOptions): APIPromise<SimulationsWireTransfersAPI.WireTransfer> {
     return this._client.post(path`/wire_transfers/${wireTransferID}/approve`, options);
   }
 
@@ -86,10 +74,7 @@ export class WireTransfers extends APIResource {
    * );
    * ```
    */
-  cancel(
-    wireTransferID: string,
-    options?: RequestOptions,
-  ): APIPromise<SimulationsWireTransfersAPI.WireTransfer> {
+  cancel(wireTransferID: string, options?: RequestOptions): APIPromise<SimulationsWireTransfersAPI.WireTransfer> {
     return this._client.post(path`/wire_transfers/${wireTransferID}/cancel`, options);
   }
 }
@@ -108,7 +93,7 @@ export interface WireTransferListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface WireTransferCreateParams {
@@ -172,7 +157,7 @@ export interface WireTransferCreateParams {
    */
   source_account_number_id?: string;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace WireTransferCreateParams {
@@ -407,17 +392,7 @@ export namespace WireTransferListParams {
      * Return results whose value is in the provided list. For GET requests, this
      * should be encoded as a comma-delimited string, such as `?in=one,two,three`.
      */
-    in?: Array<
-      | 'pending_approval'
-      | 'canceled'
-      | 'pending_reviewing'
-      | 'rejected'
-      | 'requires_attention'
-      | 'pending_creating'
-      | 'reversed'
-      | 'submitted'
-      | 'complete'
-    >;
+    in?: Array<'pending_approval' | 'canceled' | 'pending_reviewing' | 'rejected' | 'requires_attention' | 'pending_creating' | 'reversed' | 'submitted' | 'complete'>;
   }
 }
 
@@ -425,6 +400,6 @@ export declare namespace WireTransfers {
   export {
     type WireTransferListResponse as WireTransferListResponse,
     type WireTransferCreateParams as WireTransferCreateParams,
-    type WireTransferListParams as WireTransferListParams,
+    type WireTransferListParams as WireTransferListParams
   };
 }

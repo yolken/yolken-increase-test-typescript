@@ -30,10 +30,7 @@ export class BookkeepingEntries extends APIResource {
    *   await client.bookkeepingEntries.list();
    * ```
    */
-  list(
-    query: BookkeepingEntryListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<BookkeepingEntryListResponse> {
+  list(query: BookkeepingEntryListParams | null | undefined = {}, options?: RequestOptions): APIPromise<BookkeepingEntryListResponse> {
     return this._client.get('/bookkeeping_entries', { query, ...options });
   }
 }
@@ -91,7 +88,7 @@ export interface BookkeepingEntryListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface BookkeepingEntryListParams {
@@ -116,6 +113,6 @@ export declare namespace BookkeepingEntries {
   export {
     type BookkeepingEntry as BookkeepingEntry,
     type BookkeepingEntryListResponse as BookkeepingEntryListResponse,
-    type BookkeepingEntryListParams as BookkeepingEntryListParams,
+    type BookkeepingEntryListParams as BookkeepingEntryListParams
   };
 }

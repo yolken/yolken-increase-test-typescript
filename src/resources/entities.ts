@@ -57,10 +57,7 @@ export class Entities extends APIResource {
    * const entities = await client.entities.list();
    * ```
    */
-  list(
-    query: EntityListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<EntityListResponse> {
+  list(query: EntityListParams | null | undefined = {}, options?: RequestOptions): APIPromise<EntityListResponse> {
     return this._client.get('/entities', { query, ...options });
   }
 
@@ -202,7 +199,7 @@ export interface Entity {
    */
   validation: Entity.Validation | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace Entity {
@@ -254,7 +251,7 @@ export namespace Entity {
      */
     website: string | null;
 
-    [k: string]: unknown;
+  [k: string]: unknown
   }
 
   export namespace Corporation {
@@ -315,7 +312,7 @@ export namespace Entity {
        */
       prongs: Array<'ownership' | 'control'>;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     export namespace BeneficialOwner {
@@ -395,12 +392,7 @@ export namespace Entity {
            * - `drivers_license` - A driver's license number.
            * - `other` - Another identifying document.
            */
-          method:
-            | 'social_security_number'
-            | 'individual_taxpayer_identification_number'
-            | 'passport'
-            | 'drivers_license'
-            | 'other';
+          method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
 
           /**
            * The last 4 digits of the identification number that can be used to verify the
@@ -408,7 +400,7 @@ export namespace Entity {
            */
           number_last4: string;
 
-          [k: string]: unknown;
+        [k: string]: unknown
         }
       }
     }
@@ -614,12 +606,7 @@ export namespace Entity {
          * - `drivers_license` - A driver's license number.
          * - `other` - Another identifying document.
          */
-        method:
-          | 'social_security_number'
-          | 'individual_taxpayer_identification_number'
-          | 'passport'
-          | 'drivers_license'
-          | 'other';
+        method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
 
         /**
          * The last 4 digits of the identification number that can be used to verify the
@@ -627,7 +614,7 @@ export namespace Entity {
          */
         number_last4: string;
 
-        [k: string]: unknown;
+      [k: string]: unknown
       }
     }
   }
@@ -709,12 +696,7 @@ export namespace Entity {
        * - `drivers_license` - A driver's license number.
        * - `other` - Another identifying document.
        */
-      method:
-        | 'social_security_number'
-        | 'individual_taxpayer_identification_number'
-        | 'passport'
-        | 'drivers_license'
-        | 'other';
+      method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
 
       /**
        * The last 4 digits of the identification number that can be used to verify the
@@ -722,7 +704,7 @@ export namespace Entity {
        */
       number_last4: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
   }
 
@@ -949,12 +931,7 @@ export namespace Entity {
          * - `drivers_license` - A driver's license number.
          * - `other` - Another identifying document.
          */
-        method:
-          | 'social_security_number'
-          | 'individual_taxpayer_identification_number'
-          | 'passport'
-          | 'drivers_license'
-          | 'other';
+        method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
 
         /**
          * The last 4 digits of the identification number that can be used to verify the
@@ -962,7 +939,7 @@ export namespace Entity {
          */
         number_last4: string;
 
-        [k: string]: unknown;
+      [k: string]: unknown
       }
     }
 
@@ -1059,12 +1036,7 @@ export namespace Entity {
            * - `drivers_license` - A driver's license number.
            * - `other` - Another identifying document.
            */
-          method:
-            | 'social_security_number'
-            | 'individual_taxpayer_identification_number'
-            | 'passport'
-            | 'drivers_license'
-            | 'other';
+          method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
 
           /**
            * The last 4 digits of the identification number that can be used to verify the
@@ -1072,7 +1044,7 @@ export namespace Entity {
            */
           number_last4: string;
 
-          [k: string]: unknown;
+        [k: string]: unknown
         }
       }
     }
@@ -1128,11 +1100,7 @@ export namespace Entity {
        *   validated. Update the address with the
        *   [update a beneficial owner API](/documentation/api/beneficial-owners#update-a-beneficial-owner).
        */
-      category:
-        | 'entity_tax_identifier'
-        | 'entity_address'
-        | 'beneficial_owner_identity'
-        | 'beneficial_owner_address';
+      category: 'entity_tax_identifier' | 'entity_address' | 'beneficial_owner_identity' | 'beneficial_owner_address';
 
       /**
        * Details when the issue is with the entity's address.
@@ -1202,7 +1170,7 @@ export interface EntityListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface EntityCreateParams {
@@ -1278,7 +1246,7 @@ export interface EntityCreateParams {
    */
   trust?: EntityCreateParams.Trust;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace EntityCreateParams {
@@ -1324,11 +1292,7 @@ export namespace EntityCreateParams {
      *   submit beneficial owners. You can only use this exemption after approval from
      *   your bank partner.
      */
-    beneficial_ownership_exemption_reason?:
-      | 'regulated_financial_institution'
-      | 'publicly_traded_company'
-      | 'public_entity'
-      | 'other';
+    beneficial_ownership_exemption_reason?: 'regulated_financial_institution' | 'publicly_traded_company' | 'public_entity' | 'other';
 
     /**
      * An email address for the business. Not every program requires an email for
@@ -1355,7 +1319,7 @@ export namespace EntityCreateParams {
      */
     website?: string;
 
-    [k: string]: unknown;
+  [k: string]: unknown
   }
 
   export namespace Corporation {
@@ -1414,7 +1378,7 @@ export namespace EntityCreateParams {
        */
       company_title?: string;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     export namespace BeneficialOwner {
@@ -1504,12 +1468,7 @@ export namespace EntityCreateParams {
            * - `drivers_license` - A driver's license number.
            * - `other` - Another identifying document.
            */
-          method:
-            | 'social_security_number'
-            | 'individual_taxpayer_identification_number'
-            | 'passport'
-            | 'drivers_license'
-            | 'other';
+          method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
 
           /**
            * An identification number that can be used to verify the individual's identity,
@@ -1535,7 +1494,7 @@ export namespace EntityCreateParams {
            */
           passport?: Identification.Passport;
 
-          [k: string]: unknown;
+        [k: string]: unknown
         }
 
         export namespace Identification {
@@ -1824,12 +1783,7 @@ export namespace EntityCreateParams {
          * - `drivers_license` - A driver's license number.
          * - `other` - Another identifying document.
          */
-        method:
-          | 'social_security_number'
-          | 'individual_taxpayer_identification_number'
-          | 'passport'
-          | 'drivers_license'
-          | 'other';
+        method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
 
         /**
          * An identification number that can be used to verify the individual's identity,
@@ -1855,7 +1809,7 @@ export namespace EntityCreateParams {
          */
         passport?: Identification.Passport;
 
-        [k: string]: unknown;
+      [k: string]: unknown
       }
 
       export namespace Identification {
@@ -2032,12 +1986,7 @@ export namespace EntityCreateParams {
        * - `drivers_license` - A driver's license number.
        * - `other` - Another identifying document.
        */
-      method:
-        | 'social_security_number'
-        | 'individual_taxpayer_identification_number'
-        | 'passport'
-        | 'drivers_license'
-        | 'other';
+      method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
 
       /**
        * An identification number that can be used to verify the individual's identity,
@@ -2063,7 +2012,7 @@ export namespace EntityCreateParams {
        */
       passport?: Identification.Passport;
 
-      [k: string]: unknown;
+    [k: string]: unknown
     }
 
     export namespace Identification {
@@ -2408,12 +2357,7 @@ export namespace EntityCreateParams {
            * - `drivers_license` - A driver's license number.
            * - `other` - Another identifying document.
            */
-          method:
-            | 'social_security_number'
-            | 'individual_taxpayer_identification_number'
-            | 'passport'
-            | 'drivers_license'
-            | 'other';
+          method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
 
           /**
            * An identification number that can be used to verify the individual's identity,
@@ -2439,7 +2383,7 @@ export namespace EntityCreateParams {
            */
           passport?: Identification.Passport;
 
-          [k: string]: unknown;
+        [k: string]: unknown
         }
 
         export namespace Identification {
@@ -2613,12 +2557,7 @@ export namespace EntityCreateParams {
          * - `drivers_license` - A driver's license number.
          * - `other` - Another identifying document.
          */
-        method:
-          | 'social_security_number'
-          | 'individual_taxpayer_identification_number'
-          | 'passport'
-          | 'drivers_license'
-          | 'other';
+        method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
 
         /**
          * An identification number that can be used to verify the individual's identity,
@@ -2644,7 +2583,7 @@ export namespace EntityCreateParams {
          */
         passport?: Identification.Passport;
 
-        [k: string]: unknown;
+      [k: string]: unknown
       }
 
       export namespace Identification {
@@ -2822,7 +2761,7 @@ export namespace EntityUpdateParams {
      */
     name?: string;
 
-    [k: string]: unknown;
+  [k: string]: unknown
   }
 
   export namespace Corporation {
@@ -3156,6 +3095,6 @@ export declare namespace Entities {
     type EntityListResponse as EntityListResponse,
     type EntityCreateParams as EntityCreateParams,
     type EntityUpdateParams as EntityUpdateParams,
-    type EntityListParams as EntityListParams,
+    type EntityListParams as EntityListParams
   };
 }

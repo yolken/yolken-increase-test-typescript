@@ -48,10 +48,7 @@ export class AccountTransfers extends APIResource {
    *   await client.accountTransfers.list();
    * ```
    */
-  list(
-    query: AccountTransferListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<AccountTransferListResponse> {
+  list(query: AccountTransferListParams | null | undefined = {}, options?: RequestOptions): APIPromise<AccountTransferListResponse> {
     return this._client.get('/account_transfers', { query, ...options });
   }
 
@@ -196,7 +193,7 @@ export interface AccountTransfer {
    */
   type: 'account_transfer';
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace AccountTransfer {
@@ -314,7 +311,7 @@ export interface AccountTransferListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface AccountTransferCreateParams {
@@ -347,7 +344,7 @@ export interface AccountTransferCreateParams {
    */
   require_approval?: boolean;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export interface AccountTransferListParams {
@@ -411,6 +408,6 @@ export declare namespace AccountTransfers {
     type AccountTransfer as AccountTransfer,
     type AccountTransferListResponse as AccountTransferListResponse,
     type AccountTransferCreateParams as AccountTransferCreateParams,
-    type AccountTransferListParams as AccountTransferListParams,
+    type AccountTransferListParams as AccountTransferListParams
   };
 }

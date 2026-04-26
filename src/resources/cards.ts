@@ -56,10 +56,7 @@ export class Cards extends APIResource {
    * const cards = await client.cards.list();
    * ```
    */
-  list(
-    query: CardListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<CardListResponse> {
+  list(query: CardListParams | null | undefined = {}, options?: RequestOptions): APIPromise<CardListResponse> {
     return this._client.get('/cards', { query, ...options });
   }
 
@@ -75,11 +72,7 @@ export class Cards extends APIResource {
    * );
    * ```
    */
-  createDetailsIframe(
-    cardID: string,
-    body: CardCreateDetailsIframeParams,
-    options?: RequestOptions,
-  ): APIPromise<CardCreateDetailsIframeResponse> {
+  createDetailsIframe(cardID: string, body: CardCreateDetailsIframeParams, options?: RequestOptions): APIPromise<CardCreateDetailsIframeResponse> {
     return this._client.post(path`/cards/${cardID}/create_details_iframe`, { body, ...options });
   }
 
@@ -196,7 +189,7 @@ export interface Card {
    */
   type: 'card';
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace Card {
@@ -317,7 +310,7 @@ export interface CardListResponse {
    */
   next_cursor: string | null;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 /**
@@ -372,7 +365,7 @@ export interface CardCreateParams {
    */
   entity_id?: string;
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace CardCreateParams {
@@ -466,7 +459,7 @@ export interface CardUpdateParams {
    */
   status?: 'active' | 'disabled' | 'canceled';
 
-  [k: string]: unknown;
+[k: string]: unknown
 }
 
 export namespace CardUpdateParams {
@@ -616,6 +609,6 @@ export declare namespace Cards {
     type CardUpdateParams as CardUpdateParams,
     type CardListParams as CardListParams,
     type CardCreateDetailsIframeParams as CardCreateDetailsIframeParams,
-    type CardUpdatePinParams as CardUpdatePinParams,
+    type CardUpdatePinParams as CardUpdatePinParams
   };
 }

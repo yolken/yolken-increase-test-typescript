@@ -60,5 +60,7 @@ export interface GroupRetrieveCurrentResponse {
 }
 
 export declare namespace Groups {
-  export { type GroupRetrieveCurrentResponse as GroupRetrieveCurrentResponse };
+  export {
+    type GroupRetrieveCurrentResponse as GroupRetrieveCurrentResponse
+  };
 }
