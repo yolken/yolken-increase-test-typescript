@@ -30,7 +30,10 @@ export class InboundFednowTransfers extends APIResource {
    *   await client.inboundFednowTransfers.list();
    * ```
    */
-  list(query: InboundFednowTransferListParams | null | undefined = {}, options?: RequestOptions): APIPromise<InboundFednowTransferListResponse> {
+  list(
+    query: InboundFednowTransferListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<InboundFednowTransferListResponse> {
     return this._client.get('/inbound_fednow_transfers', { query, ...options });
   }
 }
@@ -144,7 +147,7 @@ export namespace InboundFednowTransfer {
      */
     transfer_id: string;
 
-  [k: string]: unknown
+    [k: string]: unknown;
   }
 
   /**
@@ -162,14 +165,20 @@ export namespace InboundFednowTransfer {
      * - `fednow_not_enabled` - Your account is not enabled to receive FedNow
      *   transfers.
      */
-    reason: 'account_number_canceled' | 'account_number_disabled' | 'account_restricted' | 'group_locked' | 'entity_not_active' | 'fednow_not_enabled';
+    reason:
+      | 'account_number_canceled'
+      | 'account_number_disabled'
+      | 'account_restricted'
+      | 'group_locked'
+      | 'entity_not_active'
+      | 'fednow_not_enabled';
 
     /**
      * The identifier of the FedNow Transfer that led to this declined transaction.
      */
     transfer_id: string;
 
-  [k: string]: unknown
+    [k: string]: unknown;
   }
 }
 
@@ -187,7 +196,7 @@ export interface InboundFednowTransferListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface InboundFednowTransferListParams {
@@ -248,6 +257,6 @@ export declare namespace InboundFednowTransfers {
   export {
     type InboundFednowTransfer as InboundFednowTransfer,
     type InboundFednowTransferListResponse as InboundFednowTransferListResponse,
-    type InboundFednowTransferListParams as InboundFednowTransferListParams
+    type InboundFednowTransferListParams as InboundFednowTransferListParams,
   };
 }

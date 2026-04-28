@@ -47,7 +47,10 @@ export class Files extends APIResource {
    * const files = await client.files.list();
    * ```
    */
-  list(query: FileListParams | null | undefined = {}, options?: RequestOptions): APIPromise<FileListResponse> {
+  list(
+    query: FileListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<FileListResponse> {
     return this._client.get('/files', { query, ...options });
   }
 }
@@ -156,7 +159,40 @@ export interface File {
    * - `funding_instructions` - Funding instructions.
    * - `hold_harmless_letter` - A Hold Harmless Letter.
    */
-  purpose: 'card_dispute_attachment' | 'check_image_front' | 'check_image_back' | 'processed_check_image_front' | 'processed_check_image_back' | 'mailed_check_image' | 'check_attachment' | 'check_voucher_image' | 'check_signature' | 'inbound_mail_item' | 'form_1099_int' | 'form_1099_misc' | 'form_ss_4' | 'identity_document' | 'increase_statement' | 'loan_application_supplemental_document' | 'other' | 'trust_formation_document' | 'digital_wallet_artwork' | 'digital_wallet_app_icon' | 'physical_card_front' | 'physical_card_back' | 'physical_card_carrier' | 'document_request' | 'entity_supplemental_document' | 'export' | 'fee_statement' | 'unusual_activity_report_attachment' | 'deposit_account_control_agreement' | 'proof_of_authorization_request_submission' | 'account_verification_letter' | 'funding_instructions' | 'hold_harmless_letter';
+  purpose:
+    | 'card_dispute_attachment'
+    | 'check_image_front'
+    | 'check_image_back'
+    | 'processed_check_image_front'
+    | 'processed_check_image_back'
+    | 'mailed_check_image'
+    | 'check_attachment'
+    | 'check_voucher_image'
+    | 'check_signature'
+    | 'inbound_mail_item'
+    | 'form_1099_int'
+    | 'form_1099_misc'
+    | 'form_ss_4'
+    | 'identity_document'
+    | 'increase_statement'
+    | 'loan_application_supplemental_document'
+    | 'other'
+    | 'trust_formation_document'
+    | 'digital_wallet_artwork'
+    | 'digital_wallet_app_icon'
+    | 'physical_card_front'
+    | 'physical_card_back'
+    | 'physical_card_carrier'
+    | 'document_request'
+    | 'entity_supplemental_document'
+    | 'export'
+    | 'fee_statement'
+    | 'unusual_activity_report_attachment'
+    | 'deposit_account_control_agreement'
+    | 'proof_of_authorization_request_submission'
+    | 'account_verification_letter'
+    | 'funding_instructions'
+    | 'hold_harmless_letter';
 
   /**
    * A constant representing the object's type. For this resource it will always be
@@ -164,7 +200,7 @@ export interface File {
    */
   type: 'file';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 /**
@@ -181,7 +217,7 @@ export interface FileListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface FileCreateParams {
@@ -231,14 +267,34 @@ export interface FileCreateParams {
    * - `proof_of_authorization_request_submission` - A file containing additional
    *   evidence for a Proof of Authorization Request Submission.
    */
-  purpose: 'card_dispute_attachment' | 'check_image_front' | 'check_image_back' | 'mailed_check_image' | 'check_attachment' | 'check_voucher_image' | 'check_signature' | 'form_ss_4' | 'identity_document' | 'loan_application_supplemental_document' | 'other' | 'trust_formation_document' | 'digital_wallet_artwork' | 'digital_wallet_app_icon' | 'physical_card_front' | 'physical_card_carrier' | 'document_request' | 'entity_supplemental_document' | 'unusual_activity_report_attachment' | 'proof_of_authorization_request_submission';
+  purpose:
+    | 'card_dispute_attachment'
+    | 'check_image_front'
+    | 'check_image_back'
+    | 'mailed_check_image'
+    | 'check_attachment'
+    | 'check_voucher_image'
+    | 'check_signature'
+    | 'form_ss_4'
+    | 'identity_document'
+    | 'loan_application_supplemental_document'
+    | 'other'
+    | 'trust_formation_document'
+    | 'digital_wallet_artwork'
+    | 'digital_wallet_app_icon'
+    | 'physical_card_front'
+    | 'physical_card_carrier'
+    | 'document_request'
+    | 'entity_supplemental_document'
+    | 'unusual_activity_report_attachment'
+    | 'proof_of_authorization_request_submission';
 
   /**
    * The description you choose to give the File.
    */
   description?: string;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface FileListParams {
@@ -298,7 +354,41 @@ export namespace FileListParams {
      * Filter Files for those with the specified purpose or purposes. For GET requests,
      * this should be encoded as a comma-delimited string, such as `?in=one,two,three`.
      */
-    in?: Array<'card_dispute_attachment' | 'check_image_front' | 'check_image_back' | 'processed_check_image_front' | 'processed_check_image_back' | 'mailed_check_image' | 'check_attachment' | 'check_voucher_image' | 'check_signature' | 'inbound_mail_item' | 'form_1099_int' | 'form_1099_misc' | 'form_ss_4' | 'identity_document' | 'increase_statement' | 'loan_application_supplemental_document' | 'other' | 'trust_formation_document' | 'digital_wallet_artwork' | 'digital_wallet_app_icon' | 'physical_card_front' | 'physical_card_back' | 'physical_card_carrier' | 'document_request' | 'entity_supplemental_document' | 'export' | 'fee_statement' | 'unusual_activity_report_attachment' | 'deposit_account_control_agreement' | 'proof_of_authorization_request_submission' | 'account_verification_letter' | 'funding_instructions' | 'hold_harmless_letter'>;
+    in?: Array<
+      | 'card_dispute_attachment'
+      | 'check_image_front'
+      | 'check_image_back'
+      | 'processed_check_image_front'
+      | 'processed_check_image_back'
+      | 'mailed_check_image'
+      | 'check_attachment'
+      | 'check_voucher_image'
+      | 'check_signature'
+      | 'inbound_mail_item'
+      | 'form_1099_int'
+      | 'form_1099_misc'
+      | 'form_ss_4'
+      | 'identity_document'
+      | 'increase_statement'
+      | 'loan_application_supplemental_document'
+      | 'other'
+      | 'trust_formation_document'
+      | 'digital_wallet_artwork'
+      | 'digital_wallet_app_icon'
+      | 'physical_card_front'
+      | 'physical_card_back'
+      | 'physical_card_carrier'
+      | 'document_request'
+      | 'entity_supplemental_document'
+      | 'export'
+      | 'fee_statement'
+      | 'unusual_activity_report_attachment'
+      | 'deposit_account_control_agreement'
+      | 'proof_of_authorization_request_submission'
+      | 'account_verification_letter'
+      | 'funding_instructions'
+      | 'hold_harmless_letter'
+    >;
   }
 }
 
@@ -307,6 +397,6 @@ export declare namespace Files {
     type File as File,
     type FileListResponse as FileListResponse,
     type FileCreateParams as FileCreateParams,
-    type FileListParams as FileListParams
+    type FileListParams as FileListParams,
   };
 }

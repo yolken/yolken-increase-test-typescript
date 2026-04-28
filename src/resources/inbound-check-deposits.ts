@@ -30,7 +30,10 @@ export class InboundCheckDeposits extends APIResource {
    *   await client.inboundCheckDeposits.list();
    * ```
    */
-  list(query: InboundCheckDepositListParams | null | undefined = {}, options?: RequestOptions): APIPromise<InboundCheckDepositListResponse> {
+  list(
+    query: InboundCheckDepositListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<InboundCheckDepositListResponse> {
     return this._client.get('/inbound_check_deposits', { query, ...options });
   }
 
@@ -61,8 +64,15 @@ export class InboundCheckDeposits extends APIResource {
    *   );
    * ```
    */
-  return(inboundCheckDepositID: string, body: InboundCheckDepositReturnParams, options?: RequestOptions): APIPromise<InboundCheckDeposit> {
-    return this._client.post(path`/inbound_check_deposits/${inboundCheckDepositID}/return`, { body, ...options });
+  return(
+    inboundCheckDepositID: string,
+    body: InboundCheckDepositReturnParams,
+    options?: RequestOptions,
+  ): APIPromise<InboundCheckDeposit> {
+    return this._client.post(path`/inbound_check_deposits/${inboundCheckDepositID}/return`, {
+      body,
+      ...options,
+    });
   }
 }
 
@@ -244,7 +254,13 @@ export namespace InboundCheckDeposit {
      * - `endorsement_irregular` - The check was not endorsed by the payee.
      * - `refer_to_maker` - The maker of the check requested its return.
      */
-    reason: 'altered_or_fictitious' | 'not_authorized' | 'duplicate_presentment' | 'endorsement_missing' | 'endorsement_irregular' | 'refer_to_maker';
+    reason:
+      | 'altered_or_fictitious'
+      | 'not_authorized'
+      | 'duplicate_presentment'
+      | 'endorsement_missing'
+      | 'endorsement_irregular'
+      | 'refer_to_maker';
 
     /**
      * The time at which the deposit was returned.
@@ -272,7 +288,7 @@ export interface InboundCheckDepositListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface InboundCheckDepositListParams {
@@ -340,7 +356,13 @@ export interface InboundCheckDepositReturnParams {
    * - `endorsement_irregular` - The check was not endorsed by the payee.
    * - `refer_to_maker` - The maker of the check requested its return.
    */
-  reason: 'altered_or_fictitious' | 'not_authorized' | 'duplicate_presentment' | 'endorsement_missing' | 'endorsement_irregular' | 'refer_to_maker';
+  reason:
+    | 'altered_or_fictitious'
+    | 'not_authorized'
+    | 'duplicate_presentment'
+    | 'endorsement_missing'
+    | 'endorsement_irregular'
+    | 'refer_to_maker';
 }
 
 export declare namespace InboundCheckDeposits {
@@ -348,6 +370,6 @@ export declare namespace InboundCheckDeposits {
     type InboundCheckDeposit as InboundCheckDeposit,
     type InboundCheckDepositListResponse as InboundCheckDepositListResponse,
     type InboundCheckDepositListParams as InboundCheckDepositListParams,
-    type InboundCheckDepositReturnParams as InboundCheckDepositReturnParams
+    type InboundCheckDepositReturnParams as InboundCheckDepositReturnParams,
   };
 }

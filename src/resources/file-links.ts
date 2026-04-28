@@ -79,12 +79,12 @@ export interface FileLinkCreateParams {
    */
   expires_at?: string;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export declare namespace FileLinks {
   export {
     type FileLinkCreateResponse as FileLinkCreateResponse,
-    type FileLinkCreateParams as FileLinkCreateParams
+    type FileLinkCreateParams as FileLinkCreateParams,
   };
 }

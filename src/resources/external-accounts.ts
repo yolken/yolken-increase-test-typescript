@@ -49,7 +49,11 @@ export class ExternalAccounts extends APIResource {
    *   );
    * ```
    */
-  update(externalAccountID: string, body: ExternalAccountUpdateParams, options?: RequestOptions): APIPromise<ExternalAccount> {
+  update(
+    externalAccountID: string,
+    body: ExternalAccountUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<ExternalAccount> {
     return this._client.patch(path`/external_accounts/${externalAccountID}`, { body, ...options });
   }
 
@@ -62,7 +66,10 @@ export class ExternalAccounts extends APIResource {
    *   await client.externalAccounts.list();
    * ```
    */
-  list(query: ExternalAccountListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ExternalAccountListResponse> {
+  list(
+    query: ExternalAccountListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ExternalAccountListResponse> {
     return this._client.get('/external_accounts', { query, ...options });
   }
 }
@@ -139,7 +146,7 @@ export interface ExternalAccount {
    */
   type: 'external_account';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 /**
@@ -156,7 +163,7 @@ export interface ExternalAccountListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface ExternalAccountCreateParams {
@@ -195,7 +202,7 @@ export interface ExternalAccountCreateParams {
    */
   funding?: 'checking' | 'savings' | 'general_ledger' | 'other';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface ExternalAccountUpdateParams {
@@ -277,6 +284,6 @@ export declare namespace ExternalAccounts {
     type ExternalAccountListResponse as ExternalAccountListResponse,
     type ExternalAccountCreateParams as ExternalAccountCreateParams,
     type ExternalAccountUpdateParams as ExternalAccountUpdateParams,
-    type ExternalAccountListParams as ExternalAccountListParams
+    type ExternalAccountListParams as ExternalAccountListParams,
   };
 }

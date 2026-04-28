@@ -42,7 +42,10 @@ export class Exports extends APIResource {
    * const exports = await client.exports.list();
    * ```
    */
-  list(query: ExportListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ExportListResponse> {
+  list(
+    query: ExportListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ExportListResponse> {
     return this._client.get('/exports', { query, ...options });
   }
 }
@@ -116,7 +119,21 @@ export interface Export {
    *   that are part of an open fee statement.
    * - `voided_check` - A PDF of a voided check.
    */
-  category: 'account_statement_ofx' | 'account_statement_bai2' | 'transaction_csv' | 'balance_csv' | 'bookkeeping_account_balance_csv' | 'entity_csv' | 'vendor_csv' | 'dashboard_table_csv' | 'account_verification_letter' | 'funding_instructions' | 'form_1099_int' | 'form_1099_misc' | 'fee_csv' | 'voided_check';
+  category:
+    | 'account_statement_ofx'
+    | 'account_statement_bai2'
+    | 'transaction_csv'
+    | 'balance_csv'
+    | 'bookkeeping_account_balance_csv'
+    | 'entity_csv'
+    | 'vendor_csv'
+    | 'dashboard_table_csv'
+    | 'account_verification_letter'
+    | 'funding_instructions'
+    | 'form_1099_int'
+    | 'form_1099_misc'
+    | 'fee_csv'
+    | 'voided_check';
 
   /**
    * The time the Export was created.
@@ -206,7 +223,7 @@ export interface Export {
    */
   voided_check: Export.VoidedCheck | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace Export {
@@ -518,7 +535,7 @@ export interface ExportListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface ExportCreateParams {
@@ -541,7 +558,17 @@ export interface ExportCreateParams {
    * - `funding_instructions` - A PDF of funding instructions.
    * - `voided_check` - A PDF of a voided check.
    */
-  category: 'account_statement_ofx' | 'account_statement_bai2' | 'transaction_csv' | 'balance_csv' | 'bookkeeping_account_balance_csv' | 'entity_csv' | 'vendor_csv' | 'account_verification_letter' | 'funding_instructions' | 'voided_check';
+  category:
+    | 'account_statement_ofx'
+    | 'account_statement_bai2'
+    | 'transaction_csv'
+    | 'balance_csv'
+    | 'bookkeeping_account_balance_csv'
+    | 'entity_csv'
+    | 'vendor_csv'
+    | 'account_verification_letter'
+    | 'funding_instructions'
+    | 'voided_check';
 
   /**
    * Options for the created export. Required if `category` is equal to
@@ -601,7 +628,7 @@ export interface ExportCreateParams {
    */
   voided_check?: ExportCreateParams.VoidedCheck;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace ExportCreateParams {
@@ -899,7 +926,21 @@ export interface ExportListParams {
    *   that are part of an open fee statement.
    * - `voided_check` - A PDF of a voided check.
    */
-  category?: 'account_statement_ofx' | 'account_statement_bai2' | 'transaction_csv' | 'balance_csv' | 'bookkeeping_account_balance_csv' | 'entity_csv' | 'vendor_csv' | 'dashboard_table_csv' | 'account_verification_letter' | 'funding_instructions' | 'form_1099_int' | 'form_1099_misc' | 'fee_csv' | 'voided_check';
+  category?:
+    | 'account_statement_ofx'
+    | 'account_statement_bai2'
+    | 'transaction_csv'
+    | 'balance_csv'
+    | 'bookkeeping_account_balance_csv'
+    | 'entity_csv'
+    | 'vendor_csv'
+    | 'dashboard_table_csv'
+    | 'account_verification_letter'
+    | 'funding_instructions'
+    | 'form_1099_int'
+    | 'form_1099_misc'
+    | 'fee_csv'
+    | 'voided_check';
 
   created_at?: ExportListParams.CreatedAt;
 
@@ -985,6 +1026,6 @@ export declare namespace Exports {
     type Export as Export,
     type ExportListResponse as ExportListResponse,
     type ExportCreateParams as ExportCreateParams,
-    type ExportListParams as ExportListParams
+    type ExportListParams as ExportListParams,
   };
 }

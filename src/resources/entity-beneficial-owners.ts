@@ -61,8 +61,15 @@ export class EntityBeneficialOwners extends APIResource {
    *   );
    * ```
    */
-  update(entityBeneficialOwnerID: string, body: EntityBeneficialOwnerUpdateParams, options?: RequestOptions): APIPromise<BeneficialOwner> {
-    return this._client.patch(path`/entity_beneficial_owners/${entityBeneficialOwnerID}`, { body, ...options });
+  update(
+    entityBeneficialOwnerID: string,
+    body: EntityBeneficialOwnerUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<BeneficialOwner> {
+    return this._client.patch(path`/entity_beneficial_owners/${entityBeneficialOwnerID}`, {
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -76,7 +83,10 @@ export class EntityBeneficialOwners extends APIResource {
    *   });
    * ```
    */
-  list(query: EntityBeneficialOwnerListParams, options?: RequestOptions): APIPromise<EntityBeneficialOwnerListResponse> {
+  list(
+    query: EntityBeneficialOwnerListParams,
+    options?: RequestOptions,
+  ): APIPromise<EntityBeneficialOwnerListResponse> {
     return this._client.get('/entity_beneficial_owners', { query, ...options });
   }
 
@@ -226,7 +236,12 @@ export namespace BeneficialOwner {
        * - `drivers_license` - A driver's license number.
        * - `other` - Another identifying document.
        */
-      method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
+      method:
+        | 'social_security_number'
+        | 'individual_taxpayer_identification_number'
+        | 'passport'
+        | 'drivers_license'
+        | 'other';
 
       /**
        * The last 4 digits of the identification number that can be used to verify the
@@ -234,7 +249,7 @@ export namespace BeneficialOwner {
        */
       number_last4: string;
 
-    [k: string]: unknown
+      [k: string]: unknown;
     }
   }
 }
@@ -253,7 +268,7 @@ export interface EntityBeneficialOwnerListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface EntityBeneficialOwnerCreateParams {
@@ -279,7 +294,7 @@ export interface EntityBeneficialOwnerCreateParams {
    */
   company_title?: string;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace EntityBeneficialOwnerCreateParams {
@@ -369,7 +384,12 @@ export namespace EntityBeneficialOwnerCreateParams {
        * - `drivers_license` - A driver's license number.
        * - `other` - Another identifying document.
        */
-      method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
+      method:
+        | 'social_security_number'
+        | 'individual_taxpayer_identification_number'
+        | 'passport'
+        | 'drivers_license'
+        | 'other';
 
       /**
        * An identification number that can be used to verify the individual's identity,
@@ -395,7 +415,7 @@ export namespace EntityBeneficialOwnerCreateParams {
        */
       passport?: Identification.Passport;
 
-    [k: string]: unknown
+      [k: string]: unknown;
     }
 
     export namespace Identification {
@@ -561,7 +581,12 @@ export namespace EntityBeneficialOwnerUpdateParams {
      * - `drivers_license` - A driver's license number.
      * - `other` - Another identifying document.
      */
-    method: 'social_security_number' | 'individual_taxpayer_identification_number' | 'passport' | 'drivers_license' | 'other';
+    method:
+      | 'social_security_number'
+      | 'individual_taxpayer_identification_number'
+      | 'passport'
+      | 'drivers_license'
+      | 'other';
 
     /**
      * An identification number that can be used to verify the individual's identity,
@@ -587,7 +612,7 @@ export namespace EntityBeneficialOwnerUpdateParams {
      */
     passport?: Identification.Passport;
 
-  [k: string]: unknown
+    [k: string]: unknown;
   }
 
   export namespace Identification {
@@ -707,6 +732,6 @@ export declare namespace EntityBeneficialOwners {
     type EntityBeneficialOwnerListResponse as EntityBeneficialOwnerListResponse,
     type EntityBeneficialOwnerCreateParams as EntityBeneficialOwnerCreateParams,
     type EntityBeneficialOwnerUpdateParams as EntityBeneficialOwnerUpdateParams,
-    type EntityBeneficialOwnerListParams as EntityBeneficialOwnerListParams
+    type EntityBeneficialOwnerListParams as EntityBeneficialOwnerListParams,
   };
 }

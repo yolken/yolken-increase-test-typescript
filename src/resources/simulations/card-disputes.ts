@@ -22,7 +22,11 @@ export class CardDisputes extends APIResource {
    *   );
    * ```
    */
-  advanceState(cardDisputeID: string, body: CardDisputeAdvanceStateParams, options?: RequestOptions): APIPromise<CardDisputesAPI.CardDispute> {
+  advanceState(
+    cardDisputeID: string,
+    body: CardDisputeAdvanceStateParams,
+    options?: RequestOptions,
+  ): APIPromise<CardDisputesAPI.CardDispute> {
     return this._client.post(path`/simulations/card_disputes/${cardDisputeID}/action`, { body, ...options });
   }
 }
@@ -76,7 +80,17 @@ export namespace CardDisputeAdvanceStateParams {
      * - `time_out_user_prearbitration` - Simulate the merchant timing out responding
      *   to a user pre-arbitration. This will move the dispute to a `win` state.
      */
-    action: 'accept_chargeback' | 'accept_user_submission' | 'decline_user_prearbitration' | 'receive_merchant_prearbitration' | 'represent' | 'request_further_information' | 'time_out_chargeback' | 'time_out_merchant_prearbitration' | 'time_out_representment' | 'time_out_user_prearbitration';
+    action:
+      | 'accept_chargeback'
+      | 'accept_user_submission'
+      | 'decline_user_prearbitration'
+      | 'receive_merchant_prearbitration'
+      | 'represent'
+      | 'request_further_information'
+      | 'time_out_chargeback'
+      | 'time_out_merchant_prearbitration'
+      | 'time_out_representment'
+      | 'time_out_user_prearbitration';
 
     /**
      * The parameters for accepting the chargeback. Required if and only if `action` is
@@ -154,7 +168,5 @@ export namespace CardDisputeAdvanceStateParams {
 }
 
 export declare namespace CardDisputes {
-  export {
-    type CardDisputeAdvanceStateParams as CardDisputeAdvanceStateParams
-  };
+  export { type CardDisputeAdvanceStateParams as CardDisputeAdvanceStateParams };
 }

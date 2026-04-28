@@ -21,8 +21,15 @@ export class CheckDeposits extends APIResource {
    *   );
    * ```
    */
-  adjust(checkDepositID: string, body: CheckDepositAdjustParams, options?: RequestOptions): APIPromise<CheckDepositsAPI.CheckDeposit> {
-    return this._client.post(path`/simulations/check_deposits/${checkDepositID}/adjustment`, { body, ...options });
+  adjust(
+    checkDepositID: string,
+    body: CheckDepositAdjustParams,
+    options?: RequestOptions,
+  ): APIPromise<CheckDepositsAPI.CheckDeposit> {
+    return this._client.post(path`/simulations/check_deposits/${checkDepositID}/adjustment`, {
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -70,8 +77,15 @@ export class CheckDeposits extends APIResource {
    *   );
    * ```
    */
-  submit(checkDepositID: string, body: CheckDepositSubmitParams, options?: RequestOptions): APIPromise<CheckDepositsAPI.CheckDeposit> {
-    return this._client.post(path`/simulations/check_deposits/${checkDepositID}/submit`, { body, ...options });
+  submit(
+    checkDepositID: string,
+    body: CheckDepositSubmitParams,
+    options?: RequestOptions,
+  ): APIPromise<CheckDepositsAPI.CheckDeposit> {
+    return this._client.post(path`/simulations/check_deposits/${checkDepositID}/submit`, {
+      body,
+      ...options,
+    });
   }
 }
 
@@ -134,6 +148,6 @@ export namespace CheckDepositSubmitParams {
 export declare namespace CheckDeposits {
   export {
     type CheckDepositAdjustParams as CheckDepositAdjustParams,
-    type CheckDepositSubmitParams as CheckDepositSubmitParams
+    type CheckDepositSubmitParams as CheckDepositSubmitParams,
   };
 }

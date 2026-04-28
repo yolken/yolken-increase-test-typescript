@@ -2,12 +2,17 @@
 
 import YolkenIncreaseTest from 'yolken-increase-test';
 
-const client = new YolkenIncreaseTest({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new YolkenIncreaseTest({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource wireDrawdownRequests', () => {
   // Mock server tests are disabled
   test.skip('refuse', async () => {
-    const responsePromise = client.simulations.wireDrawdownRequests.refuse('wire_drawdown_request_q6lmocus3glo0lr2bfv3');
+    const responsePromise = client.simulations.wireDrawdownRequests.refuse(
+      'wire_drawdown_request_q6lmocus3glo0lr2bfv3',
+    );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -19,7 +24,9 @@ describe('resource wireDrawdownRequests', () => {
 
   // Mock server tests are disabled
   test.skip('submit', async () => {
-    const responsePromise = client.simulations.wireDrawdownRequests.submit('wire_drawdown_request_q6lmocus3glo0lr2bfv3');
+    const responsePromise = client.simulations.wireDrawdownRequests.submit(
+      'wire_drawdown_request_q6lmocus3glo0lr2bfv3',
+    );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
