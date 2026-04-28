@@ -17,7 +17,10 @@ export class InboundWireDrawdownRequests extends APIResource {
    *   );
    * ```
    */
-  retrieve(inboundWireDrawdownRequestID: string, options?: RequestOptions): APIPromise<InboundWireDrawdownRequest> {
+  retrieve(
+    inboundWireDrawdownRequestID: string,
+    options?: RequestOptions,
+  ): APIPromise<InboundWireDrawdownRequest> {
     return this._client.get(path`/inbound_wire_drawdown_requests/${inboundWireDrawdownRequestID}`, options);
   }
 
@@ -30,7 +33,10 @@ export class InboundWireDrawdownRequests extends APIResource {
    *   await client.inboundWireDrawdownRequests.list();
    * ```
    */
-  list(query: InboundWireDrawdownRequestListParams | null | undefined = {}, options?: RequestOptions): APIPromise<InboundWireDrawdownRequestListResponse> {
+  list(
+    query: InboundWireDrawdownRequestListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<InboundWireDrawdownRequestListResponse> {
     return this._client.get('/inbound_wire_drawdown_requests', { query, ...options });
   }
 }
@@ -155,7 +161,7 @@ export interface InboundWireDrawdownRequest {
    */
   unstructured_remittance_information: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 /**
@@ -172,7 +178,7 @@ export interface InboundWireDrawdownRequestListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface InboundWireDrawdownRequestListParams {
@@ -192,6 +198,6 @@ export declare namespace InboundWireDrawdownRequests {
   export {
     type InboundWireDrawdownRequest as InboundWireDrawdownRequest,
     type InboundWireDrawdownRequestListResponse as InboundWireDrawdownRequestListResponse,
-    type InboundWireDrawdownRequestListParams as InboundWireDrawdownRequestListParams
+    type InboundWireDrawdownRequestListParams as InboundWireDrawdownRequestListParams,
   };
 }

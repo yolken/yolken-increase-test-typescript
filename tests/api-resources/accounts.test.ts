@@ -2,7 +2,10 @@
 
 import YolkenIncreaseTest from 'yolken-increase-test';
 
-const client = new YolkenIncreaseTest({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new YolkenIncreaseTest({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource accounts', () => {
   // Mock server tests are disabled
@@ -20,19 +23,19 @@ describe('resource accounts', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.accounts.create({
-    name: 'New Account!',
-    entity_id: 'entity_n8y8tnk2p9339ti393yi',
-    funding: 'loan',
-    informational_entity_id: 'informational_entity_id',
-    loan: {
-    credit_limit: 0,
-    grace_period_days: 0,
-    statement_day_of_month: 1,
-    statement_payment_type: 'balance',
-    maturity_date: '2019-12-27',
-  },
-    program_id: 'program_i2v2os4mwza1oetokh9i',
-  });
+      name: 'New Account!',
+      entity_id: 'entity_n8y8tnk2p9339ti393yi',
+      funding: 'loan',
+      informational_entity_id: 'informational_entity_id',
+      loan: {
+        credit_limit: 0,
+        grace_period_days: 0,
+        statement_day_of_month: 1,
+        statement_payment_type: 'balance',
+        maturity_date: '2019-12-27',
+      },
+      program_id: 'program_i2v2os4mwza1oetokh9i',
+    });
   });
 
   // Mock server tests are disabled
@@ -74,23 +77,26 @@ describe('resource accounts', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.accounts.list({
-    created_at: {
-    after: '2019-12-27T18:11:19.117Z',
-    before: '2019-12-27T18:11:19.117Z',
-    on_or_after: '2019-12-27T18:11:19.117Z',
-    on_or_before: '2019-12-27T18:11:19.117Z',
-  },
-    cursor: 'cursor',
-    entity_id: 'entity_id',
-    idempotency_key: 'x',
-    informational_entity_id: 'informational_entity_id',
-    limit: 1,
-    program_id: 'program_id',
-    status: { in: ['closed'] },
-  }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(YolkenIncreaseTest.NotFoundError);
+    await expect(
+      client.accounts.list(
+        {
+          created_at: {
+            after: '2019-12-27T18:11:19.117Z',
+            before: '2019-12-27T18:11:19.117Z',
+            on_or_after: '2019-12-27T18:11:19.117Z',
+            on_or_before: '2019-12-27T18:11:19.117Z',
+          },
+          cursor: 'cursor',
+          entity_id: 'entity_id',
+          idempotency_key: 'x',
+          informational_entity_id: 'informational_entity_id',
+          limit: 1,
+          program_id: 'program_id',
+          status: { in: ['closed'] },
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(YolkenIncreaseTest.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -120,9 +126,13 @@ describe('resource accounts', () => {
   // Mock server tests are disabled
   test.skip('retrieveBalance: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.accounts.retrieveBalance('account_in71c4amph0vgo2qllky', { at_time: '2019-12-27T18:11:19.117Z' }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(YolkenIncreaseTest.NotFoundError);
+    await expect(
+      client.accounts.retrieveBalance(
+        'account_in71c4amph0vgo2qllky',
+        { at_time: '2019-12-27T18:11:19.117Z' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(YolkenIncreaseTest.NotFoundError);
   });
 
   // Mock server tests are disabled

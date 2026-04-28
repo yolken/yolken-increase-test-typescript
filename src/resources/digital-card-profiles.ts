@@ -49,7 +49,10 @@ export class DigitalCardProfiles extends APIResource {
    *   await client.digitalCardProfiles.list();
    * ```
    */
-  list(query: DigitalCardProfileListParams | null | undefined = {}, options?: RequestOptions): APIPromise<DigitalCardProfileListResponse> {
+  list(
+    query: DigitalCardProfileListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<DigitalCardProfileListResponse> {
     return this._client.get('/digital_card_profiles', { query, ...options });
   }
 
@@ -79,8 +82,15 @@ export class DigitalCardProfiles extends APIResource {
    *   );
    * ```
    */
-  clone(digitalCardProfileID: string, body: DigitalCardProfileCloneParams, options?: RequestOptions): APIPromise<DigitalCardProfile> {
-    return this._client.post(path`/digital_card_profiles/${digitalCardProfileID}/clone`, { body, ...options });
+  clone(
+    digitalCardProfileID: string,
+    body: DigitalCardProfileCloneParams,
+    options?: RequestOptions,
+  ): APIPromise<DigitalCardProfile> {
+    return this._client.post(path`/digital_card_profiles/${digitalCardProfileID}/clone`, {
+      body,
+      ...options,
+    });
   }
 }
 
@@ -170,7 +180,7 @@ export interface DigitalCardProfile {
    */
   type: 'digital_card_profile';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace DigitalCardProfile {
@@ -209,7 +219,7 @@ export interface DigitalCardProfileListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface DigitalCardProfileCreateParams {
@@ -258,7 +268,7 @@ export interface DigitalCardProfileCreateParams {
    */
   text_color?: DigitalCardProfileCreateParams.TextColor;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace DigitalCardProfileCreateParams {
@@ -363,7 +373,7 @@ export interface DigitalCardProfileCloneParams {
    */
   text_color?: DigitalCardProfileCloneParams.TextColor;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace DigitalCardProfileCloneParams {
@@ -394,6 +404,6 @@ export declare namespace DigitalCardProfiles {
     type DigitalCardProfileListResponse as DigitalCardProfileListResponse,
     type DigitalCardProfileCreateParams as DigitalCardProfileCreateParams,
     type DigitalCardProfileListParams as DigitalCardProfileListParams,
-    type DigitalCardProfileCloneParams as DigitalCardProfileCloneParams
+    type DigitalCardProfileCloneParams as DigitalCardProfileCloneParams,
   };
 }

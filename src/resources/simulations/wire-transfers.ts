@@ -174,7 +174,16 @@ export interface WireTransfer {
    * - `complete` - The transfer has been acknowledged by Fedwire and can be
    *   considered complete.
    */
-  status: 'pending_approval' | 'canceled' | 'pending_reviewing' | 'rejected' | 'requires_attention' | 'pending_creating' | 'reversed' | 'submitted' | 'complete';
+  status:
+    | 'pending_approval'
+    | 'canceled'
+    | 'pending_reviewing'
+    | 'rejected'
+    | 'requires_attention'
+    | 'pending_creating'
+    | 'reversed'
+    | 'submitted'
+    | 'complete';
 
   /**
    * After the transfer is submitted to Fedwire, this will contain supplemental
@@ -193,7 +202,7 @@ export interface WireTransfer {
    */
   type: 'wire_transfer';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace WireTransfer {
@@ -535,7 +544,7 @@ export namespace WireTransfer {
      */
     wire_transfer_id: string;
 
-  [k: string]: unknown
+    [k: string]: unknown;
   }
 
   /**
@@ -556,7 +565,5 @@ export namespace WireTransfer {
 }
 
 export declare namespace WireTransfers {
-  export {
-    type WireTransfer as WireTransfer
-  };
+  export { type WireTransfer as WireTransfer };
 }

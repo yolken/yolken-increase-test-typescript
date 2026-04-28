@@ -2,12 +2,18 @@
 
 import YolkenIncreaseTest from 'yolken-increase-test';
 
-const client = new YolkenIncreaseTest({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new YolkenIncreaseTest({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource cardDisputes', () => {
   // Mock server tests are disabled
   test.skip('advanceState: only required params', async () => {
-    const responsePromise = client.simulations.cardDisputes.advanceState('card_dispute_h9sc95nbl1cgltpp7men', { network: 'visa' });
+    const responsePromise = client.simulations.cardDisputes.advanceState(
+      'card_dispute_h9sc95nbl1cgltpp7men',
+      { network: 'visa' },
+    );
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,20 +26,20 @@ describe('resource cardDisputes', () => {
   // Mock server tests are disabled
   test.skip('advanceState: required and optional params', async () => {
     const response = await client.simulations.cardDisputes.advanceState('card_dispute_h9sc95nbl1cgltpp7men', {
-    network: 'visa',
-    visa: {
-    action: 'accept_user_submission',
-    accept_chargeback: {},
-    accept_user_submission: {},
-    decline_user_prearbitration: {},
-    receive_merchant_prearbitration: {},
-    represent: {},
-    request_further_information: { reason: 'x' },
-    time_out_chargeback: {},
-    time_out_merchant_prearbitration: {},
-    time_out_representment: {},
-    time_out_user_prearbitration: {},
-  },
-  });
+      network: 'visa',
+      visa: {
+        action: 'accept_user_submission',
+        accept_chargeback: {},
+        accept_user_submission: {},
+        decline_user_prearbitration: {},
+        receive_merchant_prearbitration: {},
+        represent: {},
+        request_further_information: { reason: 'x' },
+        time_out_chargeback: {},
+        time_out_merchant_prearbitration: {},
+        time_out_representment: {},
+        time_out_user_prearbitration: {},
+      },
+    });
   });
 });

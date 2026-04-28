@@ -56,7 +56,10 @@ export class BookkeepingEntrySets extends APIResource {
    *   await client.bookkeepingEntrySets.list();
    * ```
    */
-  list(query: BookkeepingEntrySetListParams | null | undefined = {}, options?: RequestOptions): APIPromise<BookkeepingEntrySetListResponse> {
+  list(
+    query: BookkeepingEntrySetListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BookkeepingEntrySetListResponse> {
     return this._client.get('/bookkeeping_entry_sets', { query, ...options });
   }
 }
@@ -140,7 +143,7 @@ export interface BookkeepingEntrySetListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface BookkeepingEntrySetCreateParams {
@@ -160,7 +163,7 @@ export interface BookkeepingEntrySetCreateParams {
    */
   transaction_id?: string;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace BookkeepingEntrySetCreateParams {
@@ -210,6 +213,6 @@ export declare namespace BookkeepingEntrySets {
     type BookkeepingEntrySet as BookkeepingEntrySet,
     type BookkeepingEntrySetListResponse as BookkeepingEntrySetListResponse,
     type BookkeepingEntrySetCreateParams as BookkeepingEntrySetCreateParams,
-    type BookkeepingEntrySetListParams as BookkeepingEntrySetListParams
+    type BookkeepingEntrySetListParams as BookkeepingEntrySetListParams,
   };
 }

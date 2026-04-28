@@ -45,7 +45,11 @@ export class AccountNumbers extends APIResource {
    * );
    * ```
    */
-  update(accountNumberID: string, body: AccountNumberUpdateParams, options?: RequestOptions): APIPromise<AccountNumber> {
+  update(
+    accountNumberID: string,
+    body: AccountNumberUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<AccountNumber> {
     return this._client.patch(path`/account_numbers/${accountNumberID}`, { body, ...options });
   }
 
@@ -57,7 +61,10 @@ export class AccountNumbers extends APIResource {
    * const accountNumbers = await client.accountNumbers.list();
    * ```
    */
-  list(query: AccountNumberListParams | null | undefined = {}, options?: RequestOptions): APIPromise<AccountNumberListResponse> {
+  list(
+    query: AccountNumberListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AccountNumberListResponse> {
     return this._client.get('/account_numbers', { query, ...options });
   }
 }
@@ -134,7 +141,7 @@ export interface AccountNumber {
    */
   type: 'account_number';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace AccountNumber {
@@ -183,7 +190,7 @@ export interface AccountNumberListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface AccountNumberCreateParams {
@@ -208,7 +215,7 @@ export interface AccountNumberCreateParams {
    */
   inbound_checks?: AccountNumberCreateParams.InboundChecks;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace AccountNumberCreateParams {
@@ -386,6 +393,6 @@ export declare namespace AccountNumbers {
     type AccountNumberListResponse as AccountNumberListResponse,
     type AccountNumberCreateParams as AccountNumberCreateParams,
     type AccountNumberUpdateParams as AccountNumberUpdateParams,
-    type AccountNumberListParams as AccountNumberListParams
+    type AccountNumberListParams as AccountNumberListParams,
   };
 }

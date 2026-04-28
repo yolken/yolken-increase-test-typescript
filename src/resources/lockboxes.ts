@@ -56,7 +56,10 @@ export class Lockboxes extends APIResource {
    * const lockboxes = await client.lockboxes.list();
    * ```
    */
-  list(query: LockboxListParams | null | undefined = {}, options?: RequestOptions): APIPromise<LockboxListResponse> {
+  list(
+    query: LockboxListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<LockboxListResponse> {
     return this._client.get('/lockboxes', { query, ...options });
   }
 }
@@ -121,7 +124,7 @@ export interface Lockbox {
    */
   type: 'lockbox';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace Lockbox {
@@ -179,7 +182,7 @@ export interface LockboxListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface LockboxCreateParams {
@@ -198,7 +201,7 @@ export interface LockboxCreateParams {
    */
   recipient_name?: string;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface LockboxUpdateParams {
@@ -222,7 +225,7 @@ export interface LockboxUpdateParams {
    */
   recipient_name?: string;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface LockboxListParams {
@@ -287,6 +290,6 @@ export declare namespace Lockboxes {
     type LockboxListResponse as LockboxListResponse,
     type LockboxCreateParams as LockboxCreateParams,
     type LockboxUpdateParams as LockboxUpdateParams,
-    type LockboxListParams as LockboxListParams
+    type LockboxListParams as LockboxListParams,
   };
 }

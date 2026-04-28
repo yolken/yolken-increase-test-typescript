@@ -45,7 +45,10 @@ export class CardDisputes extends APIResource {
    * const cardDisputes = await client.cardDisputes.list();
    * ```
    */
-  list(query: CardDisputeListParams | null | undefined = {}, options?: RequestOptions): APIPromise<CardDisputeListResponse> {
+  list(
+    query: CardDisputeListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CardDisputeListResponse> {
     return this._client.get('/card_disputes', { query, ...options });
   }
 
@@ -61,8 +64,15 @@ export class CardDisputes extends APIResource {
    *   );
    * ```
    */
-  submitUserSubmission(cardDisputeID: string, body: CardDisputeSubmitUserSubmissionParams, options?: RequestOptions): APIPromise<CardDispute> {
-    return this._client.post(path`/card_disputes/${cardDisputeID}/submit_user_submission`, { body, ...options });
+  submitUserSubmission(
+    cardDisputeID: string,
+    body: CardDisputeSubmitUserSubmissionParams,
+    options?: RequestOptions,
+  ): APIPromise<CardDispute> {
+    return this._client.post(path`/card_disputes/${cardDisputeID}/submit_user_submission`, {
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -75,7 +85,11 @@ export class CardDisputes extends APIResource {
    * );
    * ```
    */
-  withdraw(cardDisputeID: string, body: CardDisputeWithdrawParams, options?: RequestOptions): APIPromise<CardDispute> {
+  withdraw(
+    cardDisputeID: string,
+    body: CardDisputeWithdrawParams,
+    options?: RequestOptions,
+  ): APIPromise<CardDispute> {
     return this._client.post(path`/card_disputes/${cardDisputeID}/withdraw`, { body, ...options });
   }
 }
@@ -148,7 +162,14 @@ export interface CardDispute {
    *   acceptance have been debited.
    * - `won` - The Card Dispute has been won and no further action can be taken.
    */
-  status: 'user_submission_required' | 'pending_user_submission_reviewing' | 'pending_user_submission_submitting' | 'pending_user_withdrawal_submitting' | 'pending_response' | 'lost' | 'won';
+  status:
+    | 'user_submission_required'
+    | 'pending_user_submission_reviewing'
+    | 'pending_user_submission_submitting'
+    | 'pending_user_withdrawal_submitting'
+    | 'pending_response'
+    | 'lost'
+    | 'won';
 
   /**
    * A constant representing the object's type. For this resource it will always be
@@ -227,7 +248,11 @@ export namespace CardDispute {
      * - `user_prearbitration` - A User Initiated Pre Arbitration User Submission is
      *   required.
      */
-    required_user_submission_category: 'chargeback' | 'merchant_prearbitration_decline' | 'user_prearbitration' | null;
+    required_user_submission_category:
+      | 'chargeback'
+      | 'merchant_prearbitration_decline'
+      | 'user_prearbitration'
+      | null;
 
     /**
      * The user submissions for the Card Dispute.
@@ -281,7 +306,20 @@ export namespace CardDispute {
        * - `user_withdrawal_submitted` - Card Dispute User Withdrawal Submitted Visa
        *   Network Event: details will be under the `user_withdrawal_submitted` object.
        */
-      category: 'chargeback_accepted' | 'chargeback_submitted' | 'chargeback_timed_out' | 'merchant_prearbitration_decline_submitted' | 'merchant_prearbitration_received' | 'merchant_prearbitration_timed_out' | 'represented' | 'representment_timed_out' | 'user_prearbitration_accepted' | 'user_prearbitration_declined' | 'user_prearbitration_submitted' | 'user_prearbitration_timed_out' | 'user_withdrawal_submitted';
+      category:
+        | 'chargeback_accepted'
+        | 'chargeback_submitted'
+        | 'chargeback_timed_out'
+        | 'merchant_prearbitration_decline_submitted'
+        | 'merchant_prearbitration_received'
+        | 'merchant_prearbitration_timed_out'
+        | 'represented'
+        | 'representment_timed_out'
+        | 'user_prearbitration_accepted'
+        | 'user_prearbitration_declined'
+        | 'user_prearbitration_submitted'
+        | 'user_prearbitration_timed_out'
+        | 'user_withdrawal_submitted';
 
       /**
        * The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date and time at which
@@ -485,7 +523,15 @@ export namespace CardDispute {
          * - `prior_undisputed_non_fraud_transactions` - Prior undisputed non-fraud
          *   transactions.
          */
-        reason: 'cardholder_no_longer_disputes' | 'compelling_evidence' | 'credit_or_reversal_processed' | 'delayed_charge_transaction' | 'evidence_of_imprint' | 'invalid_dispute' | 'non_fiat_currency_or_non_fungible_token_received' | 'prior_undisputed_non_fraud_transactions';
+        reason:
+          | 'cardholder_no_longer_disputes'
+          | 'compelling_evidence'
+          | 'credit_or_reversal_processed'
+          | 'delayed_charge_transaction'
+          | 'evidence_of_imprint'
+          | 'invalid_dispute'
+          | 'non_fiat_currency_or_non_fungible_token_received'
+          | 'prior_undisputed_non_fraud_transactions';
       }
 
       export namespace MerchantPrearbitrationReceived {
@@ -538,7 +584,22 @@ export namespace CardDispute {
            * - `travel_and_expense_subsequent_purchase` - Travel & Expense: subsequent
            *   purchases made throughout service period.
            */
-          category: 'authorized_signer' | 'delivery' | 'delivery_at_place_of_employment' | 'digital_goods_download' | 'dynamic_currency_conversion_actively_chosen' | 'flight_manifest_and_purchase_itinerary' | 'household_member_signer' | 'legitimate_spend_across_payment_types_for_same_merchandise' | 'merchandise_use' | 'passenger_transport_ticket_use' | 'recurring_transaction_with_binding_contract_or_previous_undisputed_transaction' | 'signed_delivery_or_pickup_form' | 'signed_mail_order_phone_order_form' | 'travel_and_expense_loyalty_transaction' | 'travel_and_expense_subsequent_purchase';
+          category:
+            | 'authorized_signer'
+            | 'delivery'
+            | 'delivery_at_place_of_employment'
+            | 'digital_goods_download'
+            | 'dynamic_currency_conversion_actively_chosen'
+            | 'flight_manifest_and_purchase_itinerary'
+            | 'household_member_signer'
+            | 'legitimate_spend_across_payment_types_for_same_merchandise'
+            | 'merchandise_use'
+            | 'passenger_transport_ticket_use'
+            | 'recurring_transaction_with_binding_contract_or_previous_undisputed_transaction'
+            | 'signed_delivery_or_pickup_form'
+            | 'signed_mail_order_phone_order_form'
+            | 'travel_and_expense_loyalty_transaction'
+            | 'travel_and_expense_subsequent_purchase';
 
           /**
            * Explanation of the compelling evidence provided by the merchant.
@@ -706,7 +767,14 @@ export namespace CardDispute {
          * - `proof_of_cash_disbursement` - Proof of cash disbursement provided.
          * - `reversal_issued` - Reversal issued by merchant.
          */
-        reason: 'cardholder_no_longer_disputes' | 'credit_or_reversal_processed' | 'invalid_dispute' | 'non_fiat_currency_or_non_fungible_token_as_described' | 'non_fiat_currency_or_non_fungible_token_received' | 'proof_of_cash_disbursement' | 'reversal_issued';
+        reason:
+          | 'cardholder_no_longer_disputes'
+          | 'credit_or_reversal_processed'
+          | 'invalid_dispute'
+          | 'non_fiat_currency_or_non_fungible_token_as_described'
+          | 'non_fiat_currency_or_non_fungible_token_received'
+          | 'proof_of_cash_disbursement'
+          | 'reversal_issued';
 
         /**
          * Reversal issued by merchant details. Present if and only if `reason` is
@@ -826,7 +894,41 @@ export namespace CardDispute {
            *   misrepresented.
            * - `transaction_code_correct` - Transaction code is correct.
            */
-          reason: 'automatic_teller_machine_transaction_proof_provided' | 'balance_of_partial_prepayment_not_paid' | 'cardholder_canceled_before_expected_merchandise_receipt_date' | 'cardholder_canceled_before_expected_services_receipt_date' | 'cardholder_canceled_different_date' | 'cardholder_did_not_cancel_according_to_policy' | 'cardholder_received_merchandise' | 'country_code_correct' | 'credit_processed_correctly' | 'currency_correct' | 'dispute_is_for_quality' | 'dispute_is_for_visa_cash_back_transaction_portion' | 'disputed_amount_is_value_added_tax' | 'disputed_amount_is_value_added_tax_no_credit_receipt_provided' | 'limited_return_or_cancellation_policy_properly_disclosed' | 'merchandise_held_at_cardholder_customs_agency' | 'merchandise_matches_description' | 'merchandise_not_counterfeit' | 'merchandise_not_damaged' | 'merchandise_not_defective' | 'merchandise_provided_prior_to_cancellation_date' | 'merchandise_quality_matches_description' | 'merchandise_return_not_attempted' | 'merchant_not_notified_of_closed_account' | 'name_on_flight_manifest_matches_purchase' | 'no_credit_receipt_provided' | 'other' | 'processing_error_incorrect' | 'returned_mechandise_held_at_customs_agency_outside_merchant_country' | 'services_match_description' | 'services_provided_prior_to_cancellation_date' | 'services_used_after_cancellation_date' | 'terms_of_service_not_misrepresented' | 'transaction_code_correct';
+          reason:
+            | 'automatic_teller_machine_transaction_proof_provided'
+            | 'balance_of_partial_prepayment_not_paid'
+            | 'cardholder_canceled_before_expected_merchandise_receipt_date'
+            | 'cardholder_canceled_before_expected_services_receipt_date'
+            | 'cardholder_canceled_different_date'
+            | 'cardholder_did_not_cancel_according_to_policy'
+            | 'cardholder_received_merchandise'
+            | 'country_code_correct'
+            | 'credit_processed_correctly'
+            | 'currency_correct'
+            | 'dispute_is_for_quality'
+            | 'dispute_is_for_visa_cash_back_transaction_portion'
+            | 'disputed_amount_is_value_added_tax'
+            | 'disputed_amount_is_value_added_tax_no_credit_receipt_provided'
+            | 'limited_return_or_cancellation_policy_properly_disclosed'
+            | 'merchandise_held_at_cardholder_customs_agency'
+            | 'merchandise_matches_description'
+            | 'merchandise_not_counterfeit'
+            | 'merchandise_not_damaged'
+            | 'merchandise_not_defective'
+            | 'merchandise_provided_prior_to_cancellation_date'
+            | 'merchandise_quality_matches_description'
+            | 'merchandise_return_not_attempted'
+            | 'merchant_not_notified_of_closed_account'
+            | 'name_on_flight_manifest_matches_purchase'
+            | 'no_credit_receipt_provided'
+            | 'other'
+            | 'processing_error_incorrect'
+            | 'returned_mechandise_held_at_customs_agency_outside_merchant_country'
+            | 'services_match_description'
+            | 'services_provided_prior_to_cancellation_date'
+            | 'services_used_after_cancellation_date'
+            | 'terms_of_service_not_misrepresented'
+            | 'transaction_code_correct';
         }
 
         /**
@@ -1015,7 +1117,26 @@ export namespace CardDispute {
          * - `fraud` - Fraud.
          * - `processing_error` - Processing error.
          */
-        category: 'authorization' | 'consumer_canceled_merchandise' | 'consumer_canceled_recurring_transaction' | 'consumer_canceled_services' | 'consumer_counterfeit_merchandise' | 'consumer_credit_not_processed' | 'consumer_damaged_or_defective_merchandise' | 'consumer_merchandise_misrepresentation' | 'consumer_merchandise_not_as_described' | 'consumer_merchandise_not_received' | 'consumer_non_receipt_of_cash' | 'consumer_original_credit_transaction_not_accepted' | 'consumer_quality_merchandise' | 'consumer_quality_services' | 'consumer_services_misrepresentation' | 'consumer_services_not_as_described' | 'consumer_services_not_received' | 'fraud' | 'processing_error';
+        category:
+          | 'authorization'
+          | 'consumer_canceled_merchandise'
+          | 'consumer_canceled_recurring_transaction'
+          | 'consumer_canceled_services'
+          | 'consumer_counterfeit_merchandise'
+          | 'consumer_credit_not_processed'
+          | 'consumer_damaged_or_defective_merchandise'
+          | 'consumer_merchandise_misrepresentation'
+          | 'consumer_merchandise_not_as_described'
+          | 'consumer_merchandise_not_received'
+          | 'consumer_non_receipt_of_cash'
+          | 'consumer_original_credit_transaction_not_accepted'
+          | 'consumer_quality_merchandise'
+          | 'consumer_quality_services'
+          | 'consumer_services_misrepresentation'
+          | 'consumer_services_not_as_described'
+          | 'consumer_services_not_received'
+          | 'fraud'
+          | 'processing_error';
 
         /**
          * Canceled merchandise. Present if and only if `category` is
@@ -1242,7 +1363,12 @@ export namespace CardDispute {
              * - `requested_not_to_return` - Requested not to return.
              * - `return_not_accepted` - Return not accepted.
              */
-            attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+            attempt_reason:
+              | 'merchant_not_responding'
+              | 'no_return_authorization_provided'
+              | 'no_return_instructions'
+              | 'requested_not_to_return'
+              | 'return_not_accepted';
 
             /**
              * Attempted at.
@@ -1451,7 +1577,10 @@ export namespace CardDispute {
              *   cancellation attempt within 24 hours of confirmation.
              * - `merchant_billed_no_show` - Merchant billed for no-show.
              */
-            explanation: 'cardholder_canceled_prior_to_service' | 'cardholder_cancellation_attempt_within_24_hours_of_confirmation' | 'merchant_billed_no_show';
+            explanation:
+              | 'cardholder_canceled_prior_to_service'
+              | 'cardholder_cancellation_attempt_within_24_hours_of_confirmation'
+              | 'merchant_billed_no_show';
           }
         }
 
@@ -1564,7 +1693,12 @@ export namespace CardDispute {
              * - `requested_not_to_return` - Requested not to return.
              * - `return_not_accepted` - Return not accepted.
              */
-            attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+            attempt_reason:
+              | 'merchant_not_responding'
+              | 'no_return_authorization_provided'
+              | 'no_return_instructions'
+              | 'requested_not_to_return'
+              | 'return_not_accepted';
 
             /**
              * Attempted at.
@@ -1687,7 +1821,12 @@ export namespace CardDispute {
              * - `requested_not_to_return` - Requested not to return.
              * - `return_not_accepted` - Return not accepted.
              */
-            attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+            attempt_reason:
+              | 'merchant_not_responding'
+              | 'no_return_authorization_provided'
+              | 'no_return_instructions'
+              | 'requested_not_to_return'
+              | 'return_not_accepted';
 
             /**
              * Attempted at.
@@ -1794,7 +1933,12 @@ export namespace CardDispute {
              * - `requested_not_to_return` - Requested not to return.
              * - `return_not_accepted` - Return not accepted.
              */
-            attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+            attempt_reason:
+              | 'merchant_not_responding'
+              | 'no_return_authorization_provided'
+              | 'no_return_instructions'
+              | 'requested_not_to_return'
+              | 'return_not_accepted';
 
             /**
              * Attempted at.
@@ -1858,7 +2002,10 @@ export namespace CardDispute {
            * - `merchant_cancellation` - Merchant cancellation.
            * - `no_cancellation` - No cancellation.
            */
-          cancellation_outcome: 'cardholder_cancellation_prior_to_expected_receipt' | 'merchant_cancellation' | 'no_cancellation';
+          cancellation_outcome:
+            | 'cardholder_cancellation_prior_to_expected_receipt'
+            | 'merchant_cancellation'
+            | 'no_cancellation';
 
           /**
            * Cardholder cancellation prior to expected receipt. Present if and only if
@@ -2135,7 +2282,12 @@ export namespace CardDispute {
              * - `requested_not_to_return` - Requested not to return.
              * - `return_not_accepted` - Return not accepted.
              */
-            attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+            attempt_reason:
+              | 'merchant_not_responding'
+              | 'no_return_authorization_provided'
+              | 'no_return_instructions'
+              | 'requested_not_to_return'
+              | 'return_not_accepted';
 
             /**
              * Attempted at.
@@ -2203,7 +2355,10 @@ export namespace CardDispute {
            *   redone.
            * - `paid_to_have_work_redone` - Cardholder paid to have work redone.
            */
-          cardholder_paid_to_have_work_redone: 'did_not_pay_to_have_work_redone' | 'paid_to_have_work_redone' | null;
+          cardholder_paid_to_have_work_redone:
+            | 'did_not_pay_to_have_work_redone'
+            | 'paid_to_have_work_redone'
+            | null;
 
           /**
            * Non-fiat currency or non-fungible token related and not matching description.
@@ -2211,7 +2366,9 @@ export namespace CardDispute {
            * - `not_related` - Not related.
            * - `related` - Related.
            */
-          non_fiat_currency_or_non_fungible_token_related_and_not_matching_description: 'not_related' | 'related';
+          non_fiat_currency_or_non_fungible_token_related_and_not_matching_description:
+            | 'not_related'
+            | 'related';
 
           /**
            * Ongoing negotiations. Exclude if there is no evidence of ongoing negotiations.
@@ -2411,7 +2568,10 @@ export namespace CardDispute {
            * - `merchant_cancellation` - Merchant cancellation.
            * - `no_cancellation` - No cancellation.
            */
-          cancellation_outcome: 'cardholder_cancellation_prior_to_expected_receipt' | 'merchant_cancellation' | 'no_cancellation';
+          cancellation_outcome:
+            | 'cardholder_cancellation_prior_to_expected_receipt'
+            | 'merchant_cancellation'
+            | 'no_cancellation';
 
           /**
            * Cardholder cancellation prior to expected receipt. Present if and only if
@@ -2498,7 +2658,18 @@ export namespace CardDispute {
            * - `miscellaneous` - Miscellaneous.
            * - `stolen` - Stolen.
            */
-          fraud_type: 'account_or_credentials_takeover' | 'card_not_received_as_issued' | 'fraudulent_application' | 'fraudulent_use_of_account_number' | 'incorrect_processing' | 'issuer_reported_counterfeit' | 'lost' | 'manipulation_of_account_holder' | 'merchant_misrepresentation' | 'miscellaneous' | 'stolen';
+          fraud_type:
+            | 'account_or_credentials_takeover'
+            | 'card_not_received_as_issued'
+            | 'fraudulent_application'
+            | 'fraudulent_use_of_account_number'
+            | 'incorrect_processing'
+            | 'issuer_reported_counterfeit'
+            | 'lost'
+            | 'manipulation_of_account_holder'
+            | 'merchant_misrepresentation'
+            | 'miscellaneous'
+            | 'stolen';
         }
 
         /**
@@ -2577,7 +2748,13 @@ export namespace CardDispute {
              * - `statement` - Statement.
              * - `voucher` - Voucher.
              */
-            other_form_of_payment_evidence: 'canceled_check' | 'card_transaction' | 'cash_receipt' | 'other' | 'statement' | 'voucher';
+            other_form_of_payment_evidence:
+              | 'canceled_check'
+              | 'card_transaction'
+              | 'cash_receipt'
+              | 'other'
+              | 'statement'
+              | 'voucher';
 
             /**
              * Other transaction ID.
@@ -2652,7 +2829,26 @@ export namespace CardDispute {
            * - `fraud` - Fraud.
            * - `processing_error` - Processing error.
            */
-          category: 'authorization' | 'consumer_canceled_merchandise' | 'consumer_canceled_recurring_transaction' | 'consumer_canceled_services' | 'consumer_counterfeit_merchandise' | 'consumer_credit_not_processed' | 'consumer_damaged_or_defective_merchandise' | 'consumer_merchandise_misrepresentation' | 'consumer_merchandise_not_as_described' | 'consumer_merchandise_not_received' | 'consumer_non_receipt_of_cash' | 'consumer_original_credit_transaction_not_accepted' | 'consumer_quality_merchandise' | 'consumer_quality_services' | 'consumer_services_misrepresentation' | 'consumer_services_not_as_described' | 'consumer_services_not_received' | 'fraud' | 'processing_error';
+          category:
+            | 'authorization'
+            | 'consumer_canceled_merchandise'
+            | 'consumer_canceled_recurring_transaction'
+            | 'consumer_canceled_services'
+            | 'consumer_counterfeit_merchandise'
+            | 'consumer_credit_not_processed'
+            | 'consumer_damaged_or_defective_merchandise'
+            | 'consumer_merchandise_misrepresentation'
+            | 'consumer_merchandise_not_as_described'
+            | 'consumer_merchandise_not_received'
+            | 'consumer_non_receipt_of_cash'
+            | 'consumer_original_credit_transaction_not_accepted'
+            | 'consumer_quality_merchandise'
+            | 'consumer_quality_services'
+            | 'consumer_services_misrepresentation'
+            | 'consumer_services_not_as_described'
+            | 'consumer_services_not_received'
+            | 'fraud'
+            | 'processing_error';
 
           /**
            * The reason for the pre-arbitration request.
@@ -2708,7 +2904,7 @@ export interface CardDisputeListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface CardDisputeCreateParams {
@@ -2751,7 +2947,7 @@ export interface CardDisputeCreateParams {
    */
   visa?: CardDisputeCreateParams.Visa;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace CardDisputeCreateParams {
@@ -2796,7 +2992,26 @@ export namespace CardDisputeCreateParams {
      * - `fraud` - Fraud.
      * - `processing_error` - Processing error.
      */
-    category: 'authorization' | 'consumer_canceled_merchandise' | 'consumer_canceled_recurring_transaction' | 'consumer_canceled_services' | 'consumer_counterfeit_merchandise' | 'consumer_credit_not_processed' | 'consumer_damaged_or_defective_merchandise' | 'consumer_merchandise_misrepresentation' | 'consumer_merchandise_not_as_described' | 'consumer_merchandise_not_received' | 'consumer_non_receipt_of_cash' | 'consumer_original_credit_transaction_not_accepted' | 'consumer_quality_merchandise' | 'consumer_quality_services' | 'consumer_services_misrepresentation' | 'consumer_services_not_as_described' | 'consumer_services_not_received' | 'fraud' | 'processing_error';
+    category:
+      | 'authorization'
+      | 'consumer_canceled_merchandise'
+      | 'consumer_canceled_recurring_transaction'
+      | 'consumer_canceled_services'
+      | 'consumer_counterfeit_merchandise'
+      | 'consumer_credit_not_processed'
+      | 'consumer_damaged_or_defective_merchandise'
+      | 'consumer_merchandise_misrepresentation'
+      | 'consumer_merchandise_not_as_described'
+      | 'consumer_merchandise_not_received'
+      | 'consumer_non_receipt_of_cash'
+      | 'consumer_original_credit_transaction_not_accepted'
+      | 'consumer_quality_merchandise'
+      | 'consumer_quality_services'
+      | 'consumer_services_misrepresentation'
+      | 'consumer_services_not_as_described'
+      | 'consumer_services_not_received'
+      | 'fraud'
+      | 'processing_error';
 
     /**
      * Authorization. Required if and only if `category` is `authorization`.
@@ -3030,7 +3245,12 @@ export namespace CardDisputeCreateParams {
          * - `requested_not_to_return` - Requested not to return.
          * - `return_not_accepted` - Return not accepted.
          */
-        attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+        attempt_reason:
+          | 'merchant_not_responding'
+          | 'no_return_authorization_provided'
+          | 'no_return_instructions'
+          | 'requested_not_to_return'
+          | 'return_not_accepted';
 
         /**
          * Attempted at.
@@ -3239,7 +3459,10 @@ export namespace CardDisputeCreateParams {
          *   cancellation attempt within 24 hours of confirmation.
          * - `merchant_billed_no_show` - Merchant billed for no-show.
          */
-        explanation: 'cardholder_canceled_prior_to_service' | 'cardholder_cancellation_attempt_within_24_hours_of_confirmation' | 'merchant_billed_no_show';
+        explanation:
+          | 'cardholder_canceled_prior_to_service'
+          | 'cardholder_cancellation_attempt_within_24_hours_of_confirmation'
+          | 'merchant_billed_no_show';
       }
     }
 
@@ -3354,7 +3577,12 @@ export namespace CardDisputeCreateParams {
          * - `requested_not_to_return` - Requested not to return.
          * - `return_not_accepted` - Return not accepted.
          */
-        attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+        attempt_reason:
+          | 'merchant_not_responding'
+          | 'no_return_authorization_provided'
+          | 'no_return_instructions'
+          | 'requested_not_to_return'
+          | 'return_not_accepted';
 
         /**
          * Attempted at.
@@ -3479,7 +3707,12 @@ export namespace CardDisputeCreateParams {
          * - `requested_not_to_return` - Requested not to return.
          * - `return_not_accepted` - Return not accepted.
          */
-        attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+        attempt_reason:
+          | 'merchant_not_responding'
+          | 'no_return_authorization_provided'
+          | 'no_return_instructions'
+          | 'requested_not_to_return'
+          | 'return_not_accepted';
 
         /**
          * Attempted at.
@@ -3588,7 +3821,12 @@ export namespace CardDisputeCreateParams {
          * - `requested_not_to_return` - Requested not to return.
          * - `return_not_accepted` - Return not accepted.
          */
-        attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+        attempt_reason:
+          | 'merchant_not_responding'
+          | 'no_return_authorization_provided'
+          | 'no_return_instructions'
+          | 'requested_not_to_return'
+          | 'return_not_accepted';
 
         /**
          * Attempted at.
@@ -3652,7 +3890,10 @@ export namespace CardDisputeCreateParams {
        * - `merchant_cancellation` - Merchant cancellation.
        * - `no_cancellation` - No cancellation.
        */
-      cancellation_outcome: 'cardholder_cancellation_prior_to_expected_receipt' | 'merchant_cancellation' | 'no_cancellation';
+      cancellation_outcome:
+        | 'cardholder_cancellation_prior_to_expected_receipt'
+        | 'merchant_cancellation'
+        | 'no_cancellation';
 
       /**
        * Delivery issue.
@@ -3933,7 +4174,12 @@ export namespace CardDisputeCreateParams {
          * - `requested_not_to_return` - Requested not to return.
          * - `return_not_accepted` - Return not accepted.
          */
-        attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+        attempt_reason:
+          | 'merchant_not_responding'
+          | 'no_return_authorization_provided'
+          | 'no_return_instructions'
+          | 'requested_not_to_return'
+          | 'return_not_accepted';
 
         /**
          * Attempted at.
@@ -4209,7 +4455,10 @@ export namespace CardDisputeCreateParams {
        * - `merchant_cancellation` - Merchant cancellation.
        * - `no_cancellation` - No cancellation.
        */
-      cancellation_outcome: 'cardholder_cancellation_prior_to_expected_receipt' | 'merchant_cancellation' | 'no_cancellation';
+      cancellation_outcome:
+        | 'cardholder_cancellation_prior_to_expected_receipt'
+        | 'merchant_cancellation'
+        | 'no_cancellation';
 
       /**
        * Last expected receipt at.
@@ -4296,7 +4545,18 @@ export namespace CardDisputeCreateParams {
        * - `miscellaneous` - Miscellaneous.
        * - `stolen` - Stolen.
        */
-      fraud_type: 'account_or_credentials_takeover' | 'card_not_received_as_issued' | 'fraudulent_application' | 'fraudulent_use_of_account_number' | 'incorrect_processing' | 'issuer_reported_counterfeit' | 'lost' | 'manipulation_of_account_holder' | 'merchant_misrepresentation' | 'miscellaneous' | 'stolen';
+      fraud_type:
+        | 'account_or_credentials_takeover'
+        | 'card_not_received_as_issued'
+        | 'fraudulent_application'
+        | 'fraudulent_use_of_account_number'
+        | 'incorrect_processing'
+        | 'issuer_reported_counterfeit'
+        | 'lost'
+        | 'manipulation_of_account_holder'
+        | 'merchant_misrepresentation'
+        | 'miscellaneous'
+        | 'stolen';
     }
 
     /**
@@ -4375,7 +4635,13 @@ export namespace CardDisputeCreateParams {
          * - `statement` - Statement.
          * - `voucher` - Voucher.
          */
-        other_form_of_payment_evidence: 'canceled_check' | 'card_transaction' | 'cash_receipt' | 'other' | 'statement' | 'voucher';
+        other_form_of_payment_evidence:
+          | 'canceled_check'
+          | 'card_transaction'
+          | 'cash_receipt'
+          | 'other'
+          | 'statement'
+          | 'voucher';
 
         /**
          * Other transaction ID.
@@ -4444,7 +4710,15 @@ export namespace CardDisputeListParams {
      * requests, this should be encoded as a comma-delimited string, such as
      * `?in=one,two,three`.
      */
-    in?: Array<'user_submission_required' | 'pending_user_submission_reviewing' | 'pending_user_submission_submitting' | 'pending_user_withdrawal_submitting' | 'pending_response' | 'lost' | 'won'>;
+    in?: Array<
+      | 'user_submission_required'
+      | 'pending_user_submission_reviewing'
+      | 'pending_user_submission_submitting'
+      | 'pending_user_withdrawal_submitting'
+      | 'pending_response'
+      | 'lost'
+      | 'won'
+    >;
   }
 }
 
@@ -4482,7 +4756,7 @@ export interface CardDisputeSubmitUserSubmissionParams {
    */
   visa?: CardDisputeSubmitUserSubmissionParams.Visa;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace CardDisputeSubmitUserSubmissionParams {
@@ -4562,7 +4836,26 @@ export namespace CardDisputeSubmitUserSubmissionParams {
        * - `fraud` - Fraud.
        * - `processing_error` - Processing error.
        */
-      category: 'authorization' | 'consumer_canceled_merchandise' | 'consumer_canceled_recurring_transaction' | 'consumer_canceled_services' | 'consumer_counterfeit_merchandise' | 'consumer_credit_not_processed' | 'consumer_damaged_or_defective_merchandise' | 'consumer_merchandise_misrepresentation' | 'consumer_merchandise_not_as_described' | 'consumer_merchandise_not_received' | 'consumer_non_receipt_of_cash' | 'consumer_original_credit_transaction_not_accepted' | 'consumer_quality_merchandise' | 'consumer_quality_services' | 'consumer_services_misrepresentation' | 'consumer_services_not_as_described' | 'consumer_services_not_received' | 'fraud' | 'processing_error';
+      category:
+        | 'authorization'
+        | 'consumer_canceled_merchandise'
+        | 'consumer_canceled_recurring_transaction'
+        | 'consumer_canceled_services'
+        | 'consumer_counterfeit_merchandise'
+        | 'consumer_credit_not_processed'
+        | 'consumer_damaged_or_defective_merchandise'
+        | 'consumer_merchandise_misrepresentation'
+        | 'consumer_merchandise_not_as_described'
+        | 'consumer_merchandise_not_received'
+        | 'consumer_non_receipt_of_cash'
+        | 'consumer_original_credit_transaction_not_accepted'
+        | 'consumer_quality_merchandise'
+        | 'consumer_quality_services'
+        | 'consumer_services_misrepresentation'
+        | 'consumer_services_not_as_described'
+        | 'consumer_services_not_received'
+        | 'fraud'
+        | 'processing_error';
 
       /**
        * Authorization. Required if and only if `category` is `authorization`.
@@ -4796,7 +5089,12 @@ export namespace CardDisputeSubmitUserSubmissionParams {
            * - `requested_not_to_return` - Requested not to return.
            * - `return_not_accepted` - Return not accepted.
            */
-          attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+          attempt_reason:
+            | 'merchant_not_responding'
+            | 'no_return_authorization_provided'
+            | 'no_return_instructions'
+            | 'requested_not_to_return'
+            | 'return_not_accepted';
 
           /**
            * Attempted at.
@@ -5005,7 +5303,10 @@ export namespace CardDisputeSubmitUserSubmissionParams {
            *   cancellation attempt within 24 hours of confirmation.
            * - `merchant_billed_no_show` - Merchant billed for no-show.
            */
-          explanation: 'cardholder_canceled_prior_to_service' | 'cardholder_cancellation_attempt_within_24_hours_of_confirmation' | 'merchant_billed_no_show';
+          explanation:
+            | 'cardholder_canceled_prior_to_service'
+            | 'cardholder_cancellation_attempt_within_24_hours_of_confirmation'
+            | 'merchant_billed_no_show';
         }
       }
 
@@ -5120,7 +5421,12 @@ export namespace CardDisputeSubmitUserSubmissionParams {
            * - `requested_not_to_return` - Requested not to return.
            * - `return_not_accepted` - Return not accepted.
            */
-          attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+          attempt_reason:
+            | 'merchant_not_responding'
+            | 'no_return_authorization_provided'
+            | 'no_return_instructions'
+            | 'requested_not_to_return'
+            | 'return_not_accepted';
 
           /**
            * Attempted at.
@@ -5245,7 +5551,12 @@ export namespace CardDisputeSubmitUserSubmissionParams {
            * - `requested_not_to_return` - Requested not to return.
            * - `return_not_accepted` - Return not accepted.
            */
-          attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+          attempt_reason:
+            | 'merchant_not_responding'
+            | 'no_return_authorization_provided'
+            | 'no_return_instructions'
+            | 'requested_not_to_return'
+            | 'return_not_accepted';
 
           /**
            * Attempted at.
@@ -5354,7 +5665,12 @@ export namespace CardDisputeSubmitUserSubmissionParams {
            * - `requested_not_to_return` - Requested not to return.
            * - `return_not_accepted` - Return not accepted.
            */
-          attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+          attempt_reason:
+            | 'merchant_not_responding'
+            | 'no_return_authorization_provided'
+            | 'no_return_instructions'
+            | 'requested_not_to_return'
+            | 'return_not_accepted';
 
           /**
            * Attempted at.
@@ -5418,7 +5734,10 @@ export namespace CardDisputeSubmitUserSubmissionParams {
          * - `merchant_cancellation` - Merchant cancellation.
          * - `no_cancellation` - No cancellation.
          */
-        cancellation_outcome: 'cardholder_cancellation_prior_to_expected_receipt' | 'merchant_cancellation' | 'no_cancellation';
+        cancellation_outcome:
+          | 'cardholder_cancellation_prior_to_expected_receipt'
+          | 'merchant_cancellation'
+          | 'no_cancellation';
 
         /**
          * Delivery issue.
@@ -5699,7 +6018,12 @@ export namespace CardDisputeSubmitUserSubmissionParams {
            * - `requested_not_to_return` - Requested not to return.
            * - `return_not_accepted` - Return not accepted.
            */
-          attempt_reason: 'merchant_not_responding' | 'no_return_authorization_provided' | 'no_return_instructions' | 'requested_not_to_return' | 'return_not_accepted';
+          attempt_reason:
+            | 'merchant_not_responding'
+            | 'no_return_authorization_provided'
+            | 'no_return_instructions'
+            | 'requested_not_to_return'
+            | 'return_not_accepted';
 
           /**
            * Attempted at.
@@ -5766,7 +6090,9 @@ export namespace CardDisputeSubmitUserSubmissionParams {
          * - `not_related` - Not related.
          * - `related` - Related.
          */
-        non_fiat_currency_or_non_fungible_token_related_and_not_matching_description: 'not_related' | 'related';
+        non_fiat_currency_or_non_fungible_token_related_and_not_matching_description:
+          | 'not_related'
+          | 'related';
 
         /**
          * Purchase information and quality issue.
@@ -5975,7 +6301,10 @@ export namespace CardDisputeSubmitUserSubmissionParams {
          * - `merchant_cancellation` - Merchant cancellation.
          * - `no_cancellation` - No cancellation.
          */
-        cancellation_outcome: 'cardholder_cancellation_prior_to_expected_receipt' | 'merchant_cancellation' | 'no_cancellation';
+        cancellation_outcome:
+          | 'cardholder_cancellation_prior_to_expected_receipt'
+          | 'merchant_cancellation'
+          | 'no_cancellation';
 
         /**
          * Last expected receipt at.
@@ -6062,7 +6391,18 @@ export namespace CardDisputeSubmitUserSubmissionParams {
          * - `miscellaneous` - Miscellaneous.
          * - `stolen` - Stolen.
          */
-        fraud_type: 'account_or_credentials_takeover' | 'card_not_received_as_issued' | 'fraudulent_application' | 'fraudulent_use_of_account_number' | 'incorrect_processing' | 'issuer_reported_counterfeit' | 'lost' | 'manipulation_of_account_holder' | 'merchant_misrepresentation' | 'miscellaneous' | 'stolen';
+        fraud_type:
+          | 'account_or_credentials_takeover'
+          | 'card_not_received_as_issued'
+          | 'fraudulent_application'
+          | 'fraudulent_use_of_account_number'
+          | 'incorrect_processing'
+          | 'issuer_reported_counterfeit'
+          | 'lost'
+          | 'manipulation_of_account_holder'
+          | 'merchant_misrepresentation'
+          | 'miscellaneous'
+          | 'stolen';
       }
 
       /**
@@ -6141,7 +6481,13 @@ export namespace CardDisputeSubmitUserSubmissionParams {
            * - `statement` - Statement.
            * - `voucher` - Voucher.
            */
-          other_form_of_payment_evidence: 'canceled_check' | 'card_transaction' | 'cash_receipt' | 'other' | 'statement' | 'voucher';
+          other_form_of_payment_evidence:
+            | 'canceled_check'
+            | 'card_transaction'
+            | 'cash_receipt'
+            | 'other'
+            | 'statement'
+            | 'voucher';
 
           /**
            * Other transaction ID.
@@ -6213,7 +6559,26 @@ export namespace CardDisputeSubmitUserSubmissionParams {
          * - `fraud` - Fraud.
          * - `processing_error` - Processing error.
          */
-        category: 'authorization' | 'consumer_canceled_merchandise' | 'consumer_canceled_recurring_transaction' | 'consumer_canceled_services' | 'consumer_counterfeit_merchandise' | 'consumer_credit_not_processed' | 'consumer_damaged_or_defective_merchandise' | 'consumer_merchandise_misrepresentation' | 'consumer_merchandise_not_as_described' | 'consumer_merchandise_not_received' | 'consumer_non_receipt_of_cash' | 'consumer_original_credit_transaction_not_accepted' | 'consumer_quality_merchandise' | 'consumer_quality_services' | 'consumer_services_misrepresentation' | 'consumer_services_not_as_described' | 'consumer_services_not_received' | 'fraud' | 'processing_error';
+        category:
+          | 'authorization'
+          | 'consumer_canceled_merchandise'
+          | 'consumer_canceled_recurring_transaction'
+          | 'consumer_canceled_services'
+          | 'consumer_counterfeit_merchandise'
+          | 'consumer_credit_not_processed'
+          | 'consumer_damaged_or_defective_merchandise'
+          | 'consumer_merchandise_misrepresentation'
+          | 'consumer_merchandise_not_as_described'
+          | 'consumer_merchandise_not_received'
+          | 'consumer_non_receipt_of_cash'
+          | 'consumer_original_credit_transaction_not_accepted'
+          | 'consumer_quality_merchandise'
+          | 'consumer_quality_services'
+          | 'consumer_services_misrepresentation'
+          | 'consumer_services_not_as_described'
+          | 'consumer_services_not_received'
+          | 'fraud'
+          | 'processing_error';
 
         /**
          * The reason for the category change.
@@ -6239,6 +6604,6 @@ export declare namespace CardDisputes {
     type CardDisputeCreateParams as CardDisputeCreateParams,
     type CardDisputeListParams as CardDisputeListParams,
     type CardDisputeSubmitUserSubmissionParams as CardDisputeSubmitUserSubmissionParams,
-    type CardDisputeWithdrawParams as CardDisputeWithdrawParams
+    type CardDisputeWithdrawParams as CardDisputeWithdrawParams,
   };
 }

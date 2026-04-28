@@ -30,7 +30,10 @@ export class DigitalWalletTokens extends APIResource {
    *   await client.digitalWalletTokens.list();
    * ```
    */
-  list(query: DigitalWalletTokenListParams | null | undefined = {}, options?: RequestOptions): APIPromise<DigitalWalletTokenListResponse> {
+  list(
+    query: DigitalWalletTokenListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<DigitalWalletTokenListResponse> {
     return this._client.get('/digital_wallet_tokens', { query, ...options });
   }
 }
@@ -133,7 +136,17 @@ export namespace DigitalWalletToken {
      * - `wearable_device` - Wearable Device
      * - `automobile_device` - Automobile Device
      */
-    device_type: 'unknown' | 'mobile_phone' | 'tablet' | 'watch' | 'mobilephone_or_tablet' | 'pc' | 'household_device' | 'wearable_device' | 'automobile_device' | null;
+    device_type:
+      | 'unknown'
+      | 'mobile_phone'
+      | 'tablet'
+      | 'watch'
+      | 'mobilephone_or_tablet'
+      | 'pc'
+      | 'household_device'
+      | 'wearable_device'
+      | 'automobile_device'
+      | null;
 
     /**
      * ID assigned to the device by the digital wallet provider.
@@ -200,7 +213,7 @@ export interface DigitalWalletTokenListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface DigitalWalletTokenListParams {
@@ -255,6 +268,6 @@ export declare namespace DigitalWalletTokens {
   export {
     type DigitalWalletToken as DigitalWalletToken,
     type DigitalWalletTokenListResponse as DigitalWalletTokenListResponse,
-    type DigitalWalletTokenListParams as DigitalWalletTokenListParams
+    type DigitalWalletTokenListParams as DigitalWalletTokenListParams,
   };
 }

@@ -33,7 +33,11 @@ export class BookkeepingAccounts extends APIResource {
    *   );
    * ```
    */
-  update(bookkeepingAccountID: string, body: BookkeepingAccountUpdateParams, options?: RequestOptions): APIPromise<BookkeepingAccount> {
+  update(
+    bookkeepingAccountID: string,
+    body: BookkeepingAccountUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<BookkeepingAccount> {
     return this._client.patch(path`/bookkeeping_accounts/${bookkeepingAccountID}`, { body, ...options });
   }
 
@@ -46,7 +50,10 @@ export class BookkeepingAccounts extends APIResource {
    *   await client.bookkeepingAccounts.list();
    * ```
    */
-  list(query: BookkeepingAccountListParams | null | undefined = {}, options?: RequestOptions): APIPromise<BookkeepingAccountListResponse> {
+  list(
+    query: BookkeepingAccountListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BookkeepingAccountListResponse> {
     return this._client.get('/bookkeeping_accounts', { query, ...options });
   }
 
@@ -61,8 +68,15 @@ export class BookkeepingAccounts extends APIResource {
    *   );
    * ```
    */
-  retrieveBalance(bookkeepingAccountID: string, query: BookkeepingAccountRetrieveBalanceParams | null | undefined = {}, options?: RequestOptions): APIPromise<BookkeepingAccountRetrieveBalanceResponse> {
-    return this._client.get(path`/bookkeeping_accounts/${bookkeepingAccountID}/balance`, { query, ...options });
+  retrieveBalance(
+    bookkeepingAccountID: string,
+    query: BookkeepingAccountRetrieveBalanceParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<BookkeepingAccountRetrieveBalanceResponse> {
+    return this._client.get(path`/bookkeeping_accounts/${bookkeepingAccountID}/balance`, {
+      query,
+      ...options,
+    });
   }
 }
 
@@ -128,7 +142,7 @@ export interface BookkeepingAccountListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 /**
@@ -178,7 +192,7 @@ export interface BookkeepingAccountCreateParams {
    */
   entity_id?: string;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface BookkeepingAccountUpdateParams {
@@ -224,6 +238,6 @@ export declare namespace BookkeepingAccounts {
     type BookkeepingAccountCreateParams as BookkeepingAccountCreateParams,
     type BookkeepingAccountUpdateParams as BookkeepingAccountUpdateParams,
     type BookkeepingAccountListParams as BookkeepingAccountListParams,
-    type BookkeepingAccountRetrieveBalanceParams as BookkeepingAccountRetrieveBalanceParams
+    type BookkeepingAccountRetrieveBalanceParams as BookkeepingAccountRetrieveBalanceParams,
   };
 }

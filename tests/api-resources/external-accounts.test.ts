@@ -2,16 +2,19 @@
 
 import YolkenIncreaseTest from 'yolken-increase-test';
 
-const client = new YolkenIncreaseTest({ apiKey: 'My API Key', baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010' });
+const client = new YolkenIncreaseTest({
+  apiKey: 'My API Key',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+});
 
 describe('resource externalAccounts', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.externalAccounts.create({
-    account_number: '987654321',
-    description: 'Landlord',
-    routing_number: '101050001',
-  });
+      account_number: '987654321',
+      description: 'Landlord',
+      routing_number: '101050001',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,12 +27,12 @@ describe('resource externalAccounts', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.externalAccounts.create({
-    account_number: '987654321',
-    description: 'Landlord',
-    routing_number: '101050001',
-    account_holder: 'business',
-    funding: 'checking',
-  });
+      account_number: '987654321',
+      description: 'Landlord',
+      routing_number: '101050001',
+      account_holder: 'business',
+      funding: 'checking',
+    });
   });
 
   // Mock server tests are disabled
@@ -71,14 +74,17 @@ describe('resource externalAccounts', () => {
   // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.externalAccounts.list({
-    cursor: 'cursor',
-    idempotency_key: 'x',
-    limit: 1,
-    routing_number: 'xxxxxxxxx',
-    status: { in: ['active'] },
-  }, { path: '/_stainless_unknown_path' }))
-      .rejects
-      .toThrow(YolkenIncreaseTest.NotFoundError);
+    await expect(
+      client.externalAccounts.list(
+        {
+          cursor: 'cursor',
+          idempotency_key: 'x',
+          limit: 1,
+          routing_number: 'xxxxxxxxx',
+          status: { in: ['active'] },
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(YolkenIncreaseTest.NotFoundError);
   });
 });

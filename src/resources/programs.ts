@@ -28,7 +28,10 @@ export class Programs extends APIResource {
    * const programs = await client.programs.list();
    * ```
    */
-  list(query: ProgramListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ProgramListResponse> {
+  list(
+    query: ProgramListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ProgramListResponse> {
     return this._client.get('/programs', { query, ...options });
   }
 }
@@ -126,7 +129,7 @@ export interface ProgramListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface ProgramListParams {
@@ -146,6 +149,6 @@ export declare namespace Programs {
   export {
     type Program as Program,
     type ProgramListResponse as ProgramListResponse,
-    type ProgramListParams as ProgramListParams
+    type ProgramListParams as ProgramListParams,
   };
 }

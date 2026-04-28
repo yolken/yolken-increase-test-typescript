@@ -30,7 +30,10 @@ export class CardPurchaseSupplements extends APIResource {
    *   await client.cardPurchaseSupplements.list();
    * ```
    */
-  list(query: CardPurchaseSupplementListParams | null | undefined = {}, options?: RequestOptions): APIPromise<CardPurchaseSupplementListResponse> {
+  list(
+    query: CardPurchaseSupplementListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CardPurchaseSupplementListResponse> {
     return this._client.get('/card_purchase_supplements', { query, ...options });
   }
 }
@@ -71,7 +74,7 @@ export interface CardPurchaseSupplement {
    */
   type: 'card_purchase_supplement';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace CardPurchaseSupplement {
@@ -98,7 +101,11 @@ export namespace CardPurchaseSupplement {
      * - `tax_calculated_on_pre_discount_invoice_total` - Tax calculated on pre
      *   discount invoice total
      */
-    discount_treatment_code: 'no_invoice_level_discount_provided' | 'tax_calculated_on_post_discount_invoice_total' | 'tax_calculated_on_pre_discount_invoice_total' | null;
+    discount_treatment_code:
+      | 'no_invoice_level_discount_provided'
+      | 'tax_calculated_on_post_discount_invoice_total'
+      | 'tax_calculated_on_pre_discount_invoice_total'
+      | null;
 
     /**
      * Amount of duty taxes.
@@ -166,7 +173,13 @@ export namespace CardPurchaseSupplement {
      * - `gross_price_line_item_level` - Gross price line item level
      * - `gross_price_invoice_level` - Gross price invoice level
      */
-    tax_treatments: 'no_tax_applies' | 'net_price_line_item_level' | 'net_price_invoice_level' | 'gross_price_line_item_level' | 'gross_price_invoice_level' | null;
+    tax_treatments:
+      | 'no_tax_applies'
+      | 'net_price_line_item_level'
+      | 'net_price_invoice_level'
+      | 'gross_price_line_item_level'
+      | 'gross_price_invoice_level'
+      | null;
 
     /**
      * Value added tax invoice reference number.
@@ -208,7 +221,11 @@ export namespace CardPurchaseSupplement {
      * - `tax_calculated_on_pre_discount_line_item_total` - Tax calculated on pre
      *   discount line item total
      */
-    discount_treatment_code: 'no_line_item_level_discount_provided' | 'tax_calculated_on_post_discount_line_item_total' | 'tax_calculated_on_pre_discount_line_item_total' | null;
+    discount_treatment_code:
+      | 'no_line_item_level_discount_provided'
+      | 'tax_calculated_on_post_discount_line_item_total'
+      | 'tax_calculated_on_pre_discount_line_item_total'
+      | null;
 
     /**
      * Code used to categorize the purchase item.
@@ -288,7 +305,7 @@ export interface CardPurchaseSupplementListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface CardPurchaseSupplementListParams {
@@ -344,6 +361,6 @@ export declare namespace CardPurchaseSupplements {
   export {
     type CardPurchaseSupplement as CardPurchaseSupplement,
     type CardPurchaseSupplementListResponse as CardPurchaseSupplementListResponse,
-    type CardPurchaseSupplementListParams as CardPurchaseSupplementListParams
+    type CardPurchaseSupplementListParams as CardPurchaseSupplementListParams,
   };
 }

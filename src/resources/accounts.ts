@@ -56,7 +56,10 @@ export class Accounts extends APIResource {
    * const accounts = await client.accounts.list();
    * ```
    */
-  list(query: AccountListParams | null | undefined = {}, options?: RequestOptions): APIPromise<AccountListResponse> {
+  list(
+    query: AccountListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AccountListResponse> {
     return this._client.get('/accounts', { query, ...options });
   }
 
@@ -85,7 +88,11 @@ export class Accounts extends APIResource {
    * );
    * ```
    */
-  retrieveBalance(accountID: string, query: AccountRetrieveBalanceParams | null | undefined = {}, options?: RequestOptions): APIPromise<AccountRetrieveBalanceResponse> {
+  retrieveBalance(
+    accountID: string,
+    query: AccountRetrieveBalanceParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<AccountRetrieveBalanceResponse> {
     return this._client.get(path`/accounts/${accountID}/balance`, { query, ...options });
   }
 
@@ -102,7 +109,10 @@ export class Accounts extends APIResource {
    *   );
    * ```
    */
-  retrieveIntrafiBalance(accountID: string, options?: RequestOptions): APIPromise<AccountRetrieveIntrafiBalanceResponse> {
+  retrieveIntrafiBalance(
+    accountID: string,
+    options?: RequestOptions,
+  ): APIPromise<AccountRetrieveIntrafiBalanceResponse> {
     return this._client.get(path`/accounts/${accountID}/intrafi_balance`, options);
   }
 }
@@ -230,7 +240,7 @@ export interface Account {
    */
   type: 'account';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace Account {
@@ -285,7 +295,7 @@ export interface AccountListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 /**
@@ -382,7 +392,7 @@ export interface AccountRetrieveIntrafiBalanceResponse {
    */
   type: 'intrafi_balance';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace AccountRetrieveIntrafiBalanceResponse {
@@ -409,7 +419,7 @@ export namespace AccountRetrieveIntrafiBalanceResponse {
      */
     fdic_certificate_number: string;
 
-  [k: string]: unknown
+    [k: string]: unknown;
   }
 
   export namespace Balance {
@@ -467,7 +477,7 @@ export interface AccountCreateParams {
    */
   program_id?: string;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace AccountCreateParams {
@@ -519,7 +529,7 @@ export interface AccountUpdateParams {
    */
   name?: string;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace AccountUpdateParams {
@@ -626,6 +636,6 @@ export declare namespace Accounts {
     type AccountCreateParams as AccountCreateParams,
     type AccountUpdateParams as AccountUpdateParams,
     type AccountListParams as AccountListParams,
-    type AccountRetrieveBalanceParams as AccountRetrieveBalanceParams
+    type AccountRetrieveBalanceParams as AccountRetrieveBalanceParams,
   };
 }

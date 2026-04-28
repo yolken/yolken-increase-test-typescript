@@ -61,7 +61,10 @@ export class SwiftTransfers extends APIResource {
    * const swiftTransfers = await client.swiftTransfers.list();
    * ```
    */
-  list(query: SwiftTransferListParams | null | undefined = {}, options?: RequestOptions): APIPromise<SwiftTransferListResponse> {
+  list(
+    query: SwiftTransferListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<SwiftTransferListResponse> {
     return this._client.get('/swift_transfers', { query, ...options });
   }
 
@@ -204,7 +207,15 @@ export interface SwiftTransfer {
    * - `rejected` - The transfer has been rejected by Increase.
    * - `returned` - The transfer has been returned.
    */
-  status: 'pending_approval' | 'canceled' | 'pending_reviewing' | 'requires_attention' | 'pending_initiating' | 'initiated' | 'rejected' | 'returned';
+  status:
+    | 'pending_approval'
+    | 'canceled'
+    | 'pending_reviewing'
+    | 'requires_attention'
+    | 'pending_initiating'
+    | 'initiated'
+    | 'rejected'
+    | 'returned';
 
   /**
    * The ID for the transaction funding the transfer. This will be populated after
@@ -384,7 +395,7 @@ export interface SwiftTransferListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface SwiftTransferCreateParams {
@@ -459,7 +470,7 @@ export interface SwiftTransferCreateParams {
    */
   routing_number?: string;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace SwiftTransferCreateParams {
@@ -600,7 +611,16 @@ export namespace SwiftTransferListParams {
      * Return results whose value is in the provided list. For GET requests, this
      * should be encoded as a comma-delimited string, such as `?in=one,two,three`.
      */
-    in?: Array<'pending_approval' | 'canceled' | 'pending_reviewing' | 'requires_attention' | 'pending_initiating' | 'initiated' | 'rejected' | 'returned'>;
+    in?: Array<
+      | 'pending_approval'
+      | 'canceled'
+      | 'pending_reviewing'
+      | 'requires_attention'
+      | 'pending_initiating'
+      | 'initiated'
+      | 'rejected'
+      | 'returned'
+    >;
   }
 }
 
@@ -609,6 +629,6 @@ export declare namespace SwiftTransfers {
     type SwiftTransfer as SwiftTransfer,
     type SwiftTransferListResponse as SwiftTransferListResponse,
     type SwiftTransferCreateParams as SwiftTransferCreateParams,
-    type SwiftTransferListParams as SwiftTransferListParams
+    type SwiftTransferListParams as SwiftTransferListParams,
   };
 }

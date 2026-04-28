@@ -49,7 +49,10 @@ export class PhysicalCardProfiles extends APIResource {
    *   await client.physicalCardProfiles.list();
    * ```
    */
-  list(query: PhysicalCardProfileListParams | null | undefined = {}, options?: RequestOptions): APIPromise<PhysicalCardProfileListResponse> {
+  list(
+    query: PhysicalCardProfileListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PhysicalCardProfileListResponse> {
     return this._client.get('/physical_card_profiles', { query, ...options });
   }
 
@@ -79,8 +82,15 @@ export class PhysicalCardProfiles extends APIResource {
    *   );
    * ```
    */
-  clone(physicalCardProfileID: string, body: PhysicalCardProfileCloneParams, options?: RequestOptions): APIPromise<PhysicalCardProfile> {
-    return this._client.post(path`/physical_card_profiles/${physicalCardProfileID}/clone`, { body, ...options });
+  clone(
+    physicalCardProfileID: string,
+    body: PhysicalCardProfileCloneParams,
+    options?: RequestOptions,
+  ): APIPromise<PhysicalCardProfile> {
+    return this._client.post(path`/physical_card_profiles/${physicalCardProfileID}/clone`, {
+      body,
+      ...options,
+    });
   }
 }
 
@@ -168,7 +178,13 @@ export interface PhysicalCardProfile {
    *   provider and is ready to use.
    * - `archived` - The Physical Card Profile has been archived.
    */
-  status: 'pending_creating' | 'pending_reviewing' | 'rejected' | 'pending_submitting' | 'active' | 'archived';
+  status:
+    | 'pending_creating'
+    | 'pending_reviewing'
+    | 'rejected'
+    | 'pending_submitting'
+    | 'active'
+    | 'archived';
 
   /**
    * A constant representing the object's type. For this resource it will always be
@@ -176,7 +192,7 @@ export interface PhysicalCardProfile {
    */
   type: 'physical_card_profile';
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 /**
@@ -193,7 +209,7 @@ export interface PhysicalCardProfileListResponse {
    */
   next_cursor: string | null;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export interface PhysicalCardProfileCreateParams {
@@ -228,7 +244,7 @@ export interface PhysicalCardProfileCreateParams {
    */
   front_text?: PhysicalCardProfileCreateParams.FrontText;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace PhysicalCardProfileCreateParams {
@@ -281,7 +297,9 @@ export namespace PhysicalCardProfileListParams {
      * requests, this should be encoded as a comma-delimited string, such as
      * `?in=one,two,three`.
      */
-    in?: Array<'pending_creating' | 'pending_reviewing' | 'rejected' | 'pending_submitting' | 'active' | 'archived'>;
+    in?: Array<
+      'pending_creating' | 'pending_reviewing' | 'rejected' | 'pending_submitting' | 'active' | 'archived'
+    >;
   }
 }
 
@@ -317,7 +335,7 @@ export interface PhysicalCardProfileCloneParams {
    */
   program_id?: string;
 
-[k: string]: unknown
+  [k: string]: unknown;
 }
 
 export namespace PhysicalCardProfileCloneParams {
@@ -346,6 +364,6 @@ export declare namespace PhysicalCardProfiles {
     type PhysicalCardProfileListResponse as PhysicalCardProfileListResponse,
     type PhysicalCardProfileCreateParams as PhysicalCardProfileCreateParams,
     type PhysicalCardProfileListParams as PhysicalCardProfileListParams,
-    type PhysicalCardProfileCloneParams as PhysicalCardProfileCloneParams
+    type PhysicalCardProfileCloneParams as PhysicalCardProfileCloneParams,
   };
 }
