@@ -165,7 +165,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/account_numbers/$ACCOUNT_NUMBER_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/account_numbers/$ACCOUNT_NUMBER_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "inbound_ach": {\n            "debit_status": "blocked"\n          },\n          "status": "disabled"\n        }\'',
       },
     },
   },
@@ -423,7 +423,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/accounts \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "name": "New Account!"\n        }\'',
+          'curl https://api.increase.com/accounts \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "name": "New Account!",\n          "entity_id": "entity_n8y8tnk2p9339ti393yi",\n          "program_id": "program_i2v2os4mwza1oetokh9i"\n        }\'',
       },
     },
   },
@@ -473,7 +473,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/accounts/$ACCOUNT_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/accounts/$ACCOUNT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "name": "My renamed account"\n        }\'',
       },
     },
   },
@@ -722,7 +722,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/ach_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "amount": 100,\n          "statement_descriptor": "New ACH transfer"\n        }\'',
+          'curl https://api.increase.com/ach_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "amount": 100,\n          "statement_descriptor": "New ACH transfer",\n          "account_number": "987654321",\n          "routing_number": "101050001"\n        }\'',
       },
     },
   },
@@ -1005,7 +1005,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/bookkeeping_entry_sets \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "entries": [\n            {\n              "account_id": "bookkeeping_account_9husfpw68pzmve9dvvc7",\n              "amount": 100\n            },\n            {\n              "account_id": "bookkeeping_account_t2obldz1rcu15zr54umg",\n              "amount": -100\n            }\n          ]\n        }\'',
+          'curl https://api.increase.com/bookkeeping_entry_sets \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "entries": [\n            {\n              "account_id": "bookkeeping_account_9husfpw68pzmve9dvvc7",\n              "amount": 100\n            },\n            {\n              "account_id": "bookkeeping_account_t2obldz1rcu15zr54umg",\n              "amount": -100\n            }\n          ],\n          "date": "2020-01-31T23:59:59Z",\n          "transaction_id": "transaction_uyrp7fld2ium70oa7oi"\n        }\'',
       },
     },
   },
@@ -1093,7 +1093,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/card_disputes \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "disputed_transaction_id": "transaction_uyrp7fld2ium70oa7oi",\n          "network": "visa"\n        }\'',
+          'curl https://api.increase.com/card_disputes \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "disputed_transaction_id": "transaction_uyrp7fld2ium70oa7oi",\n          "network": "visa",\n          "amount": 100,\n          "visa": {\n            "category": "fraud",\n            "fraud": {\n              "fraud_type": "account_or_credentials_takeover"\n            }\n          }\n        }\'',
       },
     },
   },
@@ -1150,7 +1150,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/card_disputes/$CARD_DISPUTE_ID/submit_user_submission \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "network": "visa"\n        }\'',
+          'curl https://api.increase.com/card_disputes/$CARD_DISPUTE_ID/submit_user_submission \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "network": "visa",\n          "visa": {\n            "category": "merchant_prearbitration_decline",\n            "merchant_prearbitration_decline": {\n              "reason": "The pre-arbitration received from the merchantdoes not explain how they obtained permission to charge the card."\n            }\n          }\n        }\'',
       },
     },
   },
@@ -1175,7 +1175,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/card_disputes/$CARD_DISPUTE_ID/withdraw \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/card_disputes/$CARD_DISPUTE_ID/withdraw \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "explanation": "The explanation for withdrawing the Card Dispute."\n        }\'',
       },
     },
   },
@@ -1592,7 +1592,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/card_validations \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "card_token_id": "outbound_card_token_zlt0ml6youq3q7vcdlg0",\n          "merchant_category_code": "1234",\n          "merchant_city_name": "New York",\n          "merchant_name": "Acme Corp",\n          "merchant_postal_code": "10045",\n          "merchant_state": "NY"\n        }\'',
+          'curl https://api.increase.com/card_validations \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "card_token_id": "outbound_card_token_zlt0ml6youq3q7vcdlg0",\n          "merchant_category_code": "1234",\n          "merchant_city_name": "New York",\n          "merchant_name": "Acme Corp",\n          "merchant_postal_code": "10045",\n          "merchant_state": "NY",\n          "cardholder_first_name": "Dee",\n          "cardholder_last_name": "Hock",\n          "cardholder_middle_name": "Ward",\n          "cardholder_postal_code": "10045",\n          "cardholder_street_address": "33 Liberty Street"\n        }\'',
       },
     },
   },
@@ -1680,7 +1680,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/cards \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky"\n        }\'',
+          'curl https://api.increase.com/cards \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "description": "Card for Ian Crease"\n        }\'',
       },
     },
   },
@@ -1737,7 +1737,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/cards/$CARD_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/cards/$CARD_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "description": "New description"\n        }\'',
       },
     },
   },
@@ -1875,7 +1875,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/check_deposits \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "amount": 1000,\n          "back_image_file_id": "file_26khfk98mzfz90a11oqx",\n          "front_image_file_id": "file_hkv175ovmc2tb2v2zbrm"\n        }\'',
+          'curl https://api.increase.com/check_deposits \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "amount": 1000,\n          "back_image_file_id": "file_26khfk98mzfz90a11oqx",\n          "front_image_file_id": "file_hkv175ovmc2tb2v2zbrm",\n          "description": "Vendor payment"\n        }\'',
       },
     },
   },
@@ -1968,7 +1968,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/check_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "amount": 1000,\n          "fulfillment_method": "physical_check",\n          "source_account_number_id": "account_number_v18nkfqm6afpsrvy82b2"\n        }\'',
+          'curl https://api.increase.com/check_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "amount": 1000,\n          "fulfillment_method": "physical_check",\n          "source_account_number_id": "account_number_v18nkfqm6afpsrvy82b2",\n          "physical_check": {\n            "mailing_address": {\n              "city": "New York",\n              "line1": "33 Liberty Street",\n              "postal_code": "10045",\n              "state": "NY",\n              "name": "Ian Crease",\n              "phone": "+16505046304"\n            },\n            "memo": "Check payment",\n            "recipient_name": "Ian Crease",\n            "return_address": {\n              "city": "x",\n              "line1": "x",\n              "name": "x",\n              "postal_code": "x",\n              "state": "x"\n            },\n            "signature": {\n              "text": "Ian Crease"\n            }\n          },\n          "valid_until_date": "2025-12-31"\n        }\'',
       },
     },
   },
@@ -2072,7 +2072,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/check_transfers/$CHECK_TRANSFER_ID/stop_payment \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/check_transfers/$CHECK_TRANSFER_ID/stop_payment \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "reason": "mail_delivery_failed"\n        }\'',
       },
     },
   },
@@ -2194,7 +2194,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/digital_card_profiles \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "app_icon_file_id": "file_8zxqkwlh43wo144u8yec",\n          "background_image_file_id": "file_1ai913suu1zfn1pdetru",\n          "card_description": "MyBank Signature Card",\n          "description": "My Card Profile",\n          "issuer_name": "MyBank"\n        }\'',
+          'curl https://api.increase.com/digital_card_profiles \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "app_icon_file_id": "file_8zxqkwlh43wo144u8yec",\n          "background_image_file_id": "file_1ai913suu1zfn1pdetru",\n          "card_description": "MyBank Signature Card",\n          "description": "My Card Profile",\n          "issuer_name": "MyBank",\n          "contact_email": "user@example.com",\n          "contact_phone": "+18885551212",\n          "contact_website": "https://example.com",\n          "text_color": {\n            "blue": 59,\n            "green": 43,\n            "red": 26\n          }\n        }\'',
       },
     },
   },
@@ -2280,7 +2280,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/digital_card_profiles/$DIGITAL_CARD_PROFILE_ID/clone \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/digital_card_profiles/$DIGITAL_CARD_PROFILE_ID/clone \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "background_image_file_id": "file_1ai913suu1zfn1pdetru"\n        }\'',
       },
     },
   },
@@ -2403,7 +2403,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/entities \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "structure": "corporation"\n        }\'',
+          'curl https://api.increase.com/entities \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "structure": "corporation",\n          "corporation": {\n            "address": {\n              "city": "New York",\n              "country": "x",\n              "line1": "33 Liberty Street",\n              "state": "NY",\n              "zip": "10045"\n            },\n            "beneficial_owners": [\n              {\n                "individual": {\n                  "address": {\n                    "city": "New York",\n                    "country": "x",\n                    "line1": "33 Liberty Street",\n                    "state": "NY",\n                    "zip": "10045"\n                  },\n                  "date_of_birth": "1970-01-31",\n                  "identification": {\n                    "method": "social_security_number",\n                    "number": "078051120"\n                  },\n                  "name": "Ian Crease"\n                },\n                "prongs": [\n                  "control"\n                ],\n                "company_title": "CEO"\n              }\n            ],\n            "legal_identifier": {\n              "value": "602214076",\n              "category": "us_employer_identification_number"\n            },\n            "name": "National Phonograph Company",\n            "incorporation_state": "NY",\n            "website": "https://example.com"\n          },\n          "supplemental_documents": [\n            {\n              "file_id": "file_makxrc67oh9l6sg7w9yc"\n            }\n          ]\n        }\'',
       },
     },
   },
@@ -2462,7 +2462,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/entities/$ENTITY_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/entities/$ENTITY_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "corporation": {\n            "address": {\n              "city": "New York",\n              "country": "US",\n              "line1": "33 Liberty Street",\n              "line2": "Unit 2",\n              "state": "NY",\n              "zip": "10045"\n            }\n          },\n          "risk_rating": {\n            "rated_at": "2020-01-31T23:59:59Z",\n            "rating": "low"\n          }\n        }\'',
       },
     },
   },
@@ -2542,7 +2542,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/entity_beneficial_owners \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "entity_id": "entity_n8y8tnk2p9339ti393yi",\n          "individual": {\n            "address": {\n              "city": "New York",\n              "country": "US",\n              "line1": "33 Liberty Street",\n              "state": "NY",\n              "zip": "10045"\n            },\n            "date_of_birth": "1970-01-31",\n            "identification": {\n              "method": "social_security_number",\n              "number": "078051120"\n            },\n            "name": "Ian Crease"\n          },\n          "prongs": [\n            "control"\n          ]\n        }\'',
+          'curl https://api.increase.com/entity_beneficial_owners \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "entity_id": "entity_n8y8tnk2p9339ti393yi",\n          "individual": {\n            "address": {\n              "city": "New York",\n              "country": "US",\n              "line1": "33 Liberty Street",\n              "state": "NY",\n              "zip": "10045"\n            },\n            "date_of_birth": "1970-01-31",\n            "identification": {\n              "method": "social_security_number",\n              "number": "078051120"\n            },\n            "name": "Ian Crease"\n          },\n          "prongs": [\n            "control"\n          ],\n          "company_title": "CEO"\n        }\'',
       },
     },
   },
@@ -2598,7 +2598,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/entity_beneficial_owners/$ENTITY_BENEFICIAL_OWNER_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/entity_beneficial_owners/$ENTITY_BENEFICIAL_OWNER_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "address": {\n            "city": "New York",\n            "country": "US",\n            "line1": "33 Liberty Street",\n            "line2": "Unit 2",\n            "state": "NY",\n            "zip": "10045"\n          }\n        }\'',
       },
     },
   },
@@ -2906,7 +2906,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/exports \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "category": "transaction_csv"\n        }\'',
+          'curl https://api.increase.com/exports \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "category": "transaction_csv",\n          "transaction_csv": {\n            "account_id": "account_in71c4amph0vgo2qllky"\n          }\n        }\'',
       },
     },
   },
@@ -2993,7 +2993,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/external_accounts \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_number": "987654321",\n          "description": "Landlord",\n          "routing_number": "101050001"\n        }\'',
+          'curl https://api.increase.com/external_accounts \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_number": "987654321",\n          "description": "Landlord",\n          "routing_number": "101050001",\n          "account_holder": "business"\n        }\'',
       },
     },
   },
@@ -3049,7 +3049,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/external_accounts/$EXTERNAL_ACCOUNT_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/external_accounts/$EXTERNAL_ACCOUNT_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "description": "New description"\n        }\'',
       },
     },
   },
@@ -3119,7 +3119,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/fednow_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "amount": 100,\n          "creditor_name": "Ian Crease",\n          "debtor_name": "National Phonograph Company",\n          "source_account_number_id": "account_number_v18nkfqm6afpsrvy82b2",\n          "unstructured_remittance_information": "Invoice 29582"\n        }\'',
+          'curl https://api.increase.com/fednow_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "amount": 100,\n          "creditor_name": "Ian Crease",\n          "debtor_name": "National Phonograph Company",\n          "source_account_number_id": "account_number_v18nkfqm6afpsrvy82b2",\n          "unstructured_remittance_information": "Invoice 29582",\n          "account_number": "987654321",\n          "creditor_address": {\n            "city": "New York",\n            "postal_code": "10045",\n            "state": "NY",\n            "line1": "33 Liberty Street"\n          },\n          "routing_number": "101050001"\n        }\'',
       },
     },
   },
@@ -3411,7 +3411,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/inbound_ach_transfers/$INBOUND_ACH_TRANSFER_ID/create_notification_of_change \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/inbound_ach_transfers/$INBOUND_ACH_TRANSFER_ID/create_notification_of_change \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "updated_account_number": "987654321",\n          "updated_routing_number": "101050001"\n        }\'',
       },
     },
   },
@@ -3436,7 +3436,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/inbound_ach_transfers/$INBOUND_ACH_TRANSFER_ID/decline \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/inbound_ach_transfers/$INBOUND_ACH_TRANSFER_ID/decline \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "reason": "payment_stopped"\n        }\'',
       },
     },
   },
@@ -4160,7 +4160,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/lockboxes \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky"\n        }\'',
+          'curl https://api.increase.com/lockboxes \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "description": "Rent payments"\n        }\'',
       },
     },
   },
@@ -4215,7 +4215,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/lockboxes/$LOCKBOX_ID \\\n    -X PATCH \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/lockboxes/$LOCKBOX_ID \\\n    -X PATCH \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "check_deposit_behavior": "disabled"\n        }\'',
       },
     },
   },
@@ -4245,7 +4245,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/oauth/tokens \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "grant_type": "authorization_code"\n        }\'',
+          'curl https://api.increase.com/oauth/tokens \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "grant_type": "authorization_code",\n          "client_id": "12345",\n          "client_secret": "supersecret",\n          "code": "123"\n        }\'',
       },
     },
   },
@@ -4414,7 +4414,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/pending_transactions \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "amount": -1000\n        }\'',
+          'curl https://api.increase.com/pending_transactions \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "amount": -1000,\n          "description": "Hold for pending transaction"\n        }\'',
       },
     },
   },
@@ -4610,7 +4610,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/physical_card_profiles/$PHYSICAL_CARD_PROFILE_ID/clone \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/physical_card_profiles/$PHYSICAL_CARD_PROFILE_ID/clone \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "front_image_file_id": "file_o6aex13wm1jcc36sgcj1"\n        }\'',
       },
     },
   },
@@ -4829,7 +4829,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/real_time_decisions/$REAL_TIME_DECISION_ID/action \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/real_time_decisions/$REAL_TIME_DECISION_ID/action \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "card_authorization": {\n            "decision": "approve",\n            "approval": {\n              "cardholder_address_verification_result": {\n                "line1": "match",\n                "postal_code": "no_match"\n              }\n            }\n          }\n        }\'',
       },
     },
   },
@@ -4899,7 +4899,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/real_time_payments_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "amount": 100,\n          "creditor_name": "Ian Crease",\n          "source_account_number_id": "account_number_v18nkfqm6afpsrvy82b2",\n          "unstructured_remittance_information": "Invoice 29582"\n        }\'',
+          'curl https://api.increase.com/real_time_payments_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "amount": 100,\n          "creditor_name": "Ian Crease",\n          "source_account_number_id": "account_number_v18nkfqm6afpsrvy82b2",\n          "unstructured_remittance_information": "Invoice 29582",\n          "account_number": "987654321",\n          "routing_number": "101050001"\n        }\'',
       },
     },
   },
@@ -5095,7 +5095,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/simulations/card_authorizations \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "amount": 1000\n        }\'',
+          'curl https://api.increase.com/simulations/card_authorizations \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "amount": 1000,\n          "card_id": "card_oubs0hwk5rn6knuecxg2",\n          "event_subscription_id": "event_subscription_001dzz0r20rcdxgb013zqb8m04g",\n          "merchant_acceptor_id": "5665270011000168",\n          "merchant_category_code": "5734",\n          "merchant_city": "New York",\n          "merchant_country": "US",\n          "merchant_descriptor": "AMAZON.COM",\n          "merchant_state": "NY"\n        }\'',
       },
     },
   },
@@ -5136,7 +5136,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/simulations/card_balance_inquiries \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/simulations/card_balance_inquiries \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "balance": 1000000,\n          "card_id": "card_oubs0hwk5rn6knuecxg2",\n          "event_subscription_id": "event_subscription_001dzz0r20rcdxgb013zqb8m04g",\n          "merchant_acceptor_id": "5665270011000168",\n          "merchant_category_code": "5734",\n          "merchant_city": "New York",\n          "merchant_country": "US",\n          "merchant_descriptor": "CITIBANK",\n          "merchant_state": "NY"\n        }\'',
       },
     },
   },
@@ -5214,7 +5214,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/simulations/card_refunds \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/simulations/card_refunds \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "transaction_id": "transaction_uyrp7fld2ium70oa7oi"\n        }\'',
       },
     },
   },
@@ -5298,7 +5298,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/simulations/card_tokens \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/simulations/card_tokens \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "capabilities": [\n            {\n              "cross_border_push_transfers": "supported",\n              "domestic_push_transfers": "supported",\n              "route": "visa"\n            }\n          ],\n          "expiration": "2019-12-27",\n          "last4": "1234",\n          "prefix": "41234567",\n          "primary_account_number_length": 16\n        }\'',
       },
     },
   },
@@ -5349,7 +5349,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/simulations/exports \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "category": "form_1099_int"\n        }\'',
+          'curl https://api.increase.com/simulations/exports \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "category": "form_1099_int",\n          "form_1099_int": {\n            "account_id": "account_in71c4amph0vgo2qllky"\n          }\n        }\'',
       },
     },
   },
@@ -5480,7 +5480,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/simulations/inbound_real_time_payments_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_number_id": "account_number_v18nkfqm6afpsrvy82b2",\n          "amount": 1000\n        }\'',
+          'curl https://api.increase.com/simulations/inbound_real_time_payments_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_number_id": "account_number_v18nkfqm6afpsrvy82b2",\n          "amount": 1000,\n          "request_for_payment_id": "real_time_payments_request_for_payment_28kcliz1oevcnqyn9qp7"\n        }\'',
       },
     },
   },
@@ -5525,7 +5525,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/simulations/inbound_wire_drawdown_requests \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "amount": 10000,\n          "creditor_account_number": "987654321",\n          "creditor_routing_number": "101050001",\n          "currency": "USD",\n          "recipient_account_number_id": "account_number_v18nkfqm6afpsrvy82b2"\n        }\'',
+          'curl https://api.increase.com/simulations/inbound_wire_drawdown_requests \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "amount": 10000,\n          "creditor_account_number": "987654321",\n          "creditor_routing_number": "101050001",\n          "currency": "USD",\n          "recipient_account_number_id": "account_number_v18nkfqm6afpsrvy82b2",\n          "creditor_address_line1": "33 Liberty Street",\n          "creditor_address_line2": "New York, NY, 10045",\n          "creditor_name": "Ian Crease",\n          "debtor_account_number": "987654321",\n          "debtor_address_line1": "33 Liberty Street",\n          "debtor_address_line2": "New York, NY, 10045",\n          "debtor_name": "Ian Crease",\n          "debtor_routing_number": "101050001",\n          "instruction_identification": "x"\n        }\'',
       },
     },
   },
@@ -5762,7 +5762,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/simulations/ach_transfers/$ACH_TRANSFER_ID/settle \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/simulations/ach_transfers/$ACH_TRANSFER_ID/settle \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "inbound_funds_hold_behavior": "release_immediately"\n        }\'',
       },
     },
   },
@@ -5823,7 +5823,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/simulations/card_authentications \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "card_id": "card_oubs0hwk5rn6knuecxg2"\n        }\'',
+          'curl https://api.increase.com/simulations/card_authentications \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "card_id": "card_oubs0hwk5rn6knuecxg2",\n          "merchant_acceptor_id": "5665270011000168",\n          "merchant_category_code": "5734",\n          "merchant_country": "US",\n          "purchase_amount": 1000\n        }\'',
       },
     },
   },
@@ -5905,7 +5905,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/simulations/card_disputes/$CARD_DISPUTE_ID/action \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "network": "visa"\n        }\'',
+          'curl https://api.increase.com/simulations/card_disputes/$CARD_DISPUTE_ID/action \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "network": "visa",\n          "visa": {\n            "action": "accept_user_submission",\n            "accept_user_submission": {}\n          }\n        }\'',
       },
     },
   },
@@ -6103,7 +6103,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          "curl https://api.increase.com/simulations/inbound_check_deposits/$INBOUND_CHECK_DEPOSIT_ID/adjustment \\\n    -H 'Content-Type: application/json' \\\n    -H \"Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY\" \\\n    -d '{}'",
+          'curl https://api.increase.com/simulations/inbound_check_deposits/$INBOUND_CHECK_DEPOSIT_ID/adjustment \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "amount": 1000\n        }\'',
       },
     },
   },
@@ -6188,7 +6188,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/simulations/physical_cards/$PHYSICAL_CARD_ID/tracking_updates \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "category": "delivered"\n        }\'',
+          'curl https://api.increase.com/simulations/physical_cards/$PHYSICAL_CARD_ID/tracking_updates \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "category": "delivered",\n          "city": "New York",\n          "postal_code": "10045",\n          "state": "NY"\n        }\'',
       },
     },
   },
@@ -6587,7 +6587,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/wire_drawdown_requests \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_number_id": "account_number_v18nkfqm6afpsrvy82b2",\n          "amount": 10000,\n          "creditor_address": {\n            "city": "New York",\n            "country": "US",\n            "line1": "33 Liberty Street",\n            "postal_code": "10045",\n            "state": "NY"\n          },\n          "creditor_name": "National Phonograph Company",\n          "debtor_address": {\n            "city": "New York",\n            "country": "US",\n            "line1": "33 Liberty Street",\n            "postal_code": "10045",\n            "state": "NY"\n          },\n          "debtor_name": "Ian Crease",\n          "unstructured_remittance_information": "Invoice 29582"\n        }\'',
+          'curl https://api.increase.com/wire_drawdown_requests \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_number_id": "account_number_v18nkfqm6afpsrvy82b2",\n          "amount": 10000,\n          "creditor_address": {\n            "city": "New York",\n            "country": "US",\n            "line1": "33 Liberty Street",\n            "postal_code": "10045",\n            "state": "NY"\n          },\n          "creditor_name": "National Phonograph Company",\n          "debtor_address": {\n            "city": "New York",\n            "country": "US",\n            "line1": "33 Liberty Street",\n            "postal_code": "10045",\n            "state": "NY"\n          },\n          "debtor_name": "Ian Crease",\n          "unstructured_remittance_information": "Invoice 29582",\n          "debtor_account_number": "987654321",\n          "debtor_routing_number": "101050001"\n        }\'',
       },
     },
   },
@@ -6682,7 +6682,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.increase.com/wire_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "amount": 100,\n          "creditor": {\n            "name": "Ian Crease",\n            "address": {\n              "unstructured": {\n                "line1": "33 Liberty Street",\n                "line2": "New York",\n                "line3": "NY 10045"\n              }\n            }\n          },\n          "remittance": {\n            "category": "unstructured",\n            "unstructured": {\n              "message": "New account transfer"\n            }\n          }\n        }\'',
+          'curl https://api.increase.com/wire_transfers \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $YOLKEN_INCREASE_TEST_API_KEY" \\\n    -d \'{\n          "account_id": "account_in71c4amph0vgo2qllky",\n          "amount": 100,\n          "creditor": {\n            "name": "Ian Crease",\n            "address": {\n              "unstructured": {\n                "line1": "33 Liberty Street",\n                "line2": "New York",\n                "line3": "NY 10045"\n              }\n            }\n          },\n          "remittance": {\n            "category": "unstructured",\n            "unstructured": {\n              "message": "New account transfer"\n            }\n          },\n          "account_number": "987654321",\n          "routing_number": "101050001"\n        }\'',
       },
     },
   },
