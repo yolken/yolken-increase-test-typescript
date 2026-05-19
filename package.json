@@ -1,6 +1,6 @@
 {
   "name": "yolken-increase-test",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "The official TypeScript library for the Yolken Increase Test API",
   "author": "Yolken Increase Test <benjamin@stainless.com>",
   "types": "dist/index.d.ts",
