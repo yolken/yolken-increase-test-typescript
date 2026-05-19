@@ -1,10 +1,11 @@
 {
   "dxt_version": "0.2",
   "name": "yolken-increase-test-mcp",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "The official MCP Server for the Yolken Increase Test API",
   "author": {
-    "name": "Yolken Increase Test"
+    "name": "Yolken Increase Test",
+    "email": "benjamin@stainless.com"
   },
   "repository": {
     "type": "git",

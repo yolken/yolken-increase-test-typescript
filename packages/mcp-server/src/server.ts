@@ -29,7 +29,7 @@ export const newMcpServer = async ({
   new McpServer(
     {
       name: 'yolken_increase_test_api',
-      version: '0.0.2',
+      version: '0.1.0',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
